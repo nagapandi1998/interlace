@@ -1,0 +1,64 @@
+<div class="form-container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h2>Angular Material Form</h2>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="firstName" placeholder="Enter first name" />
+      <mat-error *ngIf="form.controls['firstName'].invalid && form.controls['firstName'].touched">
+        First Name is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="lastName" placeholder="Enter last name" />
+      <mat-error *ngIf="form.controls['lastName'].invalid && form.controls['lastName'].touched">
+        Last Name is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>State</mat-label>
+      <mat-select formControlName="state">
+        <mat-option value="" disabled>Select a state</mat-option>
+        <mat-option value="tn">Tamil Nadu</mat-option>
+        <mat-option value="kl">Kerala</mat-option>
+        <mat-option value="ka">Karnataka</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.controls['state'].invalid && form.controls['state'].touched">
+        State is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-label>Gender <span>*</span></mat-label>
+    <mat-radio-group formControlName="gender" class="full-width">
+      <mat-radio-button value="male">Male</mat-radio-button>
+      <mat-radio-button value="female">Female</mat-radio-button>
+      <mat-radio-button value="other">Other</mat-radio-button>
+    </mat-radio-group>
+    <mat-error *ngIf="form.controls['gender'].invalid && form.controls['gender'].touched">
+      Gender is required
+    </mat-error>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Desc</mat-label>
+      <textarea matInput formControlName="desc" placeholder="Enter something" rows="2"></textarea>
+      <mat-error *ngIf="form.controls['desc'].invalid && form.controls['desc'].touched">
+        Desc is required
+      </mat-error>
+    </mat-form-field>
+
+    <div class="button-row">
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+      <button
+        mat-stroked-button
+        color="accent"
+        type="button"
+        (click)="goBack()"
+        class="back-button"
+      >
+        Back
+      </button>
+    </div>
+  </form>
+</div>

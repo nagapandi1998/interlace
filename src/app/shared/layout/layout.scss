@@ -1,0 +1,53 @@
+.layout-container {
+  height: 100vh;
+}
+
+.sidenav {
+  width: 240px;
+  background-color: #f8f9fa;
+}
+
+mat-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.content-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+app-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+mat-nav-list {
+  mat-icon {
+    position: relative;
+    top: 4px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidenav {
+    width: 200px;
+  }
+
+  mat-sidenav {
+    mode: over !important;
+  }
+}

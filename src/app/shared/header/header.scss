@@ -1,0 +1,16 @@
+.header-toolbar {
+  display: flex;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #e8e8e8;
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  mat-icon {
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,45 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <!-- Left Side: Image -->
+    <div class="card-left">
+      <img src="https://angular.dev/assets/images/press-kit/angular_icon_gradient.gif" alt="Login Image" />
+    </div>
+
+    <!-- Right Side: Login Form -->
+    <div class="card-right">
+      <h2 class="login-title">Login</h2>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <!-- Email Field -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <mat-icon matPrefix>email</mat-icon>
+          <input matInput type="email" formControlName="email" placeholder="Enter your email" />
+          <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Email is required</mat-error>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Invalid email address</mat-error>
+        </mat-form-field>
+
+        <!-- Password Field -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <mat-icon matPrefix>lock</mat-icon>
+          <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" placeholder="Enter your password" />
+          <button mat-icon-button matSuffix type="button" (click)="hide = !hide">
+            <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password is required</mat-error>
+        </mat-form-field>
+
+        <!-- Forgot Password -->
+        <div class="forgot-password">
+          <a routerLink="/forgot-password" (click)="forgotpassword()">Forgot Password?</a>
+        </div>
+
+        <!-- Submit Button -->
+        <button mat-flat-button class="login-button full-width" type="submit">
+          <mat-icon>login</mat-icon> &nbsp; Login
+        </button>
+      </form>
+    </div>
+  </mat-card>
+</div>

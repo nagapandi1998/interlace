@@ -1,0 +1,31 @@
+<mat-sidenav-container class="layout-container">
+
+  <!-- Sidebar -->
+  <mat-sidenav
+    #sidenav
+    [mode]="'side'"
+    [(opened)]="isSidebarOpen"
+    class="sidenav"
+  >
+    <!-- Optional: keep mat-toolbar or remove -->
+    <mat-toolbar>
+      <span *ngIf="isSidebarOpen">Navigation</span>
+    </mat-toolbar>
+
+    <mat-nav-list *ngIf="isSidebarOpen">
+      <a mat-list-item routerLink="/home" routerLinkActive="active"><mat-icon>home</mat-icon> Home</a>
+      <a mat-list-item routerLink="/materialform" routerLinkActive="active"><mat-icon>layers</mat-icon> Angular Material</a>
+      <a mat-list-item routerLink="/bootstrapform" routerLinkActive="active"><mat-icon>dashboard</mat-icon> Bootstrap</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Main Content -->
+  <mat-sidenav-content class="main-content">
+    <app-header (toggleSidebar)="toggleSidebar()"></app-header>
+    <div class="content-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+
+    <app-footer></app-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>

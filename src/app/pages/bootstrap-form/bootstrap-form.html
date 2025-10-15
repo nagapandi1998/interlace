@@ -1,0 +1,116 @@
+<div class="form-container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <h2 class="text-center mb-4">Bootstrap Form</h2>
+
+    <div class="mb-3">
+      <label for="firstName" class="form-label">First Name <span>*</span></label>
+      <input
+        id="firstName"
+        type="text"
+        class="form-control"
+        formControlName="firstName"
+        [ngClass]="{
+          'is-invalid': form.controls['firstName'].invalid && form.controls['firstName'].touched
+        }"
+        placeholder="Enter first name"
+      />
+      <div class="invalid-feedback">First name is required.</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="lastName" class="form-label">Last Name <span>*</span></label>
+      <input
+        id="lastName"
+        type="text"
+        class="form-control"
+        formControlName="lastName"
+        [ngClass]="{
+          'is-invalid': form.controls['lastName'].invalid && form.controls['lastName'].touched
+        }"
+        placeholder="Enter last name"
+      />
+      <div class="invalid-feedback">Last name is required.</div>
+    </div>
+
+    <div class="mb-4">
+      <label for="state" class="form-label">State <span>*</span></label>
+      <select
+        id="state"
+        class="form-select"
+        formControlName="state"
+        [ngClass]="{
+          'is-invalid': form.controls['state'].invalid && form.controls['state'].touched
+        }"
+      >
+        <option value="" disabled>Select a state</option>
+        <option value="tn">Tamil Nadu</option>
+        <option value="kl">Kerala</option>
+        <option value="ka">Karnataka</option>
+      </select>
+      <div class="invalid-feedback">State is required.</div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label d-block">Gender <span>*</span></label>
+      <div class="form-check form-check-inline">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="genderMale"
+          value="male"
+          formControlName="gender"
+          name="gender"
+        />
+        <label class="form-check-label" for="genderMale">Male</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="genderFemale"
+          value="female"
+          formControlName="gender"
+          name="gender"
+        />
+        <label class="form-check-label" for="genderFemale">Female</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="genderOther"
+          value="other"
+          formControlName="gender"
+          name="gender"
+        />
+        <label class="form-check-label" for="genderOther">Other</label>
+      </div>
+      <div
+        class="invalid-feedback d-block"
+        *ngIf="form.controls['gender'].invalid && form.controls['gender'].touched"
+      >
+        Gender is required.
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label for="desc" class="form-label">Description <span>*</span></label>
+      <textarea
+        id="desc"
+        class="form-control"
+        formControlName="desc"
+        rows="2"
+        placeholder="Enter description"
+        [ngClass]="{
+          'is-invalid': form.controls['desc'].invalid && form.controls['desc'].touched
+        }"
+      ></textarea>
+      <div class="invalid-feedback">Description is required.</div>
+    </div>
+    <div class="button-row">
+      <button type="submit" class="btn btn-primary w-100">Submit</button>
+      <button type="button" class="btn btn-secondary w-100 back-button" (click)="goBack()"
+          >Back</button>
+    </div>
+  </form>
+</div>
