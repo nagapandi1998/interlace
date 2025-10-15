@@ -40,7 +40,7 @@ export class Auth {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       console.log('Logging in with:', email, password);
-      if (email == 'nagapandieee1998@gmail.com' && password == '123456') {
+      if (email == 'admin@gmail.com' && password == '12345') {
         //  this.snackBar.open('Login Successful', 'Close', {
         //   duration: 3000,
         //   verticalPosition: 'top',

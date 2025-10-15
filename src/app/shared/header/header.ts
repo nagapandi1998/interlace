@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class Header {
   @Output() toggleSidebar = new EventEmitter<void>();
+  showDropdown: boolean = false;
 
   constructor(private router: Router) {}
 

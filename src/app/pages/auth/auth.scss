@@ -96,6 +96,10 @@
     max-width: 95%;
   }
 
+    .card-left img {
+    max-height: 300px;
+  }
+
   .card-left,
   .card-right {
     flex: unset;

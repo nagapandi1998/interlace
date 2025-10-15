@@ -5,7 +5,17 @@
 
   <span class="spacer"></span>
 
-  <button mat-icon-button (click)="logout()" aria-label="Logout">
-    <mat-icon>logout</mat-icon>
-  </button>
+  <!-- Settings icon with hover dropdown -->
+  <div class="settings-dropdown-wrapper" (mouseenter)="showDropdown = true" (mouseleave)="showDropdown = false">
+    <button mat-icon-button aria-label="Settings">
+      <mat-icon>settings</mat-icon>
+    </button>
+
+    <div class="dropdown-panel" *ngIf="showDropdown">
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </div>
+  </div>
 </mat-toolbar>

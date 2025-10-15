@@ -4,7 +4,7 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  background-color: #e8e8e8;
+  background-color: #fff;
 
   .spacer {
     flex: 1 1 auto;
@@ -14,3 +14,47 @@
     cursor: pointer;
   }
 }
+
+
+.settings-dropdown-wrapper {
+  position: relative;
+  display: inline-block;
+
+  .dropdown-panel {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    min-width: 120px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    font-size: 15px;
+
+    button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      padding: 8px 16px;
+      background: none;
+      border: none;
+      color: black;
+      cursor: pointer;
+      font-family: inherit;
+
+      mat-icon {
+        margin-right: 6px;
+        font-size: 20px;
+        position: relative;
+        top: 2px;
+      }
+
+      &:hover {
+        background-color: #fff;
+        border-radius: 10px;
+      }
+    }
+  }
+}
+
