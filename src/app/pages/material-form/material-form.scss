@@ -5,6 +5,7 @@
   min-height: 100vh;
   padding: 24px;
   background-color: #f5f5f5;
+  min-width: 500px;
 }
 
 form {
@@ -46,7 +47,6 @@ form {
       }
     }
   }
-
 }
 
 mat-radio-group.full-width {

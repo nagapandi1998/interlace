@@ -8,10 +8,15 @@
   <!-- Settings icon with hover dropdown -->
   <div class="settings-dropdown-wrapper" (mouseenter)="showDropdown = true" (mouseleave)="showDropdown = false">
     <button mat-icon-button aria-label="Settings">
-      <mat-icon>settings</mat-icon>
+      <mat-icon>person</mat-icon>
     </button>
 
     <div class="dropdown-panel" *ngIf="showDropdown">
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>settings</mat-icon>
+        <span>Setting</span>
+      </button>
+      
       <button mat-menu-item (click)="logout()">
         <mat-icon>logout</mat-icon>
         <span>Logout</span>

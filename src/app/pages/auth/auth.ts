@@ -40,7 +40,7 @@ export class Auth {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       console.log('Logging in with:', email, password);
-      if (email == 'admin@gmail.com' && password == '12345') {
+      if (email == 'admin@gmail.com' && password == 'admin@123') {
         this.router.navigate(['/home']);
       } else if (email !== 'admin@gmail.com') {
         this.snackBar.open('Username is invalid', '', {
@@ -48,7 +48,7 @@ export class Auth {
           verticalPosition: 'top',
           panelClass: ['error-snackbar'],
         });
-      } else if (password !== '12345') {
+      } else if (password !== 'admin@123') {
         this.snackBar.open('password is invalid', '', {
           duration: 3000,
           verticalPosition: 'top',
