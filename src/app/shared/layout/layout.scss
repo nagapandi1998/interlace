@@ -12,8 +12,12 @@ mat-toolbar {
   align-items: center;
   justify-content: center;
   padding: 0 1rem;
-   background-color: #af1755;
-   color: white;
+  background-color: #af1755;
+  color: white;
+
+  img {
+    height: 55px;
+  }
 }
 
 .main-content {
@@ -37,26 +41,73 @@ app-header {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-app-footer{
-    background: white;
+app-footer {
+  background: white;
+}
+
+.user-info {
+  text-align: center;
+  color: white;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+  img {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    margin-bottom: 8px;
+  }
+
+  h6 {
+    margin: 4px 0 0;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  p {
+    margin: 4px 0 0;
+    font-size: 14px;
+    color: #f673a2;
+    letter-spacing: 1.2px;
+    font-weight: 500;
+  }
 }
 
 ::ng-deep mat-nav-list a.mat-mdc-list-item {
-  color: white !important; // Applies to the link (may not override inner spans without !important)
+  padding-left: 12px !important; /* Space from left margin */
+  padding-right: 12px !important; /* Space from right margin */
+  color: white !important;
 
-  .mat-icon {
-    color: white !important;
-    position: relative;
-    top: 4px; // Aligns the icon vertically with the text
+  .menu-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .left-icon {
+    margin-right: 12px;
+    color: white;
+  }
+
+  .label {
+    flex-grow: 1;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .right-icon {
+    color: white;
   }
 
   .mat-mdc-list-item-unscoped-content,
   .mdc-list-item__primary-text {
-    color: white !important; // These are the key MDC classes wrapping the text content
+    color: white !important;
   }
 }
-
-
 
 @media (max-width: 768px) {
   .sidenav {

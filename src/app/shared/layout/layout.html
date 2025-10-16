@@ -9,14 +9,42 @@
   >
     <!-- Optional: keep mat-toolbar or remove -->
     <mat-toolbar>
-      <span *ngIf="isSidebarOpen">Welcome</span>
+      <!-- <span *ngIf="isSidebarOpen">Welcome</span> -->
+     <img src="https://js.devexpress.com/Content/Images/Frameworks/Angular.png" alt="logo Image" />
     </mat-toolbar>
+    <div class="user-info">
+      <img src="https://hi-static.z-dn.net/files/d18/92b1d7d608d1482428f2f386174120cf.png" alt="user img">
+      <h6>Nagapandi G</h6>
+      <p>User</p>
+    </div>
 
-    <mat-nav-list *ngIf="isSidebarOpen">
-      <a mat-list-item routerLink="/home" routerLinkActive="active"><mat-icon>home</mat-icon> Home</a>
-      <a mat-list-item routerLink="/materialform" routerLinkActive="active"><mat-icon>layers</mat-icon> Angular Material</a>
-      <a mat-list-item routerLink="/bootstrapform" routerLinkActive="active"><mat-icon>dashboard</mat-icon> Bootstrap</a>
-    </mat-nav-list>
+<mat-nav-list *ngIf="isSidebarOpen"> 
+  <a mat-list-item routerLink="/home" routerLinkActive="active">
+    <span class="menu-item">
+      <mat-icon class="left-icon">home</mat-icon>
+      <span class="label">Home</span>
+      <mat-icon class="right-icon">chevron_right</mat-icon>
+    </span>
+  </a>
+
+  <a mat-list-item routerLink="/materialform" routerLinkActive="active">
+    <span class="menu-item">
+      <mat-icon class="left-icon">layers</mat-icon>
+      <span class="label">Angular Material</span>
+      <mat-icon class="right-icon">chevron_right</mat-icon>
+    </span>
+  </a>
+
+  <a mat-list-item routerLink="/bootstrapform" routerLinkActive="active">
+    <span class="menu-item">
+      <mat-icon class="left-icon">dashboard</mat-icon>
+      <span class="label">Bootstrap</span>
+      <mat-icon class="right-icon">chevron_right</mat-icon>
+    </span>
+  </a>
+</mat-nav-list>
+
+
   </mat-sidenav>
 
   <!-- Main Content -->

@@ -7,6 +7,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 import { Router } from '@angular/router';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-material-form',
@@ -18,13 +19,14 @@ import { Router } from '@angular/router';
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSnackBarModule
   ],
   templateUrl: './material-form.html',
   styleUrl: './material-form.scss'
 })
 export class MaterialForm {
-  constructor(private router: Router) {}
+  constructor(private router: Router,  private snackBar: MatSnackBar,) {}
 
   form = new FormGroup({
     firstName: new FormControl('', Validators.required),
@@ -37,9 +39,18 @@ export class MaterialForm {
   onSubmit() {
     if (this.form.valid) {
       console.log('Material form data:', this.form.value);
-      alert('Form submitted.');
+      this.snackBar.open('Form submitted successfully!.', '', {
+          duration: 3000,
+          verticalPosition: 'top',
+          panelClass: ['success-snackbar']
+        });
     } else {
       this.form.markAllAsTouched();
+      this.snackBar.open('Enter mandatory details', '', {
+        duration: 3000,
+        verticalPosition: 'top',
+        panelClass: ['error-snackbar'],
+      });
     }
   }
 
