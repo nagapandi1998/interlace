@@ -31,8 +31,8 @@ export class Auth {
 
   constructor(private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
+      email: ['admin@gmail.com', [Validators.required, Validators.email]],
+      password: ['admin@123', [Validators.required]],
     });
   }
 

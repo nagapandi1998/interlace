@@ -12,7 +12,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
   styleUrl: './bootstrap-form.scss',
 })
 export class BootstrapForm {
-  constructor(private router: Router, private snackBar: MatSnackBar,) {}
+  constructor(private router: Router, private snackBar: MatSnackBar) {}
 
   form = new FormGroup({
     firstName: new FormControl('', Validators.required),
@@ -26,10 +26,10 @@ export class BootstrapForm {
     if (this.form.valid) {
       console.log('Form submitted:', this.form.value);
       this.snackBar.open('Form submitted successfully!.', '', {
-          duration: 3000,
-          verticalPosition: 'top',
-          panelClass: ['success-snackbar']
-        });
+        duration: 3000,
+        verticalPosition: 'top',
+        panelClass: ['success-snackbar'],
+      });
     } else {
       this.form.markAllAsTouched();
       this.snackBar.open('Enter mandatory details', '', {
