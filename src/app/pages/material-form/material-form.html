@@ -1,58 +1,189 @@
 <div class="form-container">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <h2>Angular Material Form</h2>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>First Name</mat-label>
-      <input matInput formControlName="firstName" placeholder="Enter first name" />
-      <mat-error *ngIf="form.controls['firstName'].invalid && form.controls['firstName'].touched">
-        First Name is required
-      </mat-error>
-    </mat-form-field>
+  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+    <h2>Employee Form - Material</h2>
 
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Last Name</mat-label>
-      <input matInput formControlName="lastName" placeholder="Enter last name" />
-      <mat-error *ngIf="form.controls['lastName'].invalid && form.controls['lastName'].touched">
-        Last Name is required
-      </mat-error>
-    </mat-form-field>
+    <div class="grid-container">
+      <!-- First Name -->
+      <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName" />
+        <mat-error *ngIf="employeeForm.get('firstName')?.touched && employeeForm.get('firstName')?.invalid">
+          First name is required
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>State</mat-label>
-      <mat-select formControlName="state">
-        <mat-option value="" disabled>Select a state</mat-option>
-        <mat-option value="tn">Tamil Nadu</mat-option>
-        <mat-option value="kl">Kerala</mat-option>
-        <mat-option value="ka">Karnataka</mat-option>
-      </mat-select>
-      <mat-error *ngIf="form.controls['state'].invalid && form.controls['state'].touched">
-        State is required
-      </mat-error>
-    </mat-form-field>
+      <!-- Last Name -->
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" />
+        <mat-error *ngIf="employeeForm.get('lastName')?.touched && employeeForm.get('lastName')?.invalid">
+          Last name is required
+        </mat-error>
+      </mat-form-field>
 
-    <mat-label>Gender <span>*</span></mat-label>
-    <mat-radio-group formControlName="gender" class="full-width">
-      <mat-radio-button value="male">Male</mat-radio-button>
-      <mat-radio-button value="female">Female</mat-radio-button>
-      <mat-radio-button value="other">Other</mat-radio-button>
-    </mat-radio-group>
-    <mat-error *ngIf="form.controls['gender'].invalid && form.controls['gender'].touched">
-      Gender is required
-    </mat-error>
+      <!-- Mobile -->
+      <mat-form-field appearance="outline">
+        <mat-label>Mobile</mat-label>
+        <input matInput formControlName="mobile" maxlength="10" />
+        <mat-error *ngIf="employeeForm.get('mobile')?.touched && employeeForm.get('mobile')?.invalid">
+          Enter a valid 10-digit mobile number
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Desc</mat-label>
-      <textarea matInput formControlName="desc" placeholder="Enter something" rows="2"></textarea>
-      <mat-error *ngIf="form.controls['desc'].invalid && form.controls['desc'].touched">
-        Desc is required
-      </mat-error>
-    </mat-form-field>
+      <!-- Age -->
+      <mat-form-field appearance="outline">
+        <mat-label>Age</mat-label>
+        <input matInput type="number" formControlName="age" />
+        <mat-error *ngIf="employeeForm.get('age')?.touched && employeeForm.get('age')?.invalid">
+          Enter your age
+        </mat-error>
+      </mat-form-field>
 
+      <!-- Gender -->
+      <mat-form-field appearance="outline">
+        <mat-label>Gender</mat-label>
+        <mat-select formControlName="gender">
+          <mat-option value="male">Male</mat-option>
+          <mat-option value="female">Female</mat-option>
+          <mat-option value="other">Other</mat-option>
+        </mat-select>
+        <mat-error *ngIf="employeeForm.get('gender')?.touched && employeeForm.get('gender')?.invalid">
+          Gender is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Qualification -->
+      <mat-form-field appearance="outline">
+        <mat-label>Qualification</mat-label>
+        <mat-select formControlName="qualification">
+          <mat-option *ngFor="let qual of qualifications" [value]="qual">{{ qual }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="employeeForm.get('qualification')?.touched && employeeForm.get('qualification')?.invalid">
+          Qualification is required
+        </mat-error>
+      </mat-form-field>
+
+
+      <!-- Marital Status -->
+      <mat-form-field appearance="outline">
+        <mat-label>Marital Status</mat-label>
+        <mat-select formControlName="maritalStatus">
+          <mat-option value="single">Single</mat-option>
+          <mat-option value="married">Married</mat-option>
+        </mat-select>
+        <mat-error *ngIf="employeeForm.get('maritalStatus')?.touched && employeeForm.get('maritalStatus')?.invalid">
+          Marital status is required
+        </mat-error>
+      </mat-form-field>
+
+
+      <!-- Department -->
+      <mat-form-field appearance="outline">
+        <mat-label>Department</mat-label>
+        <mat-select formControlName="department">
+          <mat-option *ngFor="let dept of departments" [value]="dept">{{ dept }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="employeeForm.get('department')?.touched && employeeForm.get('department')?.invalid">
+          Department is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Designation -->
+      <mat-form-field appearance="outline">
+        <mat-label>Designation</mat-label>
+        <mat-select formControlName="designation">
+          <mat-option *ngFor="let des of designations" [value]="des">{{ des }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="employeeForm.get('designation')?.touched && employeeForm.get('designation')?.invalid">
+          Designation is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Official Mail ID -->
+      <mat-form-field appearance="outline">
+        <mat-label>Official Mail ID</mat-label>
+        <input matInput formControlName="officialMailId" />
+        <mat-error *ngIf="employeeForm.get('officialMailId')?.touched && employeeForm.get('officialMailId')?.invalid">
+          Enter a valid official email
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Alternate Email -->
+      <mat-form-field appearance="outline">
+        <mat-label>Alternate Email</mat-label>
+        <input matInput formControlName="altemail" />
+      </mat-form-field>
+
+      <!-- DOB -->
+      <mat-form-field appearance="outline">
+        <mat-label>Date of Birth</mat-label>
+        <input matInput [matDatepicker]="dobPicker" formControlName="dob" />
+        <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+        <mat-datepicker #dobPicker></mat-datepicker>
+        <mat-error *ngIf="employeeForm.get('dob')?.touched && employeeForm.get('dob')?.invalid">
+          DOB is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- DOJ -->
+      <mat-form-field appearance="outline">
+        <mat-label>Date of Joining</mat-label>
+        <input matInput [matDatepicker]="dojPicker" formControlName="doj" />
+        <mat-datepicker-toggle matSuffix [for]="dojPicker"></mat-datepicker-toggle>
+        <mat-datepicker #dojPicker></mat-datepicker>
+        <mat-error *ngIf="employeeForm.get('doj')?.touched && employeeForm.get('doj')?.invalid">
+          DOJ is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Reporting Manager -->
+      <mat-form-field appearance="outline">
+        <mat-label>Reporting Manager</mat-label>
+        <mat-select formControlName="reportingManager">
+          <mat-option *ngFor="let manager of managers" [value]="manager">{{ manager }}</mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="employeeForm.get('reportingManager')?.touched && employeeForm.get('reportingManager')?.invalid">
+          Manager is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Blood Group -->
+      <mat-form-field appearance="outline">
+        <mat-label>Blood Group</mat-label>
+        <mat-select formControlName="bloodGroup">
+          <mat-option *ngFor="let bg of bloodGroups" [value]="bg">{{ bg }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="employeeForm.get('bloodGroup')?.touched && employeeForm.get('bloodGroup')?.invalid">
+          Blood group is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- DOR -->
+      <mat-form-field appearance="outline">
+        <mat-label>Date of Relieving </mat-label>
+        <input matInput [matDatepicker]="dorPicker" formControlName="dor" />
+        <mat-datepicker-toggle matSuffix [for]="dorPicker"></mat-datepicker-toggle>
+        <mat-datepicker #dorPicker></mat-datepicker>
+      </mat-form-field>
+
+      <!-- Status -->
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          <mat-option value="active">Active</mat-option>
+          <mat-option value="inactive">Inactive</mat-option>
+        </mat-select>
+        <mat-error *ngIf="employeeForm.get('status')?.touched && employeeForm.get('status')?.invalid">
+          Status is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Buttons -->
     <div class="button-row">
       <button mat-raised-button color="primary" type="submit">Submit</button>
-      <button mat-stroked-button color="accent" type="button" (click)="goBack()" class="back-button">
-        Back
-      </button>
+      <button mat-stroked-button color="accent" type="button" class="back-btn" (click)="goBack()">Back</button>
     </div>
   </form>
 </div>

@@ -13,7 +13,7 @@ import { Footer } from '../footer/footer';
 @Component({
   selector: 'app-layout',
   standalone: true,
-    imports: [
+  imports: [
     CommonModule,
     RouterOutlet,
     RouterLink,
@@ -26,7 +26,7 @@ import { Footer } from '../footer/footer';
     Footer,
   ],
   templateUrl: './layout.html',
-  styleUrl: './layout.scss'
+  styleUrl: './layout.scss',
 })
 export class Layout {
   isSidebarOpen = true;
@@ -34,5 +34,4 @@ export class Layout {
   toggleSidebar(): void {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
-
 }

@@ -65,11 +65,11 @@ export class Auth {
     }
   }
 
-  forgotpassword(){
-     this.snackBar.open('Temporary password has been sent to your email.', '', {
-          duration: 3000,
-          verticalPosition: 'top',
-          panelClass: ['success-snackbar']
-        });
+  forgotpassword() {
+    this.snackBar.open('Temporary password has been sent to your email.', '', {
+      duration: 3000,
+      verticalPosition: 'top',
+      panelClass: ['success-snackbar'],
+    });
   }
 }

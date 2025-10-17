@@ -76,8 +76,8 @@ app-footer {
 }
 
 ::ng-deep mat-nav-list a.mat-mdc-list-item {
-  padding-left: 12px !important; /* Space from left margin */
-  padding-right: 12px !important; /* Space from right margin */
+  padding-left: 12px !important;
+  padding-right: 12px !important;
   color: white !important;
 
   .menu-item {

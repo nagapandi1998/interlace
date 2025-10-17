@@ -12,7 +12,7 @@ html {
       primary: mat.$azure-palette,
       tertiary: mat.$blue-palette,
     ),
-    typography: Roboto,
+    typography: Poppins,
     density: 0,
   ));
 }
@@ -36,18 +36,15 @@ body {
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: 'Poppins', sans-serif;}
 
 
-/* styles.scss */
-
-/* Remove the ::ng-deep, since this is global already */
 .success-snackbar .mdc-snackbar__surface {
-  background-color: #4caf50 !important; /* green */
+  background-color: #4caf50 !important; 
   color: white !important;
 }
 
 .error-snackbar .mdc-snackbar__surface {
-  background-color: #e5002e !important; /* red */
+  background-color: #e5002e !important; 
   color: white !important;
 }

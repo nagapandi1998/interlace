@@ -30,7 +30,7 @@
 
 .card-left img {
   max-width: 100%;
-  height: auto;
+  height: 350px;
 }
 
 .card-right {
@@ -66,7 +66,7 @@
   font-weight: 500;
 }
 
-.forgot-password a:hover{
+.forgot-password a:hover {
   color: #da40ef;
 }
 
@@ -76,7 +76,7 @@
   font-weight: bold;
   transition: background 0.3s ease;
 
-  mat-icon{
+  mat-icon {
     color: white !important;
   }
 }
@@ -84,7 +84,6 @@
 // .login-button:hover {
 //   background: linear-gradient(to right, #da40ee, #e30536);
 // }
-
 
 @media (max-width: 768px) {
   .login-container {
@@ -96,7 +95,7 @@
     max-width: 95%;
   }
 
-    .card-left img {
+  .card-left img {
     max-height: 300px;
   }
 

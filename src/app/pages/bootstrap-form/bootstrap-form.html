@@ -1,69 +1,186 @@
 <div class="form-container">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
-    <h2 class="text-center mb-4">Bootstrap Form</h2>
+  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" novalidate>
+    <h2 class="text-center mb-4">Employee Form - Bootstrap</h2>
 
-    <div class="mb-3">
-      <label for="firstName" class="form-label">First Name <span>*</span></label>
-      <input id="firstName" type="text" class="form-control" formControlName="firstName" [ngClass]="{
-          'is-invalid': form.controls['firstName'].invalid && form.controls['firstName'].touched
-        }" placeholder="Enter first name" />
-      <div class="invalid-feedback">First name is required.</div>
-    </div>
-
-    <div class="mb-3">
-      <label for="lastName" class="form-label">Last Name <span>*</span></label>
-      <input id="lastName" type="text" class="form-control" formControlName="lastName" [ngClass]="{
-          'is-invalid': form.controls['lastName'].invalid && form.controls['lastName'].touched
-        }" placeholder="Enter last name" />
-      <div class="invalid-feedback">Last name is required.</div>
-    </div>
-
-    <div class="mb-4">
-      <label for="state" class="form-label">State <span>*</span></label>
-      <select id="state" class="form-select" formControlName="state" [ngClass]="{
-          'is-invalid': form.controls['state'].invalid && form.controls['state'].touched
-        }">
-        <option value="" disabled>Select a state</option>
-        <option value="tn">Tamil Nadu</option>
-        <option value="kl">Kerala</option>
-        <option value="ka">Karnataka</option>
-      </select>
-      <div class="invalid-feedback">State is required.</div>
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label d-block">Gender <span>*</span></label>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" id="genderMale" value="male" formControlName="gender"
-          name="gender" />
-        <label class="form-check-label" for="genderMale">Male</label>
+    <div class="row g-3">
+      <!-- First Name -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <label for="firstName" class="form-label">First Name <span>*</span></label>
+        <input type="text" id="firstName" class="form-control" formControlName="firstName"
+          [ngClass]="{'is-invalid': employeeForm.get('firstName')?.invalid && employeeForm.get('firstName')?.touched}"
+          placeholder="Enter first name" />
+        <div class="invalid-feedback">First name is required.</div>
       </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" id="genderFemale" value="female" formControlName="gender"
-          name="gender" />
-        <label class="form-check-label" for="genderFemale">Female</label>
+
+      <!-- Last Name -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <label for="lastName" class="form-label">Last Name <span>*</span></label>
+        <input type="text" id="lastName" class="form-control" formControlName="lastName"
+          [ngClass]="{'is-invalid': employeeForm.get('lastName')?.invalid && employeeForm.get('lastName')?.touched}"
+          placeholder="Enter last name" />
+        <div class="invalid-feedback">Last name is required.</div>
       </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" id="genderOther" value="other" formControlName="gender"
-          name="gender" />
-        <label class="form-check-label" for="genderOther">Other</label>
+
+      <!-- Mobile -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <label for="mobile" class="form-label">Mobile <span>*</span></label>
+        <input type="text" id="mobile" class="form-control" formControlName="mobile" placeholder="Enter mobile number"
+          [ngClass]="{'is-invalid': employeeForm.get('mobile')?.invalid && employeeForm.get('mobile')?.touched}" />
+        <div class="invalid-feedback">Enter valid 10-digit mobile number.</div>
       </div>
-      <div class="invalid-feedback d-block" *ngIf="form.controls['gender'].invalid && form.controls['gender'].touched">
-        Gender is required.
+
+      <!-- Age -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <label for="age" class="form-label">Age <span>*</span></label>
+        <input type="number" id="age" class="form-control" formControlName="age"
+          [ngClass]="{'is-invalid': employeeForm.get('age')?.invalid && employeeForm.get('age')?.touched}"
+          placeholder="Enter age" />
+        <div class="invalid-feedback">Age is required.</div>
+      </div>
+
+      <!-- DOB -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <label for="dob" class="form-label">Date of Birth <span>*</span></label>
+        <input type="date" id="dob" class="form-control" formControlName="dob"
+          [ngClass]="{'is-invalid': employeeForm.get('dob')?.invalid && employeeForm.get('dob')?.touched}" />
+        <div class="invalid-feedback">Date of Birth is required.</div>
+      </div>
+
+      <!-- Department -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <label for="department" class="form-label">Department <span>*</span></label>
+        <select id="department" class="form-select" formControlName="department"
+          [ngClass]="{'is-invalid': employeeForm.get('department')?.invalid && employeeForm.get('department')?.touched}">
+          <option value="" disabled>-- Select --</option>
+          <option *ngFor="let dept of departments" [value]="dept">{{ dept }}</option>
+        </select>
+        <div class="invalid-feedback">Department is required.</div>
+      </div>
+
+      <!-- Designation -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <label for="designation" class="form-label">Designation <span>*</span></label>
+        <select id="designation" class="form-select" formControlName="designation"
+          [ngClass]="{'is-invalid': employeeForm.get('designation')?.invalid && employeeForm.get('designation')?.touched}">
+          <option value="" disabled>-- Select --</option>
+          <option *ngFor="let desig of designations" [value]="desig">{{ desig }}</option>
+        </select>
+        <div class="invalid-feedback">Designation is required.</div>
+      </div>
+
+      <!-- DOJ -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <label for="doj" class="form-label">Date of Joining <span>*</span></label>
+        <input type="date" id="doj" class="form-control" formControlName="doj"
+          [ngClass]="{'is-invalid': employeeForm.get('doj')?.invalid && employeeForm.get('doj')?.touched}" />
+        <div class="invalid-feedback">Date of Joining is required.</div>
+      </div>
+
+      <!-- Reporting Manager -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <label for="reportingManager" class="form-label">Reporting Manager <span>*</span></label>
+        <select id="reportingManager" class="form-select" formControlName="reportingManager"
+          [ngClass]="{'is-invalid': employeeForm.get('reportingManager')?.invalid && employeeForm.get('reportingManager')?.touched}">
+          <option value="" disabled>-- Select --</option>
+          <option *ngFor="let mgr of managers" [value]="mgr">{{ mgr }}</option>
+        </select>
+        <div class="invalid-feedback">Reporting Manager is required.</div>
+      </div>
+
+      <!-- Blood Group -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <label for="bloodGroup" class="form-label">Blood Group <span>*</span></label>
+        <select id="bloodGroup" class="form-select" formControlName="bloodGroup"
+          [ngClass]="{'is-invalid': employeeForm.get('bloodGroup')?.invalid && employeeForm.get('bloodGroup')?.touched}">
+          <option value="" disabled>-- Select --</option>
+          <option *ngFor="let bg of bloodGroups" [value]="bg">{{ bg }}</option>
+        </select>
+        <div class="invalid-feedback">Blood Group is required.</div>
+      </div>
+
+      <!-- Gender -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <label for="gender" class="form-label">Gender <span>*</span></label>
+        <select id="gender" class="form-select" formControlName="gender"
+          [ngClass]="{'is-invalid': employeeForm.get('gender')?.invalid && employeeForm.get('gender')?.touched}">
+          <option value="" disabled>-- Select --</option>
+          <option *ngFor="let g of ['male','female','other']" [value]="g">{{ g | titlecase }}</option>
+        </select>
+        <div class="invalid-feedback"
+          *ngIf="employeeForm.get('gender')?.invalid && employeeForm.get('gender')?.touched">
+          Gender is required.
+        </div>
+      </div>
+
+      <!-- Qualification -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <label for="qualification" class="form-label">Qualification <span>*</span></label>
+        <select id="qualification" class="form-select" formControlName="qualification"
+          [ngClass]="{'is-invalid': employeeForm.get('qualification')?.invalid && employeeForm.get('qualification')?.touched}">
+          <option value="" disabled>-- Select --</option>
+          <option *ngFor="let qual of qualifications" [value]="qual">{{ qual }}</option>
+        </select>
+        <div class="invalid-feedback">Qualification is required.</div>
+      </div>
+
+      <!-- Official Email -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <label for="officialMailId" class="form-label">Official Email <span>*</span></label>
+        <input type="email" id="officialMailId" class="form-control" formControlName="officialMailId"
+          [ngClass]="{'is-invalid': employeeForm.get('officialMailId')?.invalid && employeeForm.get('officialMailId')?.touched}"
+          placeholder="Enter official email" />
+        <div class="invalid-feedback">Valid official email is required.</div>
+      </div>
+
+      <!-- Alternate Email -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <label for="altemail" class="form-label">Alternate Email <span>*</span></label>
+        <input type="email" id="altemail" class="form-control" formControlName="altemail"
+          [ngClass]="{'is-invalid': employeeForm.get('altemail')?.invalid && employeeForm.get('altemail')?.touched}"
+          placeholder="Enter alternate email" />
+        <div class="invalid-feedback">Alternate email is required.</div>
+      </div>
+
+      <!-- Marital Status -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <label for="maritalStatus" class="form-label">Marital Status <span>*</span></label>
+        <select id="maritalStatus" class="form-select" formControlName="maritalStatus"
+          [ngClass]="{'is-invalid': employeeForm.get('maritalStatus')?.invalid && employeeForm.get('maritalStatus')?.touched}">
+          <option value="" disabled>-- Select --</option>
+          <option value="Single">Single</option>
+          <option value="Married">Married</option>
+        </select>
+        <div class="invalid-feedback"
+          *ngIf="employeeForm.get('maritalStatus')?.invalid && employeeForm.get('maritalStatus')?.touched">
+          Marital status is required.
+        </div>
+      </div>
+
+      <!-- DOR -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <label for="dor" class="form-label">Date of Relieving</label>
+        <input type="date" id="dor" class="form-control" formControlName="dor" />
+      </div>
+
+      <!-- Status -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <label for="status" class="form-label">Status <span>*</span></label>
+        <select id="status" class="form-select" formControlName="status"
+          [ngClass]="{'is-invalid': employeeForm.get('status')?.invalid && employeeForm.get('status')?.touched}">
+          <option value="" disabled>-- Select --</option>
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+        <div class="invalid-feedback"
+          *ngIf="employeeForm.get('status')?.invalid && employeeForm.get('status')?.touched">
+          Status is required.
+        </div>
       </div>
     </div>
 
-    <div class="mb-4">
-      <label for="desc" class="form-label">Description <span>*</span></label>
-      <textarea id="desc" class="form-control" formControlName="desc" rows="2" placeholder="Enter description"
-        [ngClass]="{
-          'is-invalid': form.controls['desc'].invalid && form.controls['desc'].touched
-        }"></textarea>
-      <div class="invalid-feedback">Description is required.</div>
-    </div>
-    <div class="button-row">
+    <div class="button-row mt-4">
       <button type="submit" class="btn btn-primary w-100">Submit</button>
-      <button type="button" class="btn btn-secondary w-100 back-button" (click)="goBack()">Back</button>
+      <button type="button" class="btn btn-secondary w-100" (click)="goBack()">Back</button>
     </div>
   </form>
 </div>
