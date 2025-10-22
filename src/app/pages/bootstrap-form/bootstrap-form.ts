@@ -54,7 +54,7 @@ export class BootstrapForm {
   onSubmit() {
     if (this.employeeForm.valid) {
       console.log('Form submitted:', this.employeeForm.value);
-      this.snackBar.open('Form submitted successfully!.', '', {
+      this.snackBar.open('Form submitted successfully!', '', {
         duration: 3000,
         verticalPosition: 'top',
         panelClass: ['success-snackbar'],

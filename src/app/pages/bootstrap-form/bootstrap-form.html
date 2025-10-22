@@ -24,7 +24,7 @@
       <!-- Mobile -->
       <div class="col-12 col-md-6 col-lg-4">
         <label for="mobile" class="form-label">Mobile <span>*</span></label>
-        <input type="text" id="mobile" class="form-control" formControlName="mobile" placeholder="Enter mobile number"
+        <input type="text" id="mobile" class="form-control" formControlName="mobile" placeholder="Enter mobile number" maxlength="10"
           [ngClass]="{'is-invalid': employeeForm.get('mobile')?.invalid && employeeForm.get('mobile')?.touched}" />
         <div class="invalid-feedback">Enter valid 10-digit mobile number.</div>
       </div>
