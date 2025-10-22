@@ -46,8 +46,13 @@ export class BootstrapForm {
       qualification: ['', Validators.required],
       status: ['', Validators.required],
       officialMailId: ['', [Validators.required, Validators.email]],
-      altemail: ['', Validators.required],
+      altemail: [''],
       maritalStatus: ['', Validators.required],
+      aadhar: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
+      pan: ['', [Validators.required]],
+      uan: [''],
+      emermobile: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
+      address: [''],
     });
   }
 

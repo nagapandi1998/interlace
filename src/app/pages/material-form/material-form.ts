@@ -65,6 +65,11 @@ export class MaterialForm {
       officialMailId: ['', [Validators.required, Validators.email]],
       altemail: [''],
       maritalStatus: ['', Validators.required],
+      aadhar: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
+      pan: ['', [Validators.required]],
+      uan: [''],
+      emermobile: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
+      address: [''],
     });
   }
 

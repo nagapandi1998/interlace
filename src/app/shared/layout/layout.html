@@ -1,6 +1,5 @@
 <mat-sidenav-container class="layout-container">
 
-  <!-- Sidebar -->
   <mat-sidenav #sidenav [mode]="'side'" [(opened)]="isSidebarOpen" class="sidenav">
     <mat-toolbar>
       <img src="https://js.devexpress.com/Content/Images/Frameworks/Angular.png" alt="logo Image" />
@@ -38,7 +37,6 @@
     </mat-nav-list>
   </mat-sidenav>
 
-  <!-- Main Content -->
   <mat-sidenav-content class="main-content">
     <app-header (toggleSidebar)="toggleSidebar()"></app-header>
     <div class="content-wrapper">
