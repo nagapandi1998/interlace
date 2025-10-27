@@ -95,7 +95,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Official Mail ID</mat-label>
+        <mat-label>Official Email ID</mat-label>
         <input matInput formControlName="officialMailId" />
         <mat-error *ngIf="
             employeeForm.get('officialMailId')?.touched &&
@@ -106,7 +106,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Alternate Email</mat-label>
+        <mat-label>Alternate Email ID</mat-label>
         <input matInput formControlName="altemail" />
       </mat-form-field>
 
@@ -140,11 +140,6 @@
         <mat-error *ngIf="employeeForm.get('emermobile')?.touched && employeeForm.get('emermobile')?.invalid">
           Enter a valid 10-digit Emergency Contact number
         </mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Address</mat-label>
-        <textarea matInput formControlName="address" rows="1"></textarea>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -200,12 +195,17 @@
       <mat-form-field appearance="outline">
         <mat-label>Status</mat-label>
         <mat-select formControlName="status">
-          <mat-option value="active">Active</mat-option>
-          <mat-option value="inactive">Inactive</mat-option>
+          <mat-option value="Active">Active</mat-option>
+          <mat-option value="Inactive">Inactive</mat-option>
         </mat-select>
         <mat-error *ngIf="employeeForm.get('status')?.touched && employeeForm.get('status')?.invalid">
           Status is required
         </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Address</mat-label>
+        <textarea matInput formControlName="address" rows="1"></textarea>
       </mat-form-field>
     </div>
 

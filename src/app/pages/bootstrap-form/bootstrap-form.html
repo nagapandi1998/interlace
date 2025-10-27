@@ -160,11 +160,6 @@
       </div>
 
       <div class="col-12 col-md-6 col-lg-4">
-        <label for="address" class="form-label">Address</label>
-        <textarea name="address" id="address" class="form-control" formControlName="address" rows="1" placeholder="Enter address"></textarea>
-      </div>
-
-      <div class="col-12 col-md-6 col-lg-4">
         <label for="maritalStatus" class="form-label">Marital Status <span>*</span></label>
         <select id="maritalStatus" class="form-select" formControlName="maritalStatus"
           [ngClass]="{'is-invalid': employeeForm.get('maritalStatus')?.invalid && employeeForm.get('maritalStatus')?.touched}">
@@ -195,6 +190,12 @@
           *ngIf="employeeForm.get('status')?.invalid && employeeForm.get('status')?.touched">
           Status is required.
         </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <label for="address" class="form-label">Address</label>
+        <textarea name="address" id="address" class="form-control" formControlName="address" rows="1"
+          placeholder="Enter address"></textarea>
       </div>
     </div>
 

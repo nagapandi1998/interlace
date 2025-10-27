@@ -75,12 +75,29 @@ export class MaterialForm {
 
   onSubmit() {
     if (this.employeeForm.valid) {
-      console.log('Form Submitted:', this.employeeForm.value);
+      const formData = this.employeeForm.value;
+
+      // Get existing employees from session storage
+      const existingData = JSON.parse(sessionStorage.getItem('employeeData') || '[]');
+      // Generate incremental ID
+      const newId = existingData.length > 0 ? existingData[existingData.length - 1].id + 1 : 1;
+
+      // Add ID to form data
+      const newEmployee = { id: newId, ...formData };
+
+      // Add new entry to array
+      existingData.push(newEmployee);
+      // Save to session storage
+      sessionStorage.setItem('employeeData', JSON.stringify(existingData));
+
+      console.log('Form Submitted:', formData);
       this.snackBar.open('Form submitted successfully!', '', {
         duration: 3000,
         verticalPosition: 'top',
         panelClass: ['success-snackbar'],
       });
+
+      this.router.navigate(['/home']);
     } else {
       this.employeeForm.markAllAsTouched();
       this.snackBar.open('Please fill all required fields.', '', {
