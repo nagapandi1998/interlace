@@ -51,7 +51,7 @@ export class Auth {
         setTimeout(() => {
           this.loading = false;
           this.router.navigate(['/home']);
-        }, 500);
+        }, 700);
       } else if (email !== 'admin@gmail.com') {
         setTimeout(() => {
           this.loading = false;
@@ -60,7 +60,7 @@ export class Auth {
             verticalPosition: 'top',
             panelClass: ['error-snackbar'],
           });
-        }, 500);
+        }, 700);
       } else if (password !== 'admin@123') {
         setTimeout(() => {
           this.loading = false;
@@ -69,7 +69,7 @@ export class Auth {
             verticalPosition: 'top',
             panelClass: ['error-snackbar'],
           });
-        }, 500);
+        }, 700);
       }
     } else {
       this.loading = true;
@@ -83,7 +83,7 @@ export class Auth {
           verticalPosition: 'top',
           panelClass: ['error-snackbar'],
         });
-      }, 500);
+      }, 700);
     }
   }
 
