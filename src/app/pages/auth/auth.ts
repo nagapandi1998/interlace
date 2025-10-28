@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCard } from '@angular/material/card';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-auth',
@@ -21,6 +22,7 @@ import { Router } from '@angular/router';
     MatIconModule,
     MatCard,
     MatSnackBarModule,
+    NgbCarouselModule
   ],
   templateUrl: './auth.html',
   styleUrl: './auth.scss',

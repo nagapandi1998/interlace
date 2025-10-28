@@ -28,8 +28,9 @@
 }
 
 .card-left img {
-  max-width: 100%;
-  height: 350px;
+  width: 100%;
+  // height: 350px;
+  object-fit: cover;
 }
 
 .card-right {
@@ -95,7 +96,7 @@
   }
 
   .card-left img {
-    max-height: 300px;
+    // max-height: 300px;
   }
 
   .card-left,
@@ -120,7 +121,7 @@
   }
 
   .card-left img {
-    max-height: 200px;
+    // max-height: 200px;
   }
 
   .forgot-password {
