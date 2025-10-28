@@ -1,4 +1,5 @@
 <div class="form-container">
+  <app-loader [loading]="loading"></app-loader>
   <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" novalidate>
     <h2 class="text-center mb-4">Employee Form - Bootstrap</h2>
 

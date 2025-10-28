@@ -1,4 +1,6 @@
 <div class="home-container">
+  <app-loader [loading]="loading"></app-loader>
+  
   <div class="button-container">
     <button class="mat-button" (click)="navigateTo('materialform')">Angular Material</button>
     <button (click)="navigateTo('bootstrapform')">Ng Bootstrap</button>

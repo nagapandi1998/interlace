@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { Loader } from '../../shared/loader/loader';
 
 @Component({
   selector: 'app-material-form',
@@ -30,12 +31,14 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     MatRadioModule,
     MatSnackBarModule,
     MatDatepickerModule,
+    Loader,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './material-form.html',
   styleUrl: './material-form.scss',
 })
 export class MaterialForm {
+  loading = false;
   employeeForm!: FormGroup;
   departments = ['IT', 'HR', 'Finance', 'Admin'];
   designations = ['Software Engineer', 'Human Resource', 'Tester', 'Manager'];
@@ -75,6 +78,8 @@ export class MaterialForm {
 
   onSubmit() {
     if (this.employeeForm.valid) {
+      this.loading = true;
+
       const formData = this.employeeForm.value;
 
       // Get existing employees from session storage
@@ -91,20 +96,29 @@ export class MaterialForm {
       sessionStorage.setItem('employeeData', JSON.stringify(existingData));
 
       console.log('Form Submitted:', formData);
-      this.snackBar.open('Form submitted successfully!', '', {
-        duration: 3000,
-        verticalPosition: 'top',
-        panelClass: ['success-snackbar'],
-      });
+      setTimeout(() => {
+        this.loading = false;
+        this.snackBar.open('Form submitted successfully!', '', {
+          duration: 3000,
+          verticalPosition: 'top',
+          panelClass: ['success-snackbar'],
+        });
 
-      this.router.navigate(['/home']);
+        this.router.navigate(['/home']);
+      }, 500);
     } else {
+      this.loading = true;
+
       this.employeeForm.markAllAsTouched();
-      this.snackBar.open('Please fill all required fields.', '', {
-        duration: 3000,
-        verticalPosition: 'top',
-        panelClass: ['error-snackbar'],
-      });
+
+      setTimeout(() => {
+        this.loading = false;
+        this.snackBar.open('Please fill all required fields.', '', {
+          duration: 3000,
+          verticalPosition: 'top',
+          panelClass: ['error-snackbar'],
+        });
+      }, 200);
     }
   }
 

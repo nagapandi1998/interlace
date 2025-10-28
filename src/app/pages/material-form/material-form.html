@@ -1,4 +1,6 @@
 <div class="form-container">
+  <app-loader [loading]="loading"></app-loader>
+  
   <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
     <h2>Employee Form - Material</h2>
 

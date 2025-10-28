@@ -9,15 +9,17 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Loader } from '../../shared/loader/loader';
 
 @Component({
   selector: 'app-bootstrap-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatSnackBarModule],
+  imports: [CommonModule, ReactiveFormsModule, MatSnackBarModule, Loader],
   templateUrl: './bootstrap-form.html',
   styleUrl: './bootstrap-form.scss',
 })
 export class BootstrapForm {
+  loading = false;
   employeeForm!: FormGroup;
   departments = ['IT', 'HR', 'Finance', 'Admin'];
   designations = ['Software Engineer', 'Human Resource', 'Tester', 'Manager'];
@@ -58,6 +60,7 @@ export class BootstrapForm {
 
   onSubmit() {
     if (this.employeeForm.valid) {
+      this.loading = true;
       const formData = this.employeeForm.value;
 
       // Get existing employees from session storage
@@ -75,20 +78,29 @@ export class BootstrapForm {
 
       console.log('Form Submitted:', formData);
 
-      this.snackBar.open('Form submitted successfully!', '', {
-        duration: 3000,
-        verticalPosition: 'top',
-        panelClass: ['success-snackbar'],
-      });
+      setTimeout(() => {
+        this.loading = false;
 
-      this.router.navigate(['/home']);
+        this.snackBar.open('Form submitted successfully!', '', {
+          duration: 3000,
+          verticalPosition: 'top',
+          panelClass: ['success-snackbar'],
+        });
+
+        this.router.navigate(['/home']);
+      }, 500);
     } else {
+      this.loading = true;
       this.employeeForm.markAllAsTouched();
-      this.snackBar.open('Enter mandatory details', '', {
-        duration: 3000,
-        verticalPosition: 'top',
-        panelClass: ['error-snackbar'],
-      });
+
+      setTimeout(() => {
+        this.loading = false;
+        this.snackBar.open('Enter mandatory details', '', {
+          duration: 3000,
+          verticalPosition: 'top',
+          panelClass: ['error-snackbar'],
+        });
+      }, 200);
     }
   }
 

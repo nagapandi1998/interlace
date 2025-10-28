@@ -8,6 +8,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableDataSource } from '@angular/material/table';
+import { Loader } from '../../shared/loader/loader';
 
 @Component({
   selector: 'app-home',
@@ -21,12 +22,14 @@ import { MatTableDataSource } from '@angular/material/table';
     MatSortModule,
     MatButtonModule,
     MatCardModule,
+    Loader,
   ],
   templateUrl: './home.html',
   styleUrl: './home.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class Home implements AfterViewInit {
+  loading = false;
   displayedColumns: string[] = [
     'id',
     'firstName',
@@ -45,6 +48,7 @@ export class Home implements AfterViewInit {
   }
 
   setEmpDtaa() {
+    this.loading = true;
     const storedData = sessionStorage.getItem('employeeData');
     if (!storedData) {
       const defaultEmployees = [
@@ -101,6 +105,10 @@ export class Home implements AfterViewInit {
       ];
       sessionStorage.setItem('employeeData', JSON.stringify(defaultEmployees));
     }
+
+    setTimeout(() => {
+      this.loading = false;
+    }, 500);
   }
 
   ngAfterViewInit() {
@@ -109,10 +117,16 @@ export class Home implements AfterViewInit {
   }
 
   loadEmployeeData() {
+    this.loading = true;
+
     const storedData = sessionStorage.getItem('employeeData');
     if (storedData) {
       this.dataSource.data = JSON.parse(storedData);
     }
+
+    setTimeout(() => {
+      this.loading = false;
+    }, 500);
   }
 
   navigateTo(path: string) {

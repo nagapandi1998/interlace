@@ -9,6 +9,7 @@ import { MatCard } from '@angular/material/card';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { Loader } from '../../shared/loader/loader';
 
 @Component({
   selector: 'app-auth',
@@ -22,7 +23,8 @@ import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
     MatIconModule,
     MatCard,
     MatSnackBarModule,
-    NgbCarouselModule
+    NgbCarouselModule,
+    Loader,
   ],
   templateUrl: './auth.html',
   styleUrl: './auth.scss',
@@ -30,6 +32,7 @@ import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 export class Auth {
   hide = true;
   loginForm: FormGroup;
+  loading = false;
 
   constructor(private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router) {
     this.loginForm = this.fb.group({
@@ -40,30 +43,47 @@ export class Auth {
 
   onSubmit() {
     if (this.loginForm.valid) {
+      this.loading = true;
+
       const { email, password } = this.loginForm.value;
       console.log('Logging in with:', email, password);
       if (email == 'admin@gmail.com' && password == 'admin@123') {
-        this.router.navigate(['/home']);
+        setTimeout(() => {
+          this.loading = false;
+          this.router.navigate(['/home']);
+        }, 500);
       } else if (email !== 'admin@gmail.com') {
-        this.snackBar.open('Username is invalid', '', {
-          duration: 3000,
-          verticalPosition: 'top',
-          panelClass: ['error-snackbar'],
-        });
+        setTimeout(() => {
+          this.loading = false;
+          this.snackBar.open('Username is invalid', '', {
+            duration: 3000,
+            verticalPosition: 'top',
+            panelClass: ['error-snackbar'],
+          });
+        }, 500);
       } else if (password !== 'admin@123') {
-        this.snackBar.open('password is invalid', '', {
-          duration: 3000,
-          verticalPosition: 'top',
-          panelClass: ['error-snackbar'],
-        });
+        setTimeout(() => {
+          this.loading = false;
+          this.snackBar.open('password is invalid', '', {
+            duration: 3000,
+            verticalPosition: 'top',
+            panelClass: ['error-snackbar'],
+          });
+        }, 500);
       }
     } else {
+      this.loading = true;
       this.loginForm.markAllAsTouched();
-      this.snackBar.open('Enter mandatory details', '', {
-        duration: 3000,
-        verticalPosition: 'top',
-        panelClass: ['error-snackbar'],
-      });
+
+      setTimeout(() => {
+        this.loading = false;
+
+        this.snackBar.open('Enter mandatory details', '', {
+          duration: 3000,
+          verticalPosition: 'top',
+          panelClass: ['error-snackbar'],
+        });
+      }, 500);
     }
   }
 
