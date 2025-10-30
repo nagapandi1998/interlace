@@ -6,16 +6,26 @@
   <span class="spacer"></span>
 
   <div class="settings-dropdown-wrapper" (mouseenter)="showDropdown = true" (mouseleave)="showDropdown = false">
-    <button mat-icon-button aria-label="Settings">
+    <!-- <button mat-icon-button aria-label="Settings">
       <mat-icon>person</mat-icon>
-    </button>
+    </button> -->
+
+    <button mat-icon-button aria-label="User Profile" class="avatar-button">
+  <img src="assets/avatar.jpg" alt="User Avatar" class="user-avatar" />
+</button>
+
 
     <div class="dropdown-panel" *ngIf="showDropdown">
-      <button mat-menu-item>
+      <button mat-menu-item (click)="close()">
+        <mat-icon>person</mat-icon>
+        <span>Profile</span>
+      </button>
+
+      <button mat-menu-item (click)="close()">
         <mat-icon>settings</mat-icon>
         <span>Setting</span>
       </button>
-
+      
       <button mat-menu-item (click)="logout()">
         <mat-icon>logout</mat-icon>
         <span>Logout</span>

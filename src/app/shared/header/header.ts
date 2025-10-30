@@ -18,6 +18,10 @@ export class Header {
 
   constructor(private router: Router) {}
 
+  close() {
+    this.showDropdown = false;
+  }
+
   logout() {
     this.router.navigate(['/auth']);
   }
