@@ -1,13 +1,17 @@
 <mat-sidenav-container class="layout-container">
 
-  <mat-sidenav #sidenav [mode]="'side'" [(opened)]="isSidebarOpen" class="sidenav">
+  <mat-sidenav #sidenav 
+  [mode]="isMobile ? 'over' : 'side'"
+  [(opened)]="isSidebarOpen" 
+  [ngClass]="{ 'collapsed': !isSidebarOpen }"
+  class="sidenav">
     <mat-toolbar>
       <a routerLink="/home"> 
         <img src="assets/logo.png" alt="logo Image" />
       </a>
      
     </mat-toolbar>
-    <div class="user-info">
+    <div class="user-info" *ngIf="isSidebarOpen">
       <img src="assets/avatar.jpg" alt="user img">
       <h6>Nagapandi G</h6>
       <p>Admin</p>
@@ -17,7 +21,7 @@
       <a mat-list-item routerLink="/home" routerLinkActive="active">
         <span class="menu-item">
           <mat-icon class="left-icon">home</mat-icon>
-          <span class="label">Home</span>
+          <span class="label" *ngIf="isSidebarOpen">Home</span>
           <mat-icon class="right-icon">chevron_right</mat-icon>
         </span>
       </a>
@@ -25,7 +29,7 @@
       <a mat-list-item routerLink="/materialform" routerLinkActive="active">
         <span class="menu-item">
           <mat-icon class="left-icon">layers</mat-icon>
-          <span class="label">Angular Material</span>
+          <span class="label" *ngIf="isSidebarOpen">Angular Material</span>
           <mat-icon class="right-icon">chevron_right</mat-icon>
         </span>
       </a>
@@ -33,7 +37,7 @@
       <a mat-list-item routerLink="/bootstrapform" routerLinkActive="active">
         <span class="menu-item">
           <mat-icon class="left-icon">dashboard</mat-icon>
-          <span class="label">Ng Bootstrap</span>
+          <span class="label" *ngIf="isSidebarOpen">Ng Bootstrap</span>
           <mat-icon class="right-icon">chevron_right</mat-icon>
         </span>
       </a>

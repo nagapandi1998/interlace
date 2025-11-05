@@ -1,6 +1,5 @@
 .layout-container {
   height: 100vh;
-
   width: 100vw; 
   overflow: hidden;
     display: flex;
@@ -12,6 +11,11 @@
 
    flex-shrink: 0;
     transition: width 0.3s ease;
+
+    
+  &.collapsed {
+    width: 60px;
+  }
 }
 
 mat-toolbar {

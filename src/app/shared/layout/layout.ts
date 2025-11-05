@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -30,8 +30,19 @@ import { Footer } from '../footer/footer';
 })
 export class Layout {
   isSidebarOpen = true;
+  isMobile = window.innerWidth <= 768;
 
   toggleSidebar(): void {
     this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.isMobile = (event.target as Window).innerWidth <= 768;
+    if (this.isMobile) {
+      this.isSidebarOpen = false;
+    } else {
+      this.isSidebarOpen = true;
+    }
   }
 }
