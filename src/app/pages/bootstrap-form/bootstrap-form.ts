@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { Loader } from '../../shared/loader/loader';
+import { Loader } from '../../shared/components/loader/loader';
 
 @Component({
   selector: 'app-bootstrap-form',

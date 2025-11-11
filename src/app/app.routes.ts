@@ -9,8 +9,7 @@ export const routes: Routes = [
   },
   {
     path: 'auth',
-    loadComponent: () =>
-      import('./pages/auth/auth').then((m) => m.Auth),
+    loadComponent: () => import('./pages/auth/auth').then((m) => m.Auth),
   },
   {
     path: '',
@@ -18,8 +17,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'home',
-        loadComponent: () =>
-          import('./pages/home/home').then((m) => m.Home),
+        loadComponent: () => import('./pages/home/home').then((m) => m.Home),
       },
       {
         path: 'materialform',
@@ -30,6 +28,11 @@ export const routes: Routes = [
         path: 'bootstrapform',
         loadComponent: () =>
           import('./pages/bootstrap-form/bootstrap-form').then((m) => m.BootstrapForm),
+      },
+      {
+        path: 'casecreation',
+        loadComponent: () =>
+          import('./pages//case/case').then((m) => m.Case),
       },
     ],
   },

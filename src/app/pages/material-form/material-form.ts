@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import {
   ReactiveFormsModule,
   FormGroup,
-  FormControl,
   Validators,
   FormBuilder,
 } from '@angular/forms';
@@ -15,8 +14,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { provideNativeDateAdapter } from '@angular/material/core';
-import { Loader } from '../../shared/loader/loader';
+import { provideNativeDateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { Loader } from '../../shared/components/loader/loader';
 
 @Component({
   selector: 'app-material-form',
@@ -33,7 +32,7 @@ import { Loader } from '../../shared/loader/loader';
     MatDatepickerModule,
     Loader,
   ],
-  providers: [provideNativeDateAdapter()],
+  providers: [provideNativeDateAdapter(), { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
   templateUrl: './material-form.html',
   styleUrl: './material-form.scss',
 })

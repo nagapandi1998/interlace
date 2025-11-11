@@ -1,0 +1,47 @@
+<app-loader [loading]="loading"></app-loader>
+<h2 mat-dialog-title class="dialog-header">
+  <span>Board Standing Counsel Details</span>
+  <button mat-icon-button (click)="close()" class="close-btn">
+    <mat-icon>close</mat-icon>
+  </button>
+</h2>
+
+<mat-dialog-content [formGroup]="boardStandingCounselForm" class="dialog-content">
+  <div class="form-column">
+
+    <!-- Board Standing Counsel Type -->
+    <mat-form-field appearance="outline">
+      <mat-label>Board Standing Counsel Type</mat-label>
+      <mat-select formControlName="boardstandingcounseltype">
+        <mat-option value=""> Select </mat-option>
+        <mat-option *ngFor="let o of counselTypes" [value]="o">{{ o }}</mat-option>
+      </mat-select>
+      <mat-error
+        *ngIf="boardStandingCounselForm.get('boardstandingcounseltype')?.touched && boardStandingCounselForm.get('boardstandingcounseltype')?.invalid">
+        Board Standing Counsel Type is required
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Board Standing Counsel Name -->
+    <mat-form-field appearance="outline">
+      <mat-label>Board Standing Counsel Name</mat-label>
+      <mat-select formControlName="boardstandingcounselname">
+        <mat-option value=""> Select </mat-option>
+        <mat-option *ngFor="let o of counselNames" [value]="o">{{ o }}</mat-option>
+      </mat-select>
+      <mat-error
+        *ngIf="boardStandingCounselForm.get('boardstandingcounselname')?.touched && boardStandingCounselForm.get('boardstandingcounselname')?.invalid">
+        Board Standing Counsel Name is required
+      </mat-error>
+    </mat-form-field>
+
+
+
+  </div>
+</mat-dialog-content>
+
+
+<mat-dialog-actions class="dialog-actions">
+  <button mat-stroked-button class="back-btn" color="warn" (click)="close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="save()">Save</button>
+</mat-dialog-actions>

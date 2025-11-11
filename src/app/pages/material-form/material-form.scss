@@ -26,6 +26,10 @@ h2 {
     grid-template-columns: repeat(3, 1fr);
   }
 
+    @media (min-width: 1440px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
 }
 
 mat-form-field {
@@ -43,6 +47,7 @@ mat-form-field {
     padding: 12px;
     font-weight: 500;
     font-size: 16px;
+      border-radius: 5px;
     color: white;
     background-color: #ec1562;
 

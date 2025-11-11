@@ -1,0 +1,76 @@
+  <app-loader [loading]="loading"></app-loader>
+<h2 mat-dialog-title class="dialog-header">
+  <span>Location Details</span>
+  <button mat-icon-button (click)="close()" class="close-btn">
+    <mat-icon>close</mat-icon>
+  </button>
+</h2>
+
+<mat-dialog-content [formGroup]="locationForm" class="dialog-content">
+  <div class="form-column">
+    <mat-form-field appearance="outline">
+      <mat-label>Region Name</mat-label>
+      <mat-select formControlName="regionName">
+        <mat-option value=""> Select </mat-option>
+        <mat-option *ngFor="let r of regions" [value]="r">{{ r }}</mat-option>
+      </mat-select>
+             <mat-error
+          *ngIf="locationForm.get('regionName')?.touched && locationForm.get('regionName')?.invalid">
+          Region Name is required
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Office Type Name</mat-label>
+      <mat-select formControlName="officeTypeName">
+        <mat-option value=""> Select </mat-option>
+        <mat-option *ngFor="let o of officeTypes" [value]="o">{{ o }}</mat-option>
+      </mat-select>
+      <mat-error
+          *ngIf="locationForm.get('officeTypeName')?.touched && locationForm.get('officeTypeName')?.invalid">
+          Office Type Name is required
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Area/Dept Name</mat-label>
+      <mat-select formControlName="areaDeptName">
+        <mat-option value=""> Select </mat-option>
+        <mat-option *ngFor="let a of areas" [value]="a">{{ a }}</mat-option>
+      </mat-select>
+      <mat-error
+          *ngIf="locationForm.get('areaDeptName')?.touched && locationForm.get('areaDeptName')?.invalid">
+          Area/Dept Name is required
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Sub Office Type Name</mat-label>
+      <mat-select formControlName="subOfficeTypeName">
+        <mat-option value=""> Select </mat-option>
+        <mat-option *ngFor="let s of subOffices" [value]="s">{{ s }}</mat-option>
+      </mat-select>
+      <mat-error
+          *ngIf="locationForm.get('subOfficeTypeName')?.touched && locationForm.get('subOfficeTypeName')?.invalid">
+          Sub Office Type Name is required
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Depot/Location</mat-label>
+      <mat-select formControlName="depotLocation">
+        <mat-option value=""> Select </mat-option>
+        <mat-option *ngFor="let d of depots" [value]="d">{{ d }}</mat-option>
+      </mat-select>
+      <mat-error
+          *ngIf="locationForm.get('depotLocation')?.touched && locationForm.get('depotLocation')?.invalid">
+          Depot/Location is required
+        </mat-error>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions  class="dialog-actions">
+  <button mat-stroked-button class="back-btn" color="warn" (click)="close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="save()">Save</button>
+</mat-dialog-actions>

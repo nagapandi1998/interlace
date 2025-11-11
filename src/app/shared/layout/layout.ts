@@ -7,8 +7,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
-import { Header } from '../header/header';
-import { Footer } from '../footer/footer';
+import { Header } from '../components/header/header';
+import { Footer } from '../components/footer/footer';
 
 @Component({
   selector: 'app-layout',

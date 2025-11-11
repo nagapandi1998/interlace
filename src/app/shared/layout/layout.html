@@ -1,18 +1,15 @@
 <mat-sidenav-container class="layout-container">
 
-  <mat-sidenav #sidenav 
-  [mode]="isMobile ? 'over' : 'side'"
-  [(opened)]="isSidebarOpen" 
-  [ngClass]="{ 'collapsed': !isSidebarOpen }"
-  class="sidenav">
+  <mat-sidenav #sidenav [mode]="isMobile ? 'over' : 'side'" [(opened)]="isSidebarOpen"
+    [ngClass]="{ 'collapsed': !isSidebarOpen }" class="sidenav">
     <mat-toolbar>
-      <a routerLink="/home"> 
-        <img src="assets/logo.png" alt="logo Image" />
+      <a routerLink="/home">
+        <img src="assets/images/logo.png" alt="logo Image" />
       </a>
-     
+
     </mat-toolbar>
     <div class="user-info" *ngIf="isSidebarOpen">
-      <img src="assets/avatar.jpg" alt="user img">
+      <img src="assets/images/avatar.jpg" alt="user img">
       <h6>Nagapandi G</h6>
       <p>Admin</p>
     </div>
@@ -38,6 +35,14 @@
         <span class="menu-item">
           <mat-icon class="left-icon">dashboard</mat-icon>
           <span class="label" *ngIf="isSidebarOpen">Ng Bootstrap</span>
+          <mat-icon class="right-icon">chevron_right</mat-icon>
+        </span>
+      </a>
+
+      <a mat-list-item routerLink="/casecreation" routerLinkActive="active">
+        <span class="menu-item">
+          <mat-icon class="left-icon">insert_drive_file</mat-icon>
+          <span class="label" *ngIf="isSidebarOpen">Case Creation</span>
           <mat-icon class="right-icon">chevron_right</mat-icon>
         </span>
       </a>

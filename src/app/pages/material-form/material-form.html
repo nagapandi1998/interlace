@@ -146,7 +146,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Date of Birth</mat-label>
-        <input matInput [matDatepicker]="dobPicker" formControlName="dob" />
+        <input matInput [matDatepicker]="dobPicker" formControlName="dob" (click)="dobPicker.open()" style="cursor: pointer;"/>
         <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
         <mat-datepicker #dobPicker></mat-datepicker>
         <mat-error *ngIf="employeeForm.get('dob')?.touched && employeeForm.get('dob')?.invalid">
@@ -156,7 +156,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Date of Joining</mat-label>
-        <input matInput [matDatepicker]="dojPicker" formControlName="doj" />
+        <input matInput [matDatepicker]="dojPicker" formControlName="doj" (click)="dojPicker.open()" style="cursor: pointer;"/>
         <mat-datepicker-toggle matSuffix [for]="dojPicker"></mat-datepicker-toggle>
         <mat-datepicker #dojPicker></mat-datepicker>
         <mat-error *ngIf="employeeForm.get('doj')?.touched && employeeForm.get('doj')?.invalid">
@@ -189,7 +189,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Date of Relieving </mat-label>
-        <input matInput [matDatepicker]="dorPicker" formControlName="dor" />
+        <input matInput [matDatepicker]="dorPicker" formControlName="dor" (click)="dorPicker.open()" style="cursor: pointer;"/>
         <mat-datepicker-toggle matSuffix [for]="dorPicker"></mat-datepicker-toggle>
         <mat-datepicker #dorPicker></mat-datepicker>
       </mat-form-field>

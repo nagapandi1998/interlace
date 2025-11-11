@@ -65,9 +65,9 @@ body {
 
 /* Header cells */
 .mat-mdc-header-cell {
-  background-color: #ec1562 !important; /* Blue header */
+  background-color: #ec1562 !important;
   color: white !important;
-  font-weight: bold !important;
+  // font-weight: bold !important;
   text-align: left !important;
   padding: 12px 16px;
   border-bottom: 2px solid #ccc !important;
@@ -76,7 +76,7 @@ body {
 /* Regular cells */
 .mat-mdc-cell {
   padding: 12px 16px;
-  border-bottom: 1px solid #eee !important;
+  border-bottom: 1px solid #ccc !important;
   // border-top: 1px solid #eee !important;
 }
 
@@ -87,7 +87,7 @@ body {
 
 /* Alternating row colors */
 .mat-mdc-row:nth-child(even) {
-  background-color: #f0f0f0  !important;
+  background-color: #f0f0f0 !important;
 }
 
 /* Optional: Selected row styling */
@@ -100,3 +100,13 @@ body {
   font-weight: bold;
   background-color: #eeeeee !important;
 }
+
+.mdc-data-table__cell,
+.mdc-data-table__header-cell {
+  padding: 0 14px !important;
+}
+
+// .mat-mdc-radio-button .mdc-radio__background {
+//   width: 12px !important;
+//   height: 12px !important;
+// }

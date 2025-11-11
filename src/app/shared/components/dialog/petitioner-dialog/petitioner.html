@@ -1,0 +1,38 @@
+<app-loader [loading]="loading"></app-loader>
+<h2 mat-dialog-title class="dialog-header">
+  <span>Petitioner Details</span>
+  <button mat-icon-button (click)="close()" class="close-btn">
+    <mat-icon>close</mat-icon>
+  </button>
+</h2>
+
+<mat-dialog-content [formGroup]="petitionerForm" class="dialog-content">
+  <div class="form-column">
+
+    <!-- Petitioner Name -->
+    <mat-form-field appearance="outline">
+      <mat-label>Petitioner Name </mat-label>
+      <input matInput formControlName="petitionerName" placeholder="Enter Petitioner Name" />
+      <mat-error *ngIf="petitionerForm.get('petitionerName')?.touched && petitionerForm.get('petitionerName')?.invalid">
+        Petitioner Name is required
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Petitioner Address -->
+    <mat-form-field appearance="outline">
+      <mat-label>Petitioner Address </mat-label>
+      <textarea matInput rows="2" formControlName="petitioneraddress" placeholder="Enter Petitioner Address"></textarea>
+      <mat-error
+        *ngIf="petitionerForm.get('petitioneraddress')?.touched && petitionerForm.get('petitioneraddress')?.invalid">
+        Enter Petitioner Address
+      </mat-error>
+    </mat-form-field>
+
+  </div>
+</mat-dialog-content>
+
+
+<mat-dialog-actions class="dialog-actions">
+  <button mat-stroked-button class="back-btn" color="warn" (click)="close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="save()">Save</button>
+</mat-dialog-actions>

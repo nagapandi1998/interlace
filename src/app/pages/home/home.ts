@@ -8,7 +8,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableDataSource } from '@angular/material/table';
-import { Loader } from '../../shared/loader/loader';
+import { Loader } from '../../shared/components/loader/loader';
 
 @Component({
   selector: 'app-home',
