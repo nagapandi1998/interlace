@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -20,7 +20,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { LocationDialog } from '../../shared/components/dialog/location-dialog/location';
 import { PetitionerDialog } from '../../shared/components/dialog/petitioner-dialog/petitioner';
-import { BoardStandingCounselDialog } from '../../shared/components/dialog/board-standing-counsel-dialog/board-standing-counsel-dialog';  
+import { BoardStandingCounselDialog } from '../../shared/components/dialog/board-standing-counsel-dialog/board-standing-counsel-dialog';
+import { RespondentDialog } from '../../shared/components/dialog/respondent-dialog/respondent-dialog';
+import { DocumentDialog } from '../../shared/components/dialog/document-dialog/document-dialog';
 
 export const MY_DATE_FORMATS = {
   parse: { dateInput: 'DD/MM/YYYY' },
@@ -59,6 +61,7 @@ export const MY_DATE_FORMATS = {
   styleUrl: './case.scss',
 })
 export class Case {
+  @ViewChild('confirmDialog') confirmDialog!: TemplateRef<any>;
   formSubmitted = false;
   loading = false;
   casecreationForm!: FormGroup;
@@ -91,7 +94,27 @@ export class Case {
   petitionerdisplayedColumns: string[] = ['petitionerName', 'petitioneraddress', 'actions'];
 
   boardStandingCounselData: any[] = [];
-  boardStandingCounseldisplayedColumns: string[] = ['boardstandingcounseltype', 'boardstandingcounselname', 'actions'];
+  boardStandingCounseldisplayedColumns: string[] = [
+    'boardstandingcounseltype',
+    'boardstandingcounselname',
+    'actions',
+  ];
+
+  respondentData: any[] = [];
+  respondentdisplayedColumns: string[] = [
+    'respondenttype',
+    'regionname',
+    'officetypename',
+    'areadeptname',
+    'designation',
+    'role',
+    'respondentname',
+    'details',
+    'actions',
+  ];
+
+  documentData: any[] = [];
+  documentdisplayedColumns: string[] = ['documenttype', 'attachments', 'documentdate', 'actions'];
 
   constructor(
     private fb: FormBuilder,
@@ -163,11 +186,18 @@ export class Case {
   }
 
   deleteLocation(index: number) {
-    const confirmed = confirm('Are you sure you want to delete this location?');
-    if (confirmed) {
-      this.locationData.splice(index, 1);
-      this.locationData = [...this.locationData];
-    }
+    const dialogRef = this.dialog.open(this.confirmDialog, {
+      width: '300px',
+      data: { message: 'Are you sure you want to delete this item?' },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      console.log('Dialog result:', confirmed);
+      if (confirmed === true) {
+        this.locationData.splice(index, 1);
+        this.locationData = [...this.locationData];
+      }
+    });
   }
 
   openPetitionerDialog(data?: any, index?: number) {
@@ -200,11 +230,17 @@ export class Case {
   }
 
   deletePetitioner(index: number) {
-    const confirmed = confirm('Are you sure you want to delete this Petitioner?');
-    if (confirmed) {
-      this.petitionerData.splice(index, 1);
-      this.petitionerData = [...this.petitionerData];
-    }
+    const dialogRef = this.dialog.open(this.confirmDialog, {
+      width: '300px',
+      data: { message: 'Are you sure you want to delete this item?' },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed === true) {
+        this.petitionerData.splice(index, 1);
+        this.petitionerData = [...this.petitionerData];
+      }
+    });
   }
 
   openBoardStandingCounselDialog(data?: any, index?: number) {
@@ -237,11 +273,98 @@ export class Case {
   }
 
   deleteBoardStandingCounsel(index: number) {
-    const confirmed = confirm('Are you sure you want to delete this Board Standing Counsel?');
-    if (confirmed) {
-      this.boardStandingCounselData.splice(index, 1);
-      this.boardStandingCounselData = [...this.boardStandingCounselData];
+    const dialogRef = this.dialog.open(this.confirmDialog, {
+      width: '300px',
+      data: { message: 'Are you sure you want to delete this item?' },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed === true) {
+        this.boardStandingCounselData.splice(index, 1);
+        this.boardStandingCounselData = [...this.boardStandingCounselData];
+      }
+    });
+  }
+
+  openRespondentDialog(data?: any, index?: number) {
+    const dialogRef = this.dialog.open(RespondentDialog, {
+      width: '400px',
+      data: data || {},
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('Board data:', result);
+        if (index != null) this.respondentData[index] = result;
+        else this.respondentData.push(result);
+        this.respondentData = [...this.respondentData];
+      }
+    });
+  }
+
+  editRespondent(data: any, index: number) {
+    const dialogRef = this.dialog.open(RespondentDialog, {
+      width: '400px',
+      data: data,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.respondentData[index] = result;
+        this.respondentData = [...this.respondentData];
+      }
+    });
+  }
+
+  deleteRespondent(index: number) {
+    const dialogRef = this.dialog.open(this.confirmDialog, {
+      width: '300px',
+      data: { message: 'Are you sure you want to delete this item?' },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed == true) {
+        this.respondentData.splice(index, 1);
+        this.respondentData = [...this.respondentData];
+      }
+    });
+  }
+
+  openDocumentDialog(data?: any, index?: number) {
+    const dialogRef = this.dialog.open(DocumentDialog, {
+      width: '400px',
+      data: data || {},
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('Board data:', result);
+        if (index != null) this.documentData[index] = result;
+        else this.documentData.push(result);
+        this.documentData = [...this.documentData];
+      }
+    });
+  }
+
+  onFileSelected(event: any, index: number) {
+    const file: File = event.target.files[0];
+    if (file) {
+      // Store the file in your documentData array
+      this.documentData[index].file = file;
+      this.documentData[index].fileName = file.name;
     }
+  }
+
+  deleteDocument(index: number) {
+    const dialogRef = this.dialog.open(this.confirmDialog, {
+      width: '300px',
+      data: { message: 'Are you sure you want to delete this item?' },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed === true) {
+        this.documentData.splice(index, 1);
+        this.documentData = [...this.documentData];
+      }
+    });
   }
 
   onSubmit() {
@@ -260,16 +383,12 @@ export class Case {
         this.router.navigate(['/home']);
       }, 500);
     } else {
-      this.loading = true;
       this.casecreationForm.markAllAsTouched();
-      setTimeout(() => {
-        this.loading = false;
-        this.snackBar.open('Please fill all required fields.', '', {
-          duration: 3000,
-          verticalPosition: 'top',
-          panelClass: ['error-snackbar'],
-        });
-      }, 200);
+      this.snackBar.open('Please fill all required fields.', '', {
+        duration: 3000,
+        verticalPosition: 'top',
+        panelClass: ['error-snackbar'],
+      });
     }
   }
 

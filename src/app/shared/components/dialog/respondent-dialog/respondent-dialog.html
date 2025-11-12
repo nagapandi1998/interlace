@@ -1,1 +1,163 @@
-<p>respondent-dialog works!</p>
+<app-loader [loading]="loading"></app-loader>
+<h2 mat-dialog-title class="dialog-header">
+  <span>Respondent Details</span>
+  <button mat-icon-button (click)="close()" class="close-btn">
+    <mat-icon>close</mat-icon>
+  </button>
+</h2>
+
+<mat-dialog-content [formGroup]="respondentForm" class="dialog-content">
+  <div class="form-column">
+
+    <!-- Respondent Type -->
+    <mat-form-field appearance="outline">
+      <mat-label>Respondent Type</mat-label>
+      <mat-select formControlName="respondenttype">
+        <mat-option value=""> Select </mat-option>
+        <mat-option *ngFor="let rtype of respondentTypes" [value]="rtype">{{ rtype }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="respondentForm.get('respondenttype')?.touched && respondentForm.get('respondenttype')?.invalid">
+        Respondent Type is required
+      </mat-error>
+    </mat-form-field>
+
+    <ng-container *ngIf="respondentForm.get('respondenttype')?.value !== 'Others'">
+
+      <!-- Region Name -->
+      <mat-form-field appearance="outline">
+        <mat-label>Region Name</mat-label>
+        <mat-select formControlName="regionname">
+          <mat-option value=""> Select </mat-option>
+          <mat-option *ngFor="let rname of regionNmaes" [value]="rname">{{ rname }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="respondentForm.get('regionname')?.touched && respondentForm.get('regionname')?.invalid">
+          Region Name is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Office Type Name -->
+      <mat-form-field appearance="outline">
+        <mat-label>Office Type Name</mat-label>
+        <mat-select formControlName="officetypename">
+          <mat-option value=""> Select </mat-option>
+          <mat-option *ngFor="let offtype of officeTypeNames" [value]="offtype">{{ offtype }}</mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="respondentForm.get('officetypename')?.touched && respondentForm.get('officetypename')?.invalid">
+          Office Type Name is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Area/Dept Name -->
+      <mat-form-field appearance="outline">
+        <mat-label>Area/Dept Name</mat-label>
+        <mat-select formControlName="areadeptname">
+          <mat-option value=""> Select </mat-option>
+          <mat-option *ngFor="let areadept of areadeptnames" [value]="areadept">{{ areadept }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="respondentForm.get('areadeptname')?.touched && respondentForm.get('areadeptname')?.invalid">
+          Area/Dept Name is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Sub Office Type Name -->
+      <mat-form-field appearance="outline">
+        <mat-label>Sub Office Type Name</mat-label>
+        <mat-select formControlName="subofftypename">
+          <mat-option value=""> Select </mat-option>
+          <mat-option *ngFor="let suboff of subofftypeNames" [value]="suboff">{{ suboff }}</mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="respondentForm.get('subofftypename')?.touched && respondentForm.get('subofftypename')?.invalid">
+          Sub Office Type Name is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Depot/Location -->
+      <mat-form-field appearance="outline">
+        <mat-label>Depot/Location</mat-label>
+        <mat-select formControlName="depotlocation">
+          <mat-option value=""> Select </mat-option>
+          <mat-option *ngFor="let dept of depatlocations" [value]="dept">{{ dept }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="respondentForm.get('depotlocation')?.touched && respondentForm.get('depotlocation')?.invalid">
+          Depot/Location is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Employee Category -->
+      <mat-form-field appearance="outline">
+        <mat-label>Employee Category</mat-label>
+        <mat-select formControlName="employeecategory">
+          <mat-option value=""> Select </mat-option>
+          <mat-option *ngFor="let emp of employeecategories" [value]="emp">{{ emp }}</mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="respondentForm.get('employeecategory')?.touched && respondentForm.get('employeecategory')?.invalid">
+          Employee Category is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Category Type -->
+      <mat-form-field appearance="outline">
+        <mat-label>Category Type</mat-label>
+        <mat-select formControlName="categorytype">
+          <mat-option value=""> Select </mat-option>
+          <mat-option *ngFor="let category of categorytypes" [value]="category">{{ category }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="respondentForm.get('categorytype')?.touched && respondentForm.get('categorytype')?.invalid">
+          Category Type is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Designation -->
+      <mat-form-field appearance="outline">
+        <mat-label>Designation</mat-label>
+        <mat-select formControlName="designation">
+          <mat-option value=""> Select </mat-option>
+          <mat-option *ngFor="let desig of designations" [value]="desig">{{ desig }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="respondentForm.get('designation')?.touched && respondentForm.get('designation')?.invalid">
+          Designation is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Role -->
+      <mat-form-field appearance="outline">
+        <mat-label>Role</mat-label>
+        <mat-select formControlName="role">
+          <mat-option value=""> Select </mat-option>
+          <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ng-container>
+
+    <!-- Show these when Respondent Type = 'Others' -->
+    <ng-container *ngIf="respondentForm.get('respondenttype')?.value === 'Others'">
+      <mat-form-field appearance="outline">
+        <mat-label>Respondent Name</mat-label>
+        <input matInput placeholder="Enter Respondent Name" formControlName="respondentname" />
+        <mat-error
+          *ngIf="respondentForm.get('respondentname')?.touched && respondentForm.get('respondentname')?.invalid">
+          Respondent Name is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Details</mat-label>
+        <textarea matInput rows="3" placeholder="Enter Details" formControlName="details"></textarea>
+        <mat-error *ngIf="respondentForm.get('details')?.touched && respondentForm.get('details')?.invalid">
+          Details are required
+        </mat-error>
+      </mat-form-field>
+    </ng-container>
+
+
+  </div>
+</mat-dialog-content>
+
+
+<mat-dialog-actions class="dialog-actions">
+  <button mat-stroked-button class="back-btn" color="warn" (click)="close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="save()">Save</button>
+</mat-dialog-actions>

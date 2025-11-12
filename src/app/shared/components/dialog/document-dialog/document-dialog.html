@@ -1,0 +1,43 @@
+<app-loader [loading]="loading"></app-loader>
+<h2 mat-dialog-title class="dialog-header">
+    <span>Petitioner Details</span>
+    <button mat-icon-button (click)="close()" class="close-btn">
+        <mat-icon>close</mat-icon>
+    </button>
+</h2>
+
+<mat-dialog-content [formGroup]="documentForm" class="dialog-content">
+    <div class="form-column">
+
+        <!-- Document Type -->
+        <mat-form-field appearance="outline">
+            <mat-label>Document Type</mat-label>
+            <mat-select formControlName="documenttype">
+                <mat-option value=""> Select </mat-option>
+                <mat-option *ngFor="let doctype of documenttype" [value]="doctype">{{ doctype }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="documentForm.get('documenttype')?.touched && documentForm.get('documenttype')?.invalid">
+                Document Type is required
+            </mat-error>
+        </mat-form-field>
+
+        <!-- Document Date -->
+        <mat-form-field appearance="outline">
+            <mat-label>Document Date</mat-label>
+            <input matInput [matDatepicker]="documentDatePicker" formControlName="documentdate"
+                placeholder="DD/MM/YYYY" (click)="documentDatePicker.open()" style="cursor: pointer;"/>
+            <mat-datepicker-toggle matSuffix [for]="documentDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #documentDatePicker></mat-datepicker>
+            <mat-error *ngIf="documentForm.get('documentdate')?.touched && documentForm.get('documentdate')?.invalid">
+                Document Date is required
+            </mat-error>
+        </mat-form-field>
+
+    </div>
+</mat-dialog-content>
+
+
+<mat-dialog-actions class="dialog-actions">
+    <button mat-stroked-button class="back-btn" color="warn" (click)="close()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="save()">Save</button>
+</mat-dialog-actions>

@@ -35,6 +35,11 @@ mat-form-field {
   width: 100%;
 }
 
+.container {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
+
 .button-row {
   display: flex;
   justify-content: center;
@@ -130,18 +135,18 @@ mat-form-field {
 
 .no-data-row {
   text-align: center;
-  background: #fafafa !important;
+  // background: #fafafa !important;
 }
 
 .no-data-cell {
   text-align: center;
   padding: 15px;
   color: #333333;
+  background-color: #fafafa;
 }
 
 .action-btn{
   display: contents;
-
 
   .edit-icon {
     color: #009d54;
@@ -164,4 +169,57 @@ mat-form-field {
   color: #ba1a1a;
   font-size: 13px;
   margin-top: 4px;
+}
+
+
+
+
+
+/*  Header (title + close icon) */
+.dialog-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #ec1562 !important;
+  background: #fafafa;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Dialog content area */
+.dialog-content {
+  padding: 10px !important;
+  background: #fff;
+}
+
+/*  Footer actions (Cancel / Save) */
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 16px 24px;
+
+  button {
+    flex: 0 0 120px;
+    padding: 12px;
+    font-weight: 500;
+    font-size: 16px;
+    border-radius: 5px;
+    color: white;
+    background-color: #ec1562;
+
+    &:hover {
+      background-color: #f50458;
+    }
+  }
+
+  .back-btn {
+    background-color: #a61eea;
+
+    &:hover {
+      background-color: #a109ed;
+    }
+  }
 }

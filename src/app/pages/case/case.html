@@ -103,7 +103,7 @@
       <!-- Date of Filing/Admission Date -->
       <mat-form-field appearance="outline">
         <mat-label>Date of Filing/Admission</mat-label>
-        <input matInput [matDatepicker]="filingDatePicker" formControlName="filingDate" placeholder="DD/MM/YYYY" />
+        <input matInput [matDatepicker]="filingDatePicker" formControlName="filingDate" placeholder="DD/MM/YYYY" (click)="filingDatePicker.open()" style="cursor: pointer;"/>
         <mat-datepicker-toggle matSuffix [for]="filingDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #filingDatePicker></mat-datepicker>
         <mat-error *ngIf="casecreationForm.get('filingDate')?.touched && casecreationForm.get('filingDate')?.invalid">
@@ -114,7 +114,7 @@
       <!-- Received Date -->
       <mat-form-field appearance="outline">
         <mat-label>Received Date</mat-label>
-        <input matInput [matDatepicker]="receivedDatePicker" formControlName="receivedDate" placeholder="DD/MM/YYYY" />
+        <input matInput [matDatepicker]="receivedDatePicker" formControlName="receivedDate" placeholder="DD/MM/YYYY"  (click)="receivedDatePicker.open()" style="cursor: pointer;"/>
         <mat-datepicker-toggle matSuffix [for]="receivedDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #receivedDatePicker></mat-datepicker>
         <mat-error
@@ -160,7 +160,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Next Hearing Date</mat-label>
         <input matInput [matDatepicker]="hearingDatePicker" formControlName="nextHearingDate"
-          placeholder="DD/MM/YYYY" />
+          placeholder="DD/MM/YYYY" (click)="hearingDatePicker.open()" style="cursor: pointer;"/>
         <mat-datepicker-toggle matSuffix [for]="hearingDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #hearingDatePicker></mat-datepicker>
       </mat-form-field>
@@ -247,7 +247,7 @@
         </table>
 
         <div *ngIf="formSubmitted && locationData.length === 0" class="error-text">
-          * Please add at least one Location
+          * Please add at least one Location Detais
         </div>
       </div>
     </div>
@@ -305,7 +305,7 @@
           </tr>
         </table>
         <div *ngIf="formSubmitted && petitionerData.length === 0" class="error-text">
-          * Please add at least one Petitioner
+          * Please add at least one Petitioner Detais
         </div>
 
       </div>
@@ -335,7 +335,7 @@
       </mat-form-field>
     </div>
 
-        <br><br>
+    <br><br>
     <!-- <h2>Board Standing Counsel Details</h2> -->
     <h6>Board Standing Counsel Details</h6>
     <hr>
@@ -343,12 +343,14 @@
 
       <!-- Add Button -->
       <div class="add-button">
-        <button mat-raised-button color="primary" type="button" (click)="openBoardStandingCounselDialog()">Add Board Standing Counsel </button>
+        <button mat-raised-button color="primary" type="button" (click)="openBoardStandingCounselDialog()">Add Board
+          Standing Counsel </button>
       </div>
 
       <!-- Petitioner Table -->
       <div class="table-responsive">
-        <table mat-table [dataSource]="boardStandingCounselData" class="mat-elevation-z8" style="width:100%; margin-top:20px;">
+        <table mat-table [dataSource]="boardStandingCounselData" class="mat-elevation-z8"
+          style="width:100%; margin-top:20px;">
 
           <!-- Board Standing Counsel Type Column -->
           <ng-container matColumnDef="boardstandingcounseltype">
@@ -387,16 +389,187 @@
           </tr>
         </table>
         <div *ngIf="formSubmitted && boardStandingCounselData.length === 0" class="error-text">
-          * Please add at least one Board Standing Counsel 
+          * Please add at least one Board Standing Counsel Detais
         </div>
 
       </div>
 
     </div>
 
+    <br><br>
+    <!-- <h2>Respondent Details</h2> -->
+    <h6>Respondent Details</h6>
+    <hr>
+    <div class="container">
+
+      <!-- Add Button -->
+      <div class="add-button">
+        <button mat-raised-button color="primary" type="button" (click)="openRespondentDialog()">Add Respondent</button>
+      </div>
+
+      <!-- Petitioner Table -->
+      <div class="table-responsive">
+        <table mat-table [dataSource]="respondentData" class="mat-elevation-z8" style="width:100%; margin-top:20px;">
+
+          <!-- Board Standing Counsel Type Column -->
+          <ng-container matColumnDef="respondenttype">
+            <th mat-header-cell *matHeaderCellDef>Respondent Type</th>
+            <td mat-cell *matCellDef="let element">{{ element.respondenttype }}</td>
+          </ng-container>
+
+          <!-- Board Standing Counsel Name Column -->
+          <ng-container matColumnDef="regionname">
+            <th mat-header-cell *matHeaderCellDef>Region Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.regionname }}</td>
+          </ng-container>
+
+          <!-- Board Standing Counsel Type Column -->
+          <ng-container matColumnDef="officetypename">
+            <th mat-header-cell *matHeaderCellDef>Office Type Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.officetypename }}</td>
+          </ng-container>
+
+          <!-- Board Standing Counsel Name Column -->
+          <ng-container matColumnDef="areadeptname">
+            <th mat-header-cell *matHeaderCellDef>Area/Dept Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.areadeptname }}</td>
+          </ng-container>
+
+          <!-- Board Standing Counsel Type Column -->
+          <ng-container matColumnDef="designation">
+            <th mat-header-cell *matHeaderCellDef>Designation</th>
+            <td mat-cell *matCellDef="let element">{{ element.designation }}</td>
+          </ng-container>
+
+          <!-- Board Standing Counsel Name Column -->
+          <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef>Role</th>
+            <td mat-cell *matCellDef="let element">{{ element.role }}</td>
+          </ng-container>
+
+          <!-- Board Standing Counsel Type Column -->
+          <ng-container matColumnDef="respondentname">
+            <th mat-header-cell *matHeaderCellDef>Respondent Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.respondentname }}</td>
+          </ng-container>
+
+          <!-- Board Standing Counsel Name Column -->
+          <ng-container matColumnDef="details">
+            <th mat-header-cell *matHeaderCellDef>Details</th>
+            <td mat-cell *matCellDef="let element">{{ element.details }}</td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td class="action-btn" mat-cell *matCellDef="let element; let i = index">
+              <button mat-icon-button color="primary" type="button" (click)="editRespondent(element, i)">
+                <mat-icon class="edit-icon">edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" type="button" (click)="deleteRespondent(i)">
+                <mat-icon class="delete-icon">delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+
+          <tr mat-header-row *matHeaderRowDef="respondentdisplayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: respondentdisplayedColumns;"></tr>
+
+          <!-- Message when no data is present -->
+          <tr class="mat-row no-data-row" *matNoDataRow>
+            <td class="mat-cell" [attr.colspan]="respondentdisplayedColumns.length" class="no-data-cell">
+              No Respondent Data Found.
+            </td>
+          </tr>
+        </table>
+        <div *ngIf="formSubmitted && respondentData.length === 0" class="error-text">
+          * Please add at least one Respondent Detais
+        </div>
+
+      </div>
+
+    </div>
+
+    <br><br>
+    <!-- <h2>Document Details</h2> -->
+    <h6>Document Details</h6>
+    <hr>
+    <div class="container">
+
+      <!-- Add Button -->
+      <div class="add-button">
+        <button mat-raised-button color="primary" type="button" (click)="openDocumentDialog()">Add Document</button>
+      </div>
+
+      <!-- Document Details Table -->
+      <div class="table-responsive">
+        <table mat-table [dataSource]="documentData" class="mat-elevation-z8" style="width:100%; margin-top:20px;">
+
+          <!-- Document Type Column -->
+          <ng-container matColumnDef="documenttype">
+            <th mat-header-cell *matHeaderCellDef>Document Type</th>
+            <td mat-cell *matCellDef="let element">{{ element.documenttype }}</td>
+          </ng-container>
+
+          <!-- Attachments Column -->
+          <ng-container matColumnDef="attachments">
+            <th mat-header-cell *matHeaderCellDef>Attachments (.pdf, .doc)</th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <input type="file" (change)="onFileSelected($event, i)" accept=".pdf,.doc,.docx" />
+              <span *ngIf="element.fileName">{{ element.fileName }}</span>
+            </td>
+          </ng-container>
+
+
+          <!-- Document Date Column -->
+          <ng-container matColumnDef="documentdate">
+            <th mat-header-cell *matHeaderCellDef>Document Date</th>
+            <td mat-cell *matCellDef="let element">{{ element.documentdate }}</td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td class="action-btn" mat-cell *matCellDef="let element; let i = index">
+              <button mat-icon-button color="warn" type="button" (click)="deleteDocument(i)">
+                <mat-icon class="delete-icon">delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+
+          <tr mat-header-row *matHeaderRowDef="documentdisplayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: documentdisplayedColumns;"></tr>
+
+          <!-- Message when no data is present -->
+          <tr class="mat-row no-data-row" *matNoDataRow>
+            <td class="mat-cell" [attr.colspan]="documentdisplayedColumns.length" class="no-data-cell">
+              No Document Data Found.
+            </td>
+          </tr>
+        </table>
+        <div *ngIf="formSubmitted && documentData.length === 0" class="error-text">
+          * Please add at least one Document Detais
+        </div>
+
+      </div>
+
+    </div>
+
+    <br>
     <div class="button-row">
       <button mat-stroked-button color="accent" type="button" class="back-btn" (click)="goBack()">Back</button>
       <button mat-raised-button color="primary" type="submit">Submit</button>
     </div>
   </form>
 </div>
+
+<ng-template #confirmDialog let-data>
+  <h2 class="dialog-header" mat-dialog-title>Delete</h2>
+  <mat-dialog-content class="dialog-content">{{ data.message }}</mat-dialog-content>
+  <mat-dialog-actions align="end" class="dialog-actions">
+    <button mat-stroked-button mat-dialog-close="false" type="button" class="back-btn">Cancel</button>
+    <button mat-raised-button color="warn" [mat-dialog-close]="true" type="button">Delete</button>
+  </mat-dialog-actions>
+</ng-template>
