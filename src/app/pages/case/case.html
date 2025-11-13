@@ -1,7 +1,6 @@
 <div class="form-container">
   <app-loader [loading]="loading"></app-loader>
 
-
   <form [formGroup]="casecreationForm" (ngSubmit)="onSubmit()">
     <div class="card-header">
       <h2>Case Creation</h2>
@@ -103,7 +102,8 @@
       <!-- Date of Filing/Admission Date -->
       <mat-form-field appearance="outline">
         <mat-label>Date of Filing/Admission</mat-label>
-        <input matInput [matDatepicker]="filingDatePicker" formControlName="filingDate" placeholder="DD/MM/YYYY" (click)="filingDatePicker.open()" style="cursor: pointer;"/>
+        <input matInput [matDatepicker]="filingDatePicker" formControlName="filingDate" placeholder="DD/MM/YYYY"
+          (click)="filingDatePicker.open()" style="cursor: pointer;" />
         <mat-datepicker-toggle matSuffix [for]="filingDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #filingDatePicker></mat-datepicker>
         <mat-error *ngIf="casecreationForm.get('filingDate')?.touched && casecreationForm.get('filingDate')?.invalid">
@@ -114,7 +114,8 @@
       <!-- Received Date -->
       <mat-form-field appearance="outline">
         <mat-label>Received Date</mat-label>
-        <input matInput [matDatepicker]="receivedDatePicker" formControlName="receivedDate" placeholder="DD/MM/YYYY"  (click)="receivedDatePicker.open()" style="cursor: pointer;"/>
+        <input matInput [matDatepicker]="receivedDatePicker" formControlName="receivedDate" placeholder="DD/MM/YYYY"
+          (click)="receivedDatePicker.open()" style="cursor: pointer;" />
         <mat-datepicker-toggle matSuffix [for]="receivedDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #receivedDatePicker></mat-datepicker>
         <mat-error
@@ -159,8 +160,8 @@
       <!-- Next Hearing Date -->
       <mat-form-field appearance="outline">
         <mat-label>Next Hearing Date</mat-label>
-        <input matInput [matDatepicker]="hearingDatePicker" formControlName="nextHearingDate"
-          placeholder="DD/MM/YYYY" (click)="hearingDatePicker.open()" style="cursor: pointer;"/>
+        <input matInput [matDatepicker]="hearingDatePicker" formControlName="nextHearingDate" placeholder="DD/MM/YYYY"
+          (click)="hearingDatePicker.open()" style="cursor: pointer;" />
         <mat-datepicker-toggle matSuffix [for]="hearingDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #hearingDatePicker></mat-datepicker>
       </mat-form-field>

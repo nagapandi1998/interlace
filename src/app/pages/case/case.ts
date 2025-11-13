@@ -23,6 +23,7 @@ import { PetitionerDialog } from '../../shared/components/dialog/petitioner-dial
 import { BoardStandingCounselDialog } from '../../shared/components/dialog/board-standing-counsel-dialog/board-standing-counsel-dialog';
 import { RespondentDialog } from '../../shared/components/dialog/respondent-dialog/respondent-dialog';
 import { DocumentDialog } from '../../shared/components/dialog/document-dialog/document-dialog';
+import { DatePipe } from '@angular/common';
 
 export const MY_DATE_FORMATS = {
   parse: { dateInput: 'DD/MM/YYYY' },
@@ -53,6 +54,7 @@ export const MY_DATE_FORMATS = {
     MatDialogModule,
   ],
   providers: [
+    DatePipe,
     provideNativeDateAdapter(),
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
@@ -92,14 +94,12 @@ export class Case {
 
   petitionerData: any[] = [];
   petitionerdisplayedColumns: string[] = ['petitionerName', 'petitioneraddress', 'actions'];
-
   boardStandingCounselData: any[] = [];
   boardStandingCounseldisplayedColumns: string[] = [
     'boardstandingcounseltype',
     'boardstandingcounselname',
     'actions',
   ];
-
   respondentData: any[] = [];
   respondentdisplayedColumns: string[] = [
     'respondenttype',
@@ -112,7 +112,6 @@ export class Case {
     'details',
     'actions',
   ];
-
   documentData: any[] = [];
   documentdisplayedColumns: string[] = ['documenttype', 'attachments', 'documentdate', 'actions'];
 
@@ -120,7 +119,8 @@ export class Case {
     private fb: FormBuilder,
     private router: Router,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private datePipe: DatePipe
   ) {
     this.createCaseCreation();
     this.generateYears();
@@ -372,7 +372,26 @@ export class Case {
     console.log('Submitting form...');
     if (this.casecreationForm.valid) {
       this.loading = true;
-      console.log('Form Submitted:', this.casecreationForm.value);
+
+      const formValue = this.casecreationForm.value;
+
+      const formattedCase = {
+        ...formValue,
+        filingDate: this.datePipe.transform(formValue.filingDate, 'dd/MM/yyyy'),
+        receivedDate: this.datePipe.transform(formValue.receivedDate, 'dd/MM/yyyy'),
+        nextHearingDate: this.datePipe.transform(formValue.nextHearingDate, 'dd/MM/yyyy'),
+      };
+
+      const caseData = {
+        ...formattedCase,
+        location: this.locationData,
+        petitioner: this.petitionerData,
+        boardStandingCounsel: this.boardStandingCounselData,
+        respondent: this.respondentData,
+        document: this.documentData,
+      };
+
+      console.log('Case Data:', caseData);
       setTimeout(() => {
         this.loading = false;
         this.snackBar.open('Form submitted successfully!', '', {
