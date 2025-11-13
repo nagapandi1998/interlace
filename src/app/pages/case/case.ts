@@ -76,7 +76,7 @@ export class Case {
   nameOfCourts: string[] = ['City Civil Court, Chennai', 'vvvcv', 'vvvv'];
   types: string[] = ['Appeal', 'Cont.P', 'NGT', 'SLP'];
   filedBys: string[] = ['Against Cmwssb', 'Filed By Cmwssb'];
-  caseTypes: string[] = ['MWSTA', '', ''];
+  caseTypes: string[] = ['MWSTA', 'MWSTB', 'MWSTC', 'MWSTD'];
   categoryTypes: string[] = ['Category 1', 'Category 2', 'Category 3'];
   subCategoryTypes: string[] = ['Sub-category 1', 'Sub-category 2', 'Sub-category 3'];
   locationData: any[] = [];
