@@ -369,7 +369,7 @@ export class Case {
 
   onSubmit() {
     this.formSubmitted = true;
-    console.log('Submitting form...');
+
     if (this.casecreationForm.valid) {
       this.loading = true;
 
@@ -382,7 +382,11 @@ export class Case {
         nextHearingDate: this.datePipe.transform(formValue.nextHearingDate, 'dd/MM/yyyy'),
       };
 
+      const storedData = sessionStorage.getItem('caseData');
+      let caseList = storedData ? JSON.parse(storedData) : [];
+
       const caseData = {
+        id: caseList.length + 1,
         ...formattedCase,
         location: this.locationData,
         petitioner: this.petitionerData,
@@ -391,7 +395,10 @@ export class Case {
         document: this.documentData,
       };
 
-      console.log('Case Data:', caseData);
+      caseList.push(caseData);
+
+      sessionStorage.setItem('caseData', JSON.stringify(caseList));
+
       setTimeout(() => {
         this.loading = false;
         this.snackBar.open('Form submitted successfully!', '', {
@@ -399,7 +406,7 @@ export class Case {
           verticalPosition: 'top',
           panelClass: ['success-snackbar'],
         });
-        this.router.navigate(['/home']);
+        this.router.navigate(['/allcases']);
       }, 500);
     } else {
       this.casecreationForm.markAllAsTouched();
@@ -412,6 +419,6 @@ export class Case {
   }
 
   goBack() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/allcases']);
   }
 }

@@ -55,7 +55,7 @@ export class Home implements AfterViewInit {
         {
           id: 1,
           firstName: 'NagaPandi',
-          lastName: 'Gandhi',
+          lastName: 'G',
           mobile: '9867898778',
           age: 26,
           department: 'IT',

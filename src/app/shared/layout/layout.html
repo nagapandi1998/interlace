@@ -1,60 +1,121 @@
 <mat-sidenav-container class="layout-container">
-
-  <mat-sidenav #sidenav [mode]="isMobile ? 'over' : 'side'" [(opened)]="isSidebarOpen"
-    [ngClass]="{ 'collapsed': !isSidebarOpen }" class="sidenav">
-    <mat-toolbar>
-      <a routerLink="/home">
-        <img src="assets/images/logo.png" alt="logo Image" />
+  <mat-sidenav #sidenav 
+               [mode]="isMobile ? 'over' : 'side'" 
+               [(opened)]="isSidebarOpen"
+               [ngClass]="{ 'collapsed': !isSidebarOpen }" 
+               class="sidenav">
+    
+    <!-- Logo Section -->
+    <mat-toolbar class="sidenav-toolbar">
+      <a routerLink="/home" class="logo-link">
+        <img src="assets/images/logo.png" alt="Company Logo" class="logo" />
       </a>
-
     </mat-toolbar>
+
+    <!-- User Profile Section -->
     <div class="user-info" *ngIf="isSidebarOpen">
-      <img src="assets/images/avatar.jpg" alt="user img">
-      <h6>Nagapandi G</h6>
-      <p>Admin</p>
+      <div class="user-avatar-container">
+        <img src="assets/images/avatar.jpg" alt="avatar" class="user-avatar">
+        <div class="online-indicator"></div>
+      </div>
+      <h6 class="user-name">Nagapandi G</h6>
+      <p class="user-role">Admin</p>
     </div>
 
-    <mat-nav-list *ngIf="isSidebarOpen">
-      <a mat-list-item routerLink="/home" routerLinkActive="active">
-        <span class="menu-item">
-          <mat-icon class="left-icon">home</mat-icon>
-          <span class="label" *ngIf="isSidebarOpen">Home</span>
-          <mat-icon class="right-icon">chevron_right</mat-icon>
-        </span>
-      </a>
+    <!-- Navigation Menu - Loop through menus -->
+    <mat-nav-list class="nav-list">
+      
+      <!-- Loop through main menus -->
+      <ng-container *ngFor="let menu of menus">
+        
+        <!-- Single Menu Item (without children) -->
+        <a *ngIf="!hasChildren(menu)" 
+           mat-list-item 
+           [routerLink]="menu.route" 
+           routerLinkActive="active"
+           class="nav-item">
+          <mat-icon class="left-icon">{{ menu.icon }}</mat-icon>
+          <span class="label">{{ menu.label }}</span>
+          <div class="active-indicator"></div>
+        </a>
 
-      <a mat-list-item routerLink="/materialform" routerLinkActive="active">
-        <span class="menu-item">
-          <mat-icon class="left-icon">layers</mat-icon>
-          <span class="label" *ngIf="isSidebarOpen">Angular Material</span>
-          <mat-icon class="right-icon">chevron_right</mat-icon>
-        </span>
-      </a>
+        <!-- Parent Menu Item (with children) -->
+        <div *ngIf="hasChildren(menu)" class="menu-section">
+          <mat-list-item (click)="toggleMenu(menu.key)" 
+                        class="parent-menu nav-item"
+                        [ngClass]="{ 'expanded': openMenus[menu.key] }">
+            <mat-icon class="left-icon">{{ menu.icon }}</mat-icon>
+            <span class="label">{{ menu.label }}</span>
+            <mat-icon class="right-icon">
+              {{ openMenus[menu.key] ? 'expand_more' : 'chevron_right' }}
+            </mat-icon>
+            <div class="active-indicator"></div>
+          </mat-list-item>
 
-      <a mat-list-item routerLink="/bootstrapform" routerLinkActive="active">
-        <span class="menu-item">
-          <mat-icon class="left-icon">dashboard</mat-icon>
-          <span class="label" *ngIf="isSidebarOpen">Ng Bootstrap</span>
-          <mat-icon class="right-icon">chevron_right</mat-icon>
-        </span>
-      </a>
+          <!-- Submenu - Loop through children -->
+          <div *ngIf="openMenus[menu.key]" class="sub-menu animate-slideDown">
+            
+            <ng-container *ngFor="let child of menu.children">
+              
+              <!-- Child without further children -->
+              <a *ngIf="!hasChildren(child)" 
+                 mat-list-item 
+                 [routerLink]="child.route" 
+                 routerLinkActive="active"
+                 class="sub-menu-item">
+                <mat-icon class="submenu-icon">{{ child.icon }}</mat-icon>
+                <span class="label">{{ child.label }}</span>
+                <div class="active-indicator"></div>
+              </a>
 
-      <a mat-list-item routerLink="/casecreation" routerLinkActive="active">
-        <span class="menu-item">
-          <mat-icon class="left-icon">insert_drive_file</mat-icon>
-          <span class="label" *ngIf="isSidebarOpen">Case Creation</span>
-          <mat-icon class="right-icon">chevron_right</mat-icon>
-        </span>
-      </a>
+              <!-- Child with sub-children -->
+              <div *ngIf="hasChildren(child)" class="nested-menu-container">
+                <mat-list-item (click)="toggleMenu(child.key)" 
+                              class="nested-menu sub-menu-item"
+                              [ngClass]="{ 'expanded': openMenus[child.key] }">
+                  <mat-icon class="submenu-icon">{{ child.icon }}</mat-icon>
+                  <span class="label">{{ child.label }}</span>
+                  <mat-icon class="right-icon">
+                    {{ openMenus[child.key] ? 'expand_more' : 'chevron_right' }}
+                  </mat-icon>
+                </mat-list-item>
+
+                <!-- Sub-submenu - Loop through grand children -->
+                <div *ngIf="openMenus[child.key]" class="sub-sub-menu animate-slideDown">
+                  <a *ngFor="let grandChild of child.children" 
+                     mat-list-item 
+                     [routerLink]="grandChild.route" 
+                     routerLinkActive="active"
+                     class="deep-menu-item">
+                    <mat-icon class="deepmenu-icon">{{ grandChild.icon }}</mat-icon>
+                    <span class="label">{{ grandChild.label }}</span>
+                    <div class="active-indicator"></div>
+                  </a>
+                </div>
+              </div>
+
+            </ng-container>
+          </div>
+        </div>
+      </ng-container>
+
     </mat-nav-list>
+
+
   </mat-sidenav>
 
+  <!-- Main Content Area -->
   <mat-sidenav-content class="main-content">
-    <app-header (toggleSidebar)="toggleSidebar()"></app-header>
+    <!-- Header Component -->
+    <app-header (toggleSidebar)="onSidebarToggle()"></app-header>
+    
+    <!-- Main Content Wrapper -->
     <div class="content-wrapper">
+      <!-- Page Content -->
       <router-outlet></router-outlet>
     </div>
-
+    
+    <!-- Footer Component -->
     <app-footer></app-footer>
   </mat-sidenav-content>
 </mat-sidenav-container>

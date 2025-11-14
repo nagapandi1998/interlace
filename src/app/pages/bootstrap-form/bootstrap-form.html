@@ -1,7 +1,9 @@
 <div class="form-container">
   <app-loader [loading]="loading"></app-loader>
   <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" novalidate>
-    <h2 class="text-center mb-4">Employee Form - Bootstrap</h2>
+    <div class="card-header">
+      <h2 class="text-center mb-4">Employee Form - Bootstrap</h2>
+    </div>
 
     <div class="row g-3">
       <div class="col-12 col-md-6 col-lg-4">

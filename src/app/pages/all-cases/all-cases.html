@@ -1,0 +1,103 @@
+<!-- Employee Table Section -->
+<mat-card class="employee-table-card" appearance="outlined">
+
+    <div class="card-header">
+        <h2>Case List</h2>
+    </div>
+
+
+    <div class="table-container">
+        <!-- Add Button -->
+        <div class="add-button">
+            <button mat-raised-button color="primary" type="button" (click)="addCase()">Add Case</button>
+        </div>
+
+        <div class="table-responsive">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
+
+                <!-- S No -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef>S.No</th>
+                    <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+                </ng-container>
+
+                <!-- Case No -->
+                <ng-container matColumnDef="caseNo">
+                    <th mat-header-cell *matHeaderCellDef>Case No</th>
+                    <td mat-cell *matCellDef="let row">{{ row.caseNo }}</td>
+                </ng-container>
+
+                <!-- Date of Filing/Admission Date -->
+                <ng-container matColumnDef="filingDate">
+                    <th mat-header-cell *matHeaderCellDef>Date of Filing/Admission Date</th>
+                    <td mat-cell *matCellDef="let row">{{ row.filingDate }}</td>
+                </ng-container>
+
+                <!-- Received Date -->
+                <ng-container matColumnDef="receivedDate">
+                    <th mat-header-cell *matHeaderCellDef>Received Date</th>
+                    <td mat-cell *matCellDef="let row">{{ row.receivedDate }}</td>
+                </ng-container>
+
+                <!-- Year -->
+                <ng-container matColumnDef="year">
+                    <th mat-header-cell *matHeaderCellDef>Year</th>
+                    <td mat-cell *matCellDef="let row">{{ row.year }}</td>
+                </ng-container>
+
+                <!-- Court Category Type -->
+                <ng-container matColumnDef="courtCategory">
+                    <th mat-header-cell *matHeaderCellDef>Court Category Type</th>
+                    <td mat-cell *matCellDef="let row">{{ row.courtCategory }}</td>
+                </ng-container>
+
+                <!-- Name Of Court -->
+                <ng-container matColumnDef="courtName">
+                    <th mat-header-cell *matHeaderCellDef>Name Of Court</th>
+                    <td mat-cell *matCellDef="let row">{{ row.courtName }}</td>
+                </ng-container>
+
+                <!-- Case Type -->
+                <ng-container matColumnDef="caseType">
+                    <th mat-header-cell *matHeaderCellDef>Case Type</th>
+                    <td mat-cell *matCellDef="let row">{{ row.caseType }}</td>
+                </ng-container>
+
+                <!-- Approval Status -->
+                <ng-container matColumnDef="approvalStatus">
+                    <th mat-header-cell *matHeaderCellDef>Approval Status</th>
+                    <td mat-cell *matCellDef="let row">{{ row.approvalStatus }}</td>
+                </ng-container>
+
+                <!-- Actions -->
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef>Actions</th>
+                    <td class="action-btn" mat-cell *matCellDef="let element">
+                        <button mat-icon-button color="primary" type="button">
+                            <mat-icon class="edit-icon">edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="warn" type="button">
+                            <mat-icon class="view-icon">visibility</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <!-- Empty Row (No Data Found Message) -->
+                <tr class="mat-row no-data-row" *matNoDataRow>
+                    <td class="mat-cell" [attr.colspan]="displayedColumns.length" class="no-data-cell">
+                        No Location Data Found.
+                    </td>
+                </tr>
+
+            </table>
+
+        </div>
+
+        <mat-paginator [length]="dataSource.data.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"
+            showFirstLastButtons>
+        </mat-paginator>
+    </div>
+</mat-card>

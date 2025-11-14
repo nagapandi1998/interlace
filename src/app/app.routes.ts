@@ -34,6 +34,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages//case/case').then((m) => m.Case),
       },
+      {
+        path: 'allcases',
+        loadComponent: () =>
+          import('./pages/all-cases/all-cases').then((m) => m.AllCases),
+      }
     ],
   },
 ];

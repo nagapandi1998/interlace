@@ -2,7 +2,11 @@
   <app-loader [loading]="loading"></app-loader>
 
   <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
-    <h2>Employee Form - Material</h2>
+
+      <div class="card-header">
+        <h2>Employee Form - Material</h2>
+      </div>
+
 
     <div class="grid-container">
       <mat-form-field appearance="outline">

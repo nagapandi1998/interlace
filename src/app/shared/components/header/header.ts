@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 export class Header {
   @Output() toggleSidebar = new EventEmitter<void>();
   showDropdown: boolean = false;
+@Input() sidebarOpen: boolean = true;
 
   constructor(private router: Router) {}
 

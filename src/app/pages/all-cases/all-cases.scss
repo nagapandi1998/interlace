@@ -62,7 +62,7 @@
 
 /* ---------- Employee Table Card ---------- */
 .employee-table-card {
-  max-width: 95%;
+//   max-width: 95%;
   // margin: 0 auto 40px;
   // padding: 16px;
   background: #fff;
@@ -78,7 +78,7 @@
     font-size: 22px;
     font-weight: 600;
     margin-bottom: 16px;
-    color: #333;
+     color: #f50458;
   }
 }
 
@@ -135,32 +135,16 @@
   background-color: #fafafa;
 }
 
-/* No Data */
-::ng-deep .no-data-row td {
+.no-data-row {
   text-align: center;
-  padding: 0 !important;
-  background-color: #fafafa;
-
-  /* make td a flex container for centering */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 150px;
+  // background: #fafafa !important;
 }
 
-.no-data {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #888;
-  font-size: 15px;
-
-  p {
-    margin: 10px !important;
-    font-weight: 500;
-    text-align: center !important;
-  }
+.no-data-cell {
+  text-align: center;
+  padding: 15px;
+  color: #333333;
+  background-color: #fafafa;
 }
 
 .active-status {
@@ -239,6 +223,45 @@
     }
     p {
       font-size: 14px;
+    }
+  }
+}
+
+
+.add-button {
+  display: flex;
+  justify-content: right;
+  margin-bottom: 15px;
+  button {
+    padding: 12px;
+    font-weight: 500;
+    font-size: 16px;
+    border-radius: 5px;
+
+    color: white;
+    background-color: #ec1562;
+
+    &:hover {
+      background-color: #f50458;
+    }
+  }
+}
+
+.action-btn {
+  display: contents;
+
+  .edit-icon {
+    color: #009d54;
+
+    &:hover {
+      color: #45a049;
+    }
+  }
+  .view-icon {
+    color: #ff1100;
+
+    &:hover {
+      color: #da190b;
     }
   }
 }
