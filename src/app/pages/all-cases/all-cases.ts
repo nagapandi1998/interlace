@@ -20,7 +20,6 @@ import { Loader } from '../../shared/components/loader/loader';
     MatPaginatorModule,
     MatButtonModule,
     MatCardModule,
-    Loader,
   ],
   templateUrl: './all-cases.html',
   styleUrl: './all-cases.scss',
