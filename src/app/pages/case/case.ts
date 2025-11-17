@@ -13,7 +13,7 @@ import {
   MAT_DATE_FORMATS,
 } from '@angular/material/core';
 import { Loader } from '../../shared/components/loader/loader';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatIconModule } from '@angular/material/icon';
@@ -114,16 +114,19 @@ export class Case {
   ];
   documentData: any[] = [];
   documentdisplayedColumns: string[] = ['documenttype', 'attachments', 'documentdate', 'actions'];
+  isViewMode: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private route: ActivatedRoute,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private datePipe: DatePipe
   ) {
     this.createCaseCreation();
     this.generateYears();
+    this.checkEditMode();
   }
 
   createCaseCreation() {
@@ -154,6 +157,60 @@ export class Case {
     for (let i = currentYear; i >= 1990; i--) {
       this.years.push(i);
     }
+  }
+
+  checkEditMode() {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.isViewMode = this.route.snapshot.queryParamMap.get('view') === 'true';
+
+    if (!id) return; // no edit, no view → create mode
+
+    const rawData = sessionStorage.getItem('caseData');
+    if (!rawData) return;
+
+    const caseList = JSON.parse(rawData);
+    const record = caseList.find((c: any) => c.id === id);
+
+    if (!record) return;
+
+    // Fill form
+    this.casecreationForm.patchValue({
+      courtCategoryType: record.courtCategoryType,
+      nameOfCourt: record.nameOfCourt,
+      type: record.type,
+      filedBy: record.filedBy,
+      caseType: record.caseType,
+      categoryType: record.categoryType,
+      subCategoryType: record.subCategoryType,
+      filingDate: this.convertToDate(record.filingDate),
+      receivedDate: this.convertToDate(record.receivedDate),
+      caseNo: record.caseNo,
+      year: record.year,
+      legalCellFileNo: record.legalCellFileNo,
+      concernedOfficeFileNo: record.concernedOfficeFileNo,
+      nextHearingDate: this.convertToDate(record.nextHearingDate),
+      caseDetails: record.caseDetails,
+      prayerSubject: record.prayerSubject,
+    });
+
+    // Load child tables
+    this.locationData = record.location || [];
+    this.petitionerData = record.petitioner || [];
+    this.boardStandingCounselData = record.boardStandingCounsel || [];
+    this.respondentData = record.respondent || [];
+    this.documentData = record.document || [];
+
+    // VIEW MODE (disable the form)
+    if (this.isViewMode) {
+      this.casecreationForm.disable();
+    }
+  }
+
+  // Helper to convert string to Date
+  convertToDate(dateStr: string) {
+    if (!dateStr) return '';
+    const [day, month, year] = dateStr.split('/');
+    return new Date(+year, +month - 1, +day);
   }
 
   openLocationDialog(data?: any, index?: number) {
@@ -380,14 +437,6 @@ export class Case {
         filingDate: this.datePipe.transform(formValue.filingDate, 'dd/MM/yyyy'),
         receivedDate: this.datePipe.transform(formValue.receivedDate, 'dd/MM/yyyy'),
         nextHearingDate: this.datePipe.transform(formValue.nextHearingDate, 'dd/MM/yyyy'),
-      };
-
-      const storedData = sessionStorage.getItem('caseData');
-      let caseList = storedData ? JSON.parse(storedData) : [];
-
-      const caseData = {
-        id: caseList.length + 1,
-        ...formattedCase,
         location: this.locationData,
         petitioner: this.petitionerData,
         boardStandingCounsel: this.boardStandingCounselData,
@@ -395,13 +444,31 @@ export class Case {
         document: this.documentData,
       };
 
-      caseList.push(caseData);
+      const storedData = sessionStorage.getItem('caseData');
+      let caseList = storedData ? JSON.parse(storedData) : [];
+
+      const id = Number(this.route.snapshot.paramMap.get('id'));
+
+      let caseMsg;
+      if (id) {
+        // UPDATE
+        const index = caseList.findIndex((c: any) => c.id === id);
+        if (index !== -1) {
+          caseList[index] = { id, ...formattedCase };
+        }
+
+        caseMsg = 'Case Updated successfully!';
+      } else {
+        // CREATE
+        caseList.push({ id: caseList.length + 1, ...formattedCase });
+        caseMsg = 'Case Created successfully!';
+      }
 
       sessionStorage.setItem('caseData', JSON.stringify(caseList));
 
       setTimeout(() => {
         this.loading = false;
-        this.snackBar.open('Form submitted successfully!', '', {
+        this.snackBar.open(caseMsg, '', {
           duration: 3000,
           verticalPosition: 'top',
           panelClass: ['success-snackbar'],

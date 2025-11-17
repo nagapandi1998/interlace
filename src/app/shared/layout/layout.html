@@ -35,7 +35,7 @@
 
         <!-- Parent Menu Item (with children) -->
         <div *ngIf="hasChildren(menu)" class="menu-section">
-          <mat-list-item (click)="toggleMenu(menu.key)" class="parent-menu nav-item"
+          <mat-list-item (click)="toggleMenu(menu.key, 1)" class="parent-menu nav-item"
             [ngClass]="{ 'expanded': openMenus[menu.key] }">
             <mat-icon class="left-icon">{{ menu.icon }}</mat-icon>
             <span class="label">{{ menu.label }}</span>
@@ -59,7 +59,7 @@
               </a>
 
               <div *ngIf="hasChildren(child)" class="nested-menu-container">
-                <mat-list-item (click)="toggleMenu(child.key)" class="nested-menu sub-menu-item"
+                <mat-list-item (click)="toggleMenu(child.key, 2)" class="nested-menu sub-menu-item"
                   [ngClass]="{ 'expanded': openMenus[child.key] }">
                   <mat-icon class="submenu-icon">{{ child.icon }}</mat-icon>
                   <span class="label">{{ child.label }}</span>
@@ -69,7 +69,7 @@
                   </mat-icon>
                 </mat-list-item>
 
-                <!-- Level 3 -->
+                <!-- sub-sub-menu -->
                 <div *ngIf="openMenus[child.key]" class="sub-sub-menu animate-slideDown">
 
                   <ng-container *ngFor="let grandChild of child.children">
@@ -81,9 +81,9 @@
                       <span class="label">{{ grandChild.label }}</span>
                     </a>
 
-                    <!-- Grandchild with CHILDREN (Level 4) -->
-                    <div *ngIf="hasChildren(grandChild)" class="third-level">
-                      <mat-list-item (click)="toggleMenu(grandChild.key)" class="deep-menu-item"
+                    <!-- Grandchild with CHILDREN -->
+                    <div *ngIf="hasChildren(grandChild)" class="sub-grandchild">
+                      <mat-list-item (click)="toggleMenu(grandChild.key, 3)" class="deep-menu-item"
                         [ngClass]="{ 'expanded': openMenus[grandChild.key] }">
 
                         <mat-icon class="deepmenu-icon">{{ grandChild.icon }}</mat-icon>
@@ -98,7 +98,8 @@
                         <a *ngFor="let great of grandChild.children" mat-list-item [routerLink]="great.route"
                           routerLinkActive="active" class="level-4-item">
                           <mat-icon class="deepmenu-icon">{{ great.icon }}</mat-icon>
-                          <span class="label">{{ great.label }}</span>
+                          <span class="label" matTooltip="{{ great.label }}" matTooltipPosition="right">{{ great.label
+                            }}</span>
                         </a>
                       </div>
 

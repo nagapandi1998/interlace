@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableDataSource } from '@angular/material/table';
 import { Loader } from '../../shared/components/loader/loader';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-all-cases',
@@ -20,6 +21,7 @@ import { Loader } from '../../shared/components/loader/loader';
     MatPaginatorModule,
     MatButtonModule,
     MatCardModule,
+    MatTooltipModule,
   ],
   templateUrl: './all-cases.html',
   styleUrl: './all-cases.scss',
@@ -54,6 +56,16 @@ export class AllCases {
     this.router.navigate(['/casecreation']);
   }
 
+  editCase(caseId: number) {
+    this.router.navigate(['/casecreation', caseId]);
+  }
+
+  viewCase(caseId: number) {
+    this.router.navigate(['/casecreation', caseId], {
+      queryParams: { view: true },
+    });
+  }
+
   loadCaseData() {
     this.loading = true;
 
@@ -75,10 +87,14 @@ export class AllCases {
         courtCategory: item.courtCategoryType,
         courtName: item.nameOfCourt,
         caseType: item.caseType,
-        approvalStatus: item.approvalStatus ?? 'Pending', // default value
+        approvalStatus: item.approvalStatus ?? 'Pending',
       }));
 
       this.dataSource.data = mappedData;
+
+      if (this.paginator) {
+        this.dataSource.paginator = this.paginator;
+      }
     }
 
     setTimeout(() => {

@@ -31,14 +31,21 @@ export const routes: Routes = [
       },
       {
         path: 'casecreation',
-        loadComponent: () =>
-          import('./pages//case/case').then((m) => m.Case),
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./pages/case/case').then((m) => m.Case),
+          },
+          {
+            path: ':id',
+            loadComponent: () => import('./pages/case/case').then((m) => m.Case),
+          },
+        ],
       },
       {
         path: 'allcases',
-        loadComponent: () =>
-          import('./pages/all-cases/all-cases').then((m) => m.AllCases),
-      }
+        loadComponent: () => import('./pages/all-cases/all-cases').then((m) => m.AllCases),
+      },
     ],
   },
 ];

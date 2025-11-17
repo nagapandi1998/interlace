@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { filter } from 'rxjs/operators';
 import { RouterModule } from '@angular/router';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { Header } from '../components/header/header';
 import { Footer } from '../components/footer/footer';
@@ -33,6 +34,7 @@ interface MenuItem {
     MatButtonModule,
     MatToolbarModule,
     RouterModule,
+    MatTooltipModule,
     Header,
     Footer,
   ],
@@ -42,11 +44,9 @@ interface MenuItem {
 export class Layout implements OnInit {
   isSidebarOpen = true;
   isMobile = window.innerWidth <= 768;
-
-  // Track open state per menu
   openMenus: { [key: string]: boolean } = {};
 
-  // Dynamic menu structure
+  // menu structure
   menus: MenuItem[] = [
     //     {
     //   key: 'dashboard',
@@ -117,12 +117,10 @@ export class Layout implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    // Close sidebar on mobile by default
     if (this.isMobile) {
       this.isSidebarOpen = false;
     }
 
-    // Auto-close sidebar on mobile when route changes
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
       if (this.isMobile) {
         this.isSidebarOpen = false;
@@ -134,25 +132,46 @@ export class Layout implements OnInit {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
-  toggleMenu(menuKey: string): void {
-    this.openMenus[menuKey] = !this.openMenus[menuKey];
+  private getAllDescendantKeys(menu: MenuItem): string[] {
+    const keys: string[] = [menu.key];
+
+    if (menu.children) {
+      menu.children.forEach((child) => {
+        keys.push(...this.getAllDescendantKeys(child));
+      });
+    }
+
+    return keys;
   }
 
-  // Enhanced toggle with sidebar state management
+  toggleMenu(menuKey: string, level: number = 1) {
+    const isAlreadyOpen = this.openMenus[menuKey];
+
+    if (level === 1) {
+      this.menus.forEach((menu) => {
+        if (menu.key !== menuKey) {
+          this.openMenus[menu.key] = false;
+
+          const allChildKeys = this.getAllDescendantKeys(menu);
+          allChildKeys.forEach((key) => (this.openMenus[key] = false));
+        }
+      });
+    }
+
+    this.openMenus[menuKey] = !isAlreadyOpen;
+  }
+
   onSidebarToggle(): void {
     this.toggleSidebar();
-    // Close all menus when sidebar collapses
     if (!this.isSidebarOpen) {
       this.openMenus = {};
     }
   }
 
-  // Check if menu has children
   hasChildren(menu: MenuItem): boolean {
     return !!menu.children && menu.children.length > 0;
   }
 
-  // Check if menu is active based on route
   isMenuActive(menu: MenuItem): boolean {
     if (menu.route) {
       return this.router.isActive(menu.route, false);
@@ -166,7 +185,6 @@ export class Layout implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
     this.isMobile = (event.target as Window).innerWidth <= 768;
-    // Auto-manage sidebar state based on screen size
     if (!this.isMobile) {
       this.isSidebarOpen = true;
     } else {

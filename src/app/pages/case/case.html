@@ -176,7 +176,7 @@
 
       <!-- Add Button -->
       <div class="add-button">
-        <button mat-raised-button color="primary" type="button" (click)="openLocationDialog()">Add Location</button>
+        <button mat-raised-button color="primary" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode" (click)="openLocationDialog()">Add Location</button>
       </div>
 
       <!-- Locations Table -->
@@ -225,10 +225,10 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td class="action-btn" mat-cell *matCellDef="let element; let i = index">
-              <button mat-icon-button color="primary" type="button" (click)="editLocation(element, i)">
+              <button mat-icon-button color="primary" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode" (click)="editLocation(element, i)">
                 <mat-icon class="edit-icon">edit</mat-icon>
               </button>
-              <button mat-icon-button color="warn" type="button" (click)="deleteLocation(i)">
+              <button mat-icon-button color="warn" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode" (click)="deleteLocation(i)">
                 <mat-icon class="delete-icon">delete</mat-icon>
               </button>
             </td>
@@ -260,7 +260,7 @@
 
       <!-- Add Button -->
       <div class="add-button">
-        <button mat-raised-button color="primary" type="button" (click)="openPetitionerDialog()">Add Petitioner</button>
+        <button mat-raised-button color="primary" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode" (click)="openPetitionerDialog()">Add Petitioner</button>
       </div>
 
       <!-- Petitioner Table -->
@@ -283,10 +283,10 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td class="action-btn" mat-cell *matCellDef="let element; let i = index">
-              <button mat-icon-button color="primary" type="button" (click)="editPetitioner(element, i)">
+              <button mat-icon-button color="primary" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode" (click)="editPetitioner(element, i)">
                 <mat-icon class="edit-icon">edit</mat-icon>
               </button>
-              <button mat-icon-button color="warn" type="button" (click)="deletePetitioner(i)">
+              <button mat-icon-button color="warn" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode" (click)="deletePetitioner(i)">
                 <mat-icon class="delete-icon">delete</mat-icon>
               </button>
             </td>
@@ -342,7 +342,7 @@
 
       <!-- Add Button -->
       <div class="add-button">
-        <button mat-raised-button color="primary" type="button" (click)="openBoardStandingCounselDialog()">Add Board
+        <button mat-raised-button color="primary" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode" (click)="openBoardStandingCounselDialog()">Add Board
           Standing Counsel </button>
       </div>
 
@@ -367,10 +367,10 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td class="action-btn" mat-cell *matCellDef="let element; let i = index">
-              <button mat-icon-button color="primary" type="button" (click)="editBoardStandingCounsel(element, i)">
+              <button mat-icon-button color="primary" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode" (click)="editBoardStandingCounsel(element, i)">
                 <mat-icon class="edit-icon">edit</mat-icon>
               </button>
-              <button mat-icon-button color="warn" type="button" (click)="deleteBoardStandingCounsel(i)">
+              <button mat-icon-button color="warn" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode" (click)="deleteBoardStandingCounsel(i)">
                 <mat-icon class="delete-icon">delete</mat-icon>
               </button>
             </td>
@@ -403,7 +403,7 @@
 
       <!-- Add Button -->
       <div class="add-button">
-        <button mat-raised-button color="primary" type="button" (click)="openRespondentDialog()">Add Respondent</button>
+        <button mat-raised-button color="primary" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode" (click)="openRespondentDialog()">Add Respondent</button>
       </div>
 
       <!-- Petitioner Table -->
@@ -462,10 +462,10 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td class="action-btn" mat-cell *matCellDef="let element; let i = index">
-              <button mat-icon-button color="primary" type="button" (click)="editRespondent(element, i)">
+              <button mat-icon-button color="primary" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode" (click)="editRespondent(element, i)">
                 <mat-icon class="edit-icon">edit</mat-icon>
               </button>
-              <button mat-icon-button color="warn" type="button" (click)="deleteRespondent(i)">
+              <button mat-icon-button color="warn" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode" (click)="deleteRespondent(i)">
                 <mat-icon class="delete-icon">delete</mat-icon>
               </button>
             </td>
@@ -498,7 +498,7 @@
 
       <!-- Add Button -->
       <div class="add-button">
-        <button mat-raised-button color="primary" type="button" (click)="openDocumentDialog()">Add Document</button>
+        <button mat-raised-button color="primary" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode" (click)="openDocumentDialog()">Add Document</button>
       </div>
 
       <!-- Document Details Table -->
@@ -531,7 +531,7 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td class="action-btn" mat-cell *matCellDef="let element; let i = index">
-              <button mat-icon-button color="warn" type="button" (click)="deleteDocument(i)">
+              <button mat-icon-button color="warn" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode" (click)="deleteDocument(i)">
                 <mat-icon class="delete-icon">delete</mat-icon>
               </button>
             </td>
@@ -559,7 +559,7 @@
     <br>
     <div class="button-row">
       <button mat-stroked-button color="accent" type="button" class="back-btn" (click)="goBack()">Back</button>
-      <button mat-raised-button color="primary" type="submit">Submit</button>
+      <button mat-raised-button color="primary"  [class.disabled]="isViewMode" [disabled]="isViewMode" type="submit">Submit</button>
     </div>
   </form>
 </div>
