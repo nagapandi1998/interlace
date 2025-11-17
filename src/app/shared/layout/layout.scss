@@ -1,7 +1,7 @@
 // Variables
 $sidebar-bg: linear-gradient(180deg, #a1144d 0%, #8a1241 50%, #a1144d 100%);
 $sidebar-width: 290px; //auto;
-$sidebar-collapsed-width: 60px;
+$sidebar-collapsed-width: 0px;
 $primary-color: #a1144d;
 $accent-color: #ff6b9d;
 $text-primary: #ffffff;
@@ -47,7 +47,8 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
   // Collapsed State
   &.collapsed {
-     width: $sidebar-collapsed-width;
+    width: $sidebar-collapsed-width;
+    transition: $transition;
 
     .user-info {
       padding: 10px 0;
@@ -79,7 +80,8 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       .left-icon {
         margin-right: 0 !important;
       }
-    }  }
+    }
+  }
 
   // Toolbar Styles
   .sidenav-toolbar {
@@ -306,7 +308,9 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     .right-icon {
-      margin-left: 16px;
+      // margin-left: 16px;
+      position: absolute;
+      right: 5px;
       color: $text-muted !important;
       transition: $transition;
       font-size: 18px;
@@ -413,7 +417,7 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
       .right-icon {
         font-size: 18px;
-        margin-left: 10px;
+        // margin-left: 10px;
         color: $text-muted !important;
         transition: $transition;
       }
@@ -571,6 +575,7 @@ app-footer {
     height: 100vh;
 
     &.collapsed {
+      transition: $transition;
       transform: translateX(-100%);
     }
   }

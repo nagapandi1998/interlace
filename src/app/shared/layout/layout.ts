@@ -48,66 +48,71 @@ export class Layout implements OnInit {
 
   // Dynamic menu structure
   menus: MenuItem[] = [
-  {
-    key: 'employee',
-    label: 'Employees',
-    icon: 'people_alt',
-    children: [
-      {
-        key: 'allEmployees',
-        label: 'All Employees',
-        route: '/home',
-        icon: 'list_alt'
-      },
-      {
-        key: 'addEmployee',
-        label: 'Add Employees',
-        icon: 'person_add',
-        children: [
-          {
-            key: 'uiLibrary',
-            label: 'UI Library',
-            icon: 'integration_instructions',
-            children: [
-              {
-                key: 'materialForm',
-                label: 'Angular Material',
-                route: '/materialform',
-                icon: 'widgets'
-              },
-              {
-                key: 'ngBootstrap',
-                label: 'Ng Bootstrap',
-                route: '/bootstrapform',
-                icon: 'grid_view'
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    key: 'case',
-    label: 'Court Case',
-    icon: 'folder_special',
-    children: [
-      {
-        key: 'allCases',
-        label: 'All Cases',
-        route: '/allcases',
-        icon: 'folder_open'
-      },
-      {
-        key: 'caseCreation',
-        label: 'Case Creation',
-        route: '/casecreation',
-        icon: 'create_new_folder'
-      }
-    ]
-  }
-];
-
+    //     {
+    //   key: 'dashboard',
+    //   label: 'Dashboard',
+    //   icon: 'dashboard',
+    //   route: '/home',
+    // },
+    {
+      key: 'employee',
+      label: 'Employees',
+      icon: 'people_alt',
+      children: [
+        {
+          key: 'allEmployees',
+          label: 'All Employees',
+          route: '/home',
+          icon: 'list_alt',
+        },
+        {
+          key: 'addEmployee',
+          label: 'Add Employees',
+          icon: 'person_add',
+          children: [
+            {
+              key: 'uiLibrary',
+              label: 'UI Library',
+              icon: 'integration_instructions',
+              children: [
+                {
+                  key: 'materialForm',
+                  label: 'Angular Material',
+                  route: '/materialform',
+                  icon: 'widgets',
+                },
+                {
+                  key: 'ngBootstrap',
+                  label: 'Ng Bootstrap',
+                  route: '/bootstrapform',
+                  icon: 'grid_view',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      key: 'case',
+      label: 'Court Case',
+      icon: 'folder_special',
+      children: [
+        {
+          key: 'allCases',
+          label: 'All Cases',
+          route: '/allcases',
+          icon: 'folder_open',
+        },
+        {
+          key: 'caseCreation',
+          label: 'Case Creation',
+          route: '/casecreation',
+          icon: 'create_new_folder',
+        },
+      ],
+    },
+  ];
 
   constructor(private router: Router) {}
 
@@ -118,13 +123,11 @@ export class Layout implements OnInit {
     }
 
     // Auto-close sidebar on mobile when route changes
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        if (this.isMobile) {
-          this.isSidebarOpen = false;
-        }
-      });
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
+      if (this.isMobile) {
+        this.isSidebarOpen = false;
+      }
+    });
   }
 
   toggleSidebar(): void {
@@ -155,7 +158,7 @@ export class Layout implements OnInit {
       return this.router.isActive(menu.route, false);
     }
     if (menu.children) {
-      return menu.children.some(child => this.isMenuActive(child));
+      return menu.children.some((child) => this.isMenuActive(child));
     }
     return false;
   }
