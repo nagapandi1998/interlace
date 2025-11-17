@@ -1,10 +1,7 @@
 <mat-sidenav-container class="layout-container">
-  <mat-sidenav #sidenav 
-               [mode]="isMobile ? 'over' : 'side'" 
-               [(opened)]="isSidebarOpen"
-               [ngClass]="{ 'collapsed': !isSidebarOpen }" 
-               class="sidenav">
-    
+  <mat-sidenav #sidenav [mode]="isMobile ? 'over' : 'side'" [(opened)]="isSidebarOpen"
+    [ngClass]="{ 'collapsed': !isSidebarOpen }" class="sidenav">
+
     <!-- Logo Section -->
     <mat-toolbar class="sidenav-toolbar">
       <a routerLink="/home" class="logo-link">
@@ -24,16 +21,13 @@
 
     <!-- Navigation Menu - Loop through menus -->
     <mat-nav-list class="nav-list">
-      
+
       <!-- Loop through main menus -->
       <ng-container *ngFor="let menu of menus">
-        
+
         <!-- Single Menu Item (without children) -->
-        <a *ngIf="!hasChildren(menu)" 
-           mat-list-item 
-           [routerLink]="menu.route" 
-           routerLinkActive="active"
-           class="nav-item">
+        <a *ngIf="!hasChildren(menu)" mat-list-item [routerLink]="menu.route" routerLinkActive="active"
+          class="nav-item">
           <mat-icon class="left-icon">{{ menu.icon }}</mat-icon>
           <span class="label">{{ menu.label }}</span>
           <div class="active-indicator"></div>
@@ -41,9 +35,8 @@
 
         <!-- Parent Menu Item (with children) -->
         <div *ngIf="hasChildren(menu)" class="menu-section">
-          <mat-list-item (click)="toggleMenu(menu.key)" 
-                        class="parent-menu nav-item"
-                        [ngClass]="{ 'expanded': openMenus[menu.key] }">
+          <mat-list-item (click)="toggleMenu(menu.key)" class="parent-menu nav-item"
+            [ngClass]="{ 'expanded': openMenus[menu.key] }">
             <mat-icon class="left-icon">{{ menu.icon }}</mat-icon>
             <span class="label">{{ menu.label }}</span>
             <mat-icon class="right-icon">
@@ -54,45 +47,68 @@
 
           <!-- Submenu - Loop through children -->
           <div *ngIf="openMenus[menu.key]" class="sub-menu animate-slideDown">
-            
+
             <ng-container *ngFor="let child of menu.children">
-              
+
               <!-- Child without further children -->
-              <a *ngIf="!hasChildren(child)" 
-                 mat-list-item 
-                 [routerLink]="child.route" 
-                 routerLinkActive="active"
-                 class="sub-menu-item">
+              <a *ngIf="!hasChildren(child)" mat-list-item [routerLink]="child.route" routerLinkActive="active"
+                class="sub-menu-item">
                 <mat-icon class="submenu-icon">{{ child.icon }}</mat-icon>
                 <span class="label">{{ child.label }}</span>
                 <div class="active-indicator"></div>
               </a>
 
-              <!-- Child with sub-children -->
               <div *ngIf="hasChildren(child)" class="nested-menu-container">
-                <mat-list-item (click)="toggleMenu(child.key)" 
-                              class="nested-menu sub-menu-item"
-                              [ngClass]="{ 'expanded': openMenus[child.key] }">
+                <mat-list-item (click)="toggleMenu(child.key)" class="nested-menu sub-menu-item"
+                  [ngClass]="{ 'expanded': openMenus[child.key] }">
                   <mat-icon class="submenu-icon">{{ child.icon }}</mat-icon>
                   <span class="label">{{ child.label }}</span>
+
                   <mat-icon class="right-icon">
                     {{ openMenus[child.key] ? 'expand_more' : 'chevron_right' }}
                   </mat-icon>
                 </mat-list-item>
 
-                <!-- Sub-submenu - Loop through grand children -->
+                <!-- Level 3 -->
                 <div *ngIf="openMenus[child.key]" class="sub-sub-menu animate-slideDown">
-                  <a *ngFor="let grandChild of child.children" 
-                     mat-list-item 
-                     [routerLink]="grandChild.route" 
-                     routerLinkActive="active"
-                     class="deep-menu-item">
-                    <mat-icon class="deepmenu-icon">{{ grandChild.icon }}</mat-icon>
-                    <span class="label">{{ grandChild.label }}</span>
-                    <div class="active-indicator"></div>
-                  </a>
+
+                  <ng-container *ngFor="let grandChild of child.children">
+
+                    <!-- Grandchild with NO children -->
+                    <a *ngIf="!hasChildren(grandChild)" mat-list-item [routerLink]="grandChild.route"
+                      class="deep-menu-item" routerLinkActive="active">
+                      <mat-icon class="deepmenu-icon">{{ grandChild.icon }}</mat-icon>
+                      <span class="label">{{ grandChild.label }}</span>
+                    </a>
+
+                    <!-- Grandchild with CHILDREN (Level 4) -->
+                    <div *ngIf="hasChildren(grandChild)" class="third-level">
+                      <mat-list-item (click)="toggleMenu(grandChild.key)" class="deep-menu-item"
+                        [ngClass]="{ 'expanded': openMenus[grandChild.key] }">
+
+                        <mat-icon class="deepmenu-icon">{{ grandChild.icon }}</mat-icon>
+                        <span class="label">{{ grandChild.label }}</span>
+
+                        <mat-icon class="right-icon">
+                          {{ openMenus[grandChild.key] ? 'expand_more' : 'chevron_right' }}
+                        </mat-icon>
+                      </mat-list-item>
+
+                      <div *ngIf="openMenus[grandChild.key]" class="level-4 animate-slideDown">
+                        <a *ngFor="let great of grandChild.children" mat-list-item [routerLink]="great.route"
+                          routerLinkActive="active" class="level-4-item">
+                          <mat-icon class="deepmenu-icon">{{ great.icon }}</mat-icon>
+                          <span class="label">{{ great.label }}</span>
+                        </a>
+                      </div>
+
+                    </div>
+
+                  </ng-container>
+
                 </div>
               </div>
+
 
             </ng-container>
           </div>
@@ -108,13 +124,13 @@
   <mat-sidenav-content class="main-content">
     <!-- Header Component -->
     <app-header (toggleSidebar)="onSidebarToggle()"></app-header>
-    
+
     <!-- Main Content Wrapper -->
     <div class="content-wrapper">
       <!-- Page Content -->
       <router-outlet></router-outlet>
     </div>
-    
+
     <!-- Footer Component -->
     <app-footer></app-footer>
   </mat-sidenav-content>

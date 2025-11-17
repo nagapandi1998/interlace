@@ -48,70 +48,65 @@ export class Layout implements OnInit {
 
   // Dynamic menu structure
   menus: MenuItem[] = [
-    // {
-    //   key: 'home',
-    //   label: 'Home',
-    //   icon: 'dashboard',
-    //   route: '/home'
-    // },
-    {
-      key: 'employee',
-      label: 'Employees',
-      icon: 'people_alt',
-      children: [
-        { 
-          key: 'allEmployees',
-          label: 'All Employees', 
-          route: '/home', 
-          icon: 'list_alt' 
-        },
-        {
-          key: 'addEmployee',
-          label: 'Add Employee',
-          icon: 'person_add',
-          children: [
-            { 
-              key: 'materialForm',
-              label: 'Angular Material', 
-              route: '/materialform', 
-              icon: 'dynamic_form' 
-            },
-            { 
-              key: 'ngBootstrap',
-              label: 'NgBootstrap', 
-              route: '/bootstrapform', 
-              icon: 'dynamic_form' 
-            },
-          ],
-        },
-        // { 
-        //   key: 'employeeReports',
-        //   label: 'Employee Reports', 
-        //   route: '/employees/reports', 
-        //   icon: 'assessment' 
-        // },
-      ],
-    },
-    {
-      key: 'case',
-      label: 'Court Case',
-      icon: 'folder_special',
-      children: [
-        { 
-          key: 'allCases',
-          label: 'All Cases', 
-          route: '/allcases', 
-          icon: 'folder_open' 
-        },
-        { 
-          key: 'caseCreation',
-          label: 'Case Creation', 
-          route: '/casecreation', 
-          icon: 'create_new_folder' 
-        },
-      ],
-    }
-  ];
+  {
+    key: 'employee',
+    label: 'Employees',
+    icon: 'people_alt',
+    children: [
+      {
+        key: 'allEmployees',
+        label: 'All Employees',
+        route: '/home',
+        icon: 'list_alt'
+      },
+      {
+        key: 'addEmployee',
+        label: 'Add Employees',
+        icon: 'person_add',
+        children: [
+          {
+            key: 'uiLibrary',
+            label: 'UI Library',
+            icon: 'integration_instructions',
+            children: [
+              {
+                key: 'materialForm',
+                label: 'Angular Material',
+                route: '/materialform',
+                icon: 'widgets'
+              },
+              {
+                key: 'ngBootstrap',
+                label: 'Ng Bootstrap',
+                route: '/bootstrapform',
+                icon: 'grid_view'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    key: 'case',
+    label: 'Court Case',
+    icon: 'folder_special',
+    children: [
+      {
+        key: 'allCases',
+        label: 'All Cases',
+        route: '/allcases',
+        icon: 'folder_open'
+      },
+      {
+        key: 'caseCreation',
+        label: 'Case Creation',
+        route: '/casecreation',
+        icon: 'create_new_folder'
+      }
+    ]
+  }
+];
 
 
   constructor(private router: Router) {}
