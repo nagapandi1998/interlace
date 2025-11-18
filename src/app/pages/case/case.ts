@@ -115,6 +115,7 @@ export class Case {
   documentData: any[] = [];
   documentdisplayedColumns: string[] = ['documenttype', 'attachments', 'documentdate', 'actions'];
   isViewMode: boolean = false;
+  isEditMode: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -145,6 +146,7 @@ export class Case {
       legalCellFileNo: [''],
       concernedOfficeFileNo: [''],
       nextHearingDate: [''],
+      approvalStatus: [''],
 
       //  <-- case details form -->
       caseDetails: ['', Validators.required],
@@ -165,6 +167,11 @@ export class Case {
 
     if (!id) return; // no edit, no view → create mode
 
+    if (id && !this.isViewMode) {
+      this.isEditMode = true;
+    }
+
+    console.log('Edit Mode:', this.isEditMode, 'View Mode:', this.isViewMode);
     const rawData = sessionStorage.getItem('caseData');
     if (!rawData) return;
 
@@ -191,6 +198,7 @@ export class Case {
       nextHearingDate: this.convertToDate(record.nextHearingDate),
       caseDetails: record.caseDetails,
       prayerSubject: record.prayerSubject,
+      approvalStatus: record.approvalStatus,
     });
 
     // Load child tables
@@ -450,6 +458,7 @@ export class Case {
       const id = Number(this.route.snapshot.paramMap.get('id'));
 
       let caseMsg;
+
       if (id) {
         // UPDATE
         const index = caseList.findIndex((c: any) => c.id === id);
@@ -460,6 +469,7 @@ export class Case {
         caseMsg = 'Case Updated successfully!';
       } else {
         // CREATE
+        formattedCase.approvalStatus = 'Pending';
         caseList.push({ id: caseList.length + 1, ...formattedCase });
         caseMsg = 'Case Created successfully!';
       }

@@ -559,7 +559,7 @@
     <br>
     <div class="button-row">
       <button mat-stroked-button color="accent" type="button" class="back-btn" (click)="goBack()">Back</button>
-      <button mat-raised-button color="primary"  [class.disabled]="isViewMode" [disabled]="isViewMode" type="submit">Submit</button>
+      <button mat-raised-button color="primary"  [class.disabled]="isViewMode" [disabled]="isViewMode" type="submit">{{ isEditMode ? 'Update' : 'Create' }}</button>
     </div>
   </form>
 </div>

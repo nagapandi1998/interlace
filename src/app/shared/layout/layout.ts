@@ -55,6 +55,25 @@ export class Layout implements OnInit {
     //   route: '/home',
     // },
     {
+      key: 'case',
+      label: 'Court Case',
+      icon: 'folder_special',
+      children: [
+        {
+          key: 'allCases',
+          label: 'All Cases',
+          route: '/allcases',
+          icon: 'folder_open',
+        },
+        {
+          key: 'caseCreation',
+          label: 'Case Creation',
+          route: '/casecreation',
+          icon: 'create_new_folder',
+        },
+      ],
+    },
+    {
       key: 'employee',
       label: 'Employees',
       icon: 'people_alt',
@@ -90,25 +109,6 @@ export class Layout implements OnInit {
               ],
             },
           ],
-        },
-      ],
-    },
-    {
-      key: 'case',
-      label: 'Court Case',
-      icon: 'folder_special',
-      children: [
-        {
-          key: 'allCases',
-          label: 'All Cases',
-          route: '/allcases',
-          icon: 'folder_open',
-        },
-        {
-          key: 'caseCreation',
-          label: 'Case Creation',
-          route: '/casecreation',
-          icon: 'create_new_folder',
         },
       ],
     },

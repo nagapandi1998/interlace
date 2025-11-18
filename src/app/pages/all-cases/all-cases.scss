@@ -62,7 +62,7 @@
 
 /* ---------- Employee Table Card ---------- */
 .employee-table-card {
-//   max-width: 95%;
+  //   max-width: 95%;
   // margin: 0 auto 40px;
   // padding: 16px;
   background: #fff;
@@ -75,10 +75,10 @@
 
   h2 {
     text-align: center;
-    font-size: 22px;
+    // font-size: 22px;
     font-weight: 600;
     margin-bottom: 16px;
-     color: #f50458;
+    color: #f50458;
   }
 }
 
@@ -93,8 +93,8 @@
 }
 
 /* Header */
-:host ::ng-deep .mat-header-row {
-  background-color: #1976d2 !important;
+.mat-mdc-table {
+  white-space: nowrap !important;
 }
 
 :host ::ng-deep .mat-header-cell {
@@ -102,7 +102,7 @@
   color: #fff !important;
   text-transform: capitalize;
   padding: 14px 16px;
-  border-bottom: 2px solid #1565c0;
+  // border-bottom: 2px solid #1565c0;
 }
 
 /* Body Rows */
@@ -147,28 +147,6 @@
   background-color: #fafafa;
 }
 
-.active-status {
-  background-color: #f50458;
-  color: white;
-  padding: 4px 8px;
-  border-radius: 12px;
-  // font-weight: 600;
-  display: inline-block;
-  min-width: 70px;
-  text-align: center;
-}
-
-.inactive-status {
-  background-color: #0066ff;
-  color: white;
-  padding: 4px 8px;
-  border-radius: 12px;
-  // font-weight: 600;
-  display: inline-block;
-  min-width: 70px;
-  text-align: center;
-}
-
 /* ---------- Responsive Design ---------- */
 @media (max-width: 1024px) {
   ::ng-deep table.mat-table {
@@ -208,6 +186,10 @@
 }
 
 @media (max-width: 480px) {
+  .search-field {
+  width: 180px !important;
+  }
+
   .employee-table-card {
     padding: 8px;
   }
@@ -227,6 +209,20 @@
   }
 }
 
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.search-field {
+  width: 300px;
+
+  .search-btn{
+    color: #495057 !important;
+  }
+}
 
 .add-button {
   display: flex;
@@ -247,21 +243,62 @@
   }
 }
 
+
+
 .action-btn {
-  display: contents;
+  align-items: center;
 
   .edit-icon {
-    color: #009d54;
+    color: #02A852;
 
     &:hover {
       color: #45a049;
     }
   }
   .view-icon {
-    color: #a61eea;
+    color: #A020F0;
 
     &:hover {
       color: #a605f7;
     }
   }
+  .forward {
+    color: #E91E63;
+
+    &:hover {
+      color: #f50458;
+    }
+  }
 }
+
+.status-badge {
+  display: inline-block;
+  padding: 0.4em 0.5em;
+  font-size: 75%;
+  font-weight: 600;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+  color: #fff;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.approved {
+  background-color: #28a745;
+}
+
+.pending {
+  background-color: #ffbf00;
+}
+
+.returned {
+  background-color: #dc3545;
+}
+
+.forwarded {
+  background-color: #717171;
+}
+

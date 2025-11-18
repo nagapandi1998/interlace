@@ -50,7 +50,7 @@ export class Auth {
       if (email == 'admin@gmail.com' && password == 'admin@123') {
         setTimeout(() => {
           this.loading = false;
-          this.router.navigate(['/home']);
+          this.router.navigate(['/allcases']);
         }, 700);
       } else if (email !== 'admin@gmail.com') {
         setTimeout(() => {

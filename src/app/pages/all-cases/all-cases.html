@@ -1,16 +1,31 @@
 <!-- Employee Table Section -->
 <mat-card class="employee-table-card" appearance="outlined">
-
+    <app-loader [loading]="loading"></app-loader>
     <div class="card-header">
-        <h2>Case List</h2>
+        <h2>All Cases</h2>
     </div>
 
 
     <div class="table-container">
-        <!-- Add Button -->
-        <div class="add-button">
-            <button mat-raised-button color="primary" type="button" (click)="addCase()">Add Case</button>
+
+        <!-- Search + Add Button -->
+        <div class="top-bar">
+
+            <!-- Search Bar -->
+            <mat-form-field class="search-field" appearance="outline">
+                <mat-label>Search</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Search cases..." />
+                <button class="search-btn" mat-icon-button matPrefix disabled>
+                    <mat-icon>search</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <!-- Add Button -->
+            <div class="add-button">
+                <button mat-raised-button color="primary" type="button" (click)="addCase()">Add Case</button>
+            </div>
         </div>
+
 
         <div class="table-responsive">
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
@@ -29,7 +44,7 @@
 
                 <!-- Date of Filing/Admission Date -->
                 <ng-container matColumnDef="filingDate">
-                    <th mat-header-cell *matHeaderCellDef>Date of Filing/Admission Date</th>
+                    <th mat-header-cell *matHeaderCellDef>Date of Filing/ Admission</th>
                     <td mat-cell *matCellDef="let row">{{ row.filingDate }}</td>
                 </ng-container>
 
@@ -66,18 +81,28 @@
                 <!-- Approval Status -->
                 <ng-container matColumnDef="approvalStatus">
                     <th mat-header-cell *matHeaderCellDef>Approval Status</th>
-                    <td mat-cell *matCellDef="let row">{{ row.approvalStatus }}</td>
+                    <td mat-cell *matCellDef="let row">
+                        <span class="status-badge"
+                            [ngClass]="{'pending': row.approvalStatus === 'Pending', 'approved': row.approvalStatus === 'Approved', 'forwarded': row.approvalStatus === 'Forward', 'returned': row.approvalStatus === 'Returned'}">
+                            {{ row.approvalStatus }}
+                        </span>
+                    </td>
                 </ng-container>
 
                 <!-- Actions -->
                 <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef>Actions</th>
                     <td class="action-btn" mat-cell *matCellDef="let element">
-                        <button mat-icon-button color="primary" type="button" matTooltip="Edit" matTooltipPosition="below" (click)="editCase(element.id)" >
+                        <button mat-icon-button color="warn" type="button" matTooltip="View" matTooltipPosition="below"
+                            (click)="viewCase(element.id)">
+                            <mat-icon class="view-icon">visibility</mat-icon>
+                        </button>
+                        <button mat-icon-button color="primary" type="button" matTooltip="Edit"
+                            matTooltipPosition="below" (click)="editCase(element.id)">
                             <mat-icon class="edit-icon">edit</mat-icon>
                         </button>
-                        <button mat-icon-button color="warn" type="button" matTooltip="View" matTooltipPosition="below" (click)="viewCase(element.id)">
-                            <mat-icon class="view-icon">visibility</mat-icon>
+                        <button mat-icon-button type="button" matTooltip="Forward" matTooltipPosition="below">
+                            <mat-icon class="forward">send</mat-icon>
                         </button>
                     </td>
                 </ng-container>
