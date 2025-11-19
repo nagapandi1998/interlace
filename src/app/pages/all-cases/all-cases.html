@@ -7,8 +7,6 @@
 
 
     <div class="table-container">
-
-        <!-- Search + Add Button -->
         <div class="top-bar">
 
             <!-- Search Bar -->
@@ -90,7 +88,7 @@
                 </ng-container>
 
                 <!-- Actions -->
-                <ng-container matColumnDef="actions">
+                <!-- <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef>Actions</th>
                     <td class="action-btn" mat-cell *matCellDef="let element">
                         <button mat-icon-button color="warn" type="button" matTooltip="View" matTooltipPosition="below"
@@ -105,7 +103,36 @@
                             <mat-icon class="forward">send</mat-icon>
                         </button>
                     </td>
+                </ng-container> -->
+
+                <!-- Actions -->
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef>Actions</th>
+                    <td class="action-btn" mat-cell *matCellDef="let element">
+
+                        <!-- View: Always visible except maybe you can add conditions if needed -->
+                        <button mat-icon-button color="warn" type="button" matTooltip="View" matTooltipPosition="below"
+                            (click)="viewCase(element.id)"
+                            *ngIf="['Forward', 'Approved', 'Pending', 'Returned'].includes(element.approvalStatus)">
+                            <mat-icon class="view-icon">visibility</mat-icon>
+                        </button>
+
+                        <!-- Edit: Only for Returned or Pending -->
+                        <button mat-icon-button color="primary" type="button" matTooltip="Edit"
+                            matTooltipPosition="below" (click)="editCase(element.id)"
+                            *ngIf="['Returned', 'Pending'].includes(element.approvalStatus)">
+                            <mat-icon class="edit-icon">edit</mat-icon>
+                        </button>
+
+                        <!-- Forward: Only for Pending -->
+                        <button mat-icon-button type="button" matTooltip="Forward" matTooltipPosition="below"
+                            *ngIf="element.approvalStatus === 'Pending'">
+                            <mat-icon class="forward">send</mat-icon>
+                        </button>
+
+                    </td>
                 </ng-container>
+
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

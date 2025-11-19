@@ -187,7 +187,7 @@
 
 @media (max-width: 480px) {
   .search-field {
-  width: 180px !important;
+    width: 180px !important;
   }
 
   .employee-table-card {
@@ -219,9 +219,13 @@
 .search-field {
   width: 300px;
 
-  .search-btn{
+  .search-btn {
     color: #495057 !important;
   }
+}
+
+:host :ng-deep .search-field .mdc-text-field {
+  height: 50px;
 }
 
 .add-button {
@@ -243,27 +247,30 @@
   }
 }
 
-
-
 .action-btn {
+  // align-items: center;
+  display: flex;
+  justify-content: center;
   align-items: center;
+  gap: 8px;
+  margin-top: 11px;
 
   .edit-icon {
-    color: #02A852;
+    color: #02a852;
 
     &:hover {
       color: #45a049;
     }
   }
   .view-icon {
-    color: #A020F0;
+    color: #a020f0;
 
     &:hover {
       color: #a605f7;
     }
   }
   .forward {
-    color: #E91E63;
+    color: #e91e63;
 
     &:hover {
       color: #f50458;
@@ -301,4 +308,3 @@
 .forwarded {
   background-color: #717171;
 }
-

@@ -243,3 +243,7 @@ mat-form-field {
 .disabled{
   opacity: 0.6;
 }
+
+::ng-deep .mdc-text-field--disabled {
+    -webkit-text-fill-color: rgba(0, 0, 0, 0.87) !important;
+}
