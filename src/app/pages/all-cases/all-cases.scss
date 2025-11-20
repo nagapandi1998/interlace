@@ -224,8 +224,8 @@
   }
 }
 
-:host :ng-deep .search-field .mdc-text-field {
-  height: 50px;
+:host ::ng-deep .search-field .mat-mdc-text-field-wrapper {
+  height: 50px !important;
 }
 
 .add-button {
