@@ -114,6 +114,10 @@ mat-form-field {
   background-color: #1976d2 !important;
 }
 
+.mat-mdc-table {
+  white-space: nowrap !important;
+}
+
 :host ::ng-deep .mat-header-cell {
   font-weight: bold;
   color: #fff !important;
@@ -176,7 +180,7 @@ mat-form-field {
 }
 
 .action-btn {
-  display: contents;
+  // display: contents;
 
   .edit-icon {
     color: #009d54;
@@ -195,8 +199,8 @@ mat-form-field {
 }
 
 .error-text {
-  color: #ba1a1a;
-  font-size: 13px;
+  color: #ff0000;
+  font-size: 14px;
   margin-top: 4px;
 }
 

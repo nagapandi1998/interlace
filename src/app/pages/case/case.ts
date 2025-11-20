@@ -434,65 +434,83 @@ export class Case {
 
   onSubmit() {
     this.formSubmitted = true;
+    this.casecreationForm.markAllAsTouched();
+    
+    // Check table data required
+    const isTableEmpty =
+      !this.locationData.length ||
+      !this.petitionerData.length ||
+      !this.boardStandingCounselData.length ||
+      !this.respondentData.length ||
+      !this.documentData.length;
 
-    if (this.casecreationForm.valid) {
-      this.loading = true;
-
-      const formValue = this.casecreationForm.value;
-
-      const formattedCase = {
-        ...formValue,
-        filingDate: this.datePipe.transform(formValue.filingDate, 'dd/MM/yyyy'),
-        receivedDate: this.datePipe.transform(formValue.receivedDate, 'dd/MM/yyyy'),
-        nextHearingDate: this.datePipe.transform(formValue.nextHearingDate, 'dd/MM/yyyy'),
-        location: this.locationData,
-        petitioner: this.petitionerData,
-        boardStandingCounsel: this.boardStandingCounselData,
-        respondent: this.respondentData,
-        document: this.documentData,
-      };
-
-      const storedData = sessionStorage.getItem('caseData');
-      let caseList = storedData ? JSON.parse(storedData) : [];
-
-      const id = Number(this.route.snapshot.paramMap.get('id'));
-
-      let caseMsg;
-
-      if (id) {
-        // UPDATE
-        const index = caseList.findIndex((c: any) => c.id === id);
-        if (index !== -1) {
-          caseList[index] = { id, ...formattedCase };
-        }
-
-        caseMsg = 'Case Updated successfully!';
-      } else {
-        // CREATE
-        formattedCase.approvalStatus = 'Pending';
-        caseList.push({ id: caseList.length + 1, ...formattedCase });
-        caseMsg = 'Case Created successfully!';
-      }
-
-      sessionStorage.setItem('caseData', JSON.stringify(caseList));
-
-      setTimeout(() => {
-        this.loading = false;
-        this.snackBar.open(caseMsg, '', {
-          duration: 3000,
-          verticalPosition: 'top',
-          panelClass: ['success-snackbar'],
-        });
-        this.router.navigate(['/allcases']);
-      }, 500);
-    } else {
-      this.casecreationForm.markAllAsTouched();
+    if (isTableEmpty) {
       this.snackBar.open('Please fill all required fields.', '', {
         duration: 3000,
         verticalPosition: 'top',
         panelClass: ['error-snackbar'],
       });
+      return;
     }
+
+    if (!this.casecreationForm.valid) {
+      this.snackBar.open('Please fill all required fields.', '', {
+        duration: 3000,
+        verticalPosition: 'top',
+        panelClass: ['error-snackbar'],
+      });
+      return;
+    }
+
+    this.loading = true;
+
+    const formValue = this.casecreationForm.value;
+
+    const formattedCase = {
+      ...formValue,
+      filingDate: this.datePipe.transform(formValue.filingDate, 'dd/MM/yyyy'),
+      receivedDate: this.datePipe.transform(formValue.receivedDate, 'dd/MM/yyyy'),
+      nextHearingDate: this.datePipe.transform(formValue.nextHearingDate, 'dd/MM/yyyy'),
+      location: this.locationData,
+      petitioner: this.petitionerData,
+      boardStandingCounsel: this.boardStandingCounselData,
+      respondent: this.respondentData,
+      document: this.documentData,
+    };
+
+    const storedData = sessionStorage.getItem('caseData');
+    let caseList = storedData ? JSON.parse(storedData) : [];
+
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+
+    let caseMsg;
+
+    if (id) {
+      // UPDATE
+      const index = caseList.findIndex((c: any) => c.id === id);
+      if (index !== -1) {
+        caseList[index] = { id, ...formattedCase };
+      }
+
+      caseMsg = 'Case Updated successfully!';
+    } else {
+      // CREATE
+      formattedCase.approvalStatus = 'Pending';
+      caseList.push({ id: caseList.length + 1, ...formattedCase });
+      caseMsg = 'Case Created successfully!';
+    }
+
+    sessionStorage.setItem('caseData', JSON.stringify(caseList));
+
+    setTimeout(() => {
+      this.loading = false;
+      this.snackBar.open(caseMsg, '', {
+        duration: 3000,
+        verticalPosition: 'top',
+        panelClass: ['success-snackbar'],
+      });
+      this.router.navigate(['/allcases']);
+    }, 500);
   }
 
   goBack() {
