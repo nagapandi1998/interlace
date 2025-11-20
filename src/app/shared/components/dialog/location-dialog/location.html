@@ -1,4 +1,4 @@
-  <app-loader [loading]="loading"></app-loader>
+<app-loader [loading]="loading"></app-loader>
 <h2 mat-dialog-title class="dialog-header">
   <span>Location Details</span>
   <button mat-icon-button (click)="close()" class="close-btn">
@@ -14,10 +14,9 @@
         <mat-option value=""> Select </mat-option>
         <mat-option *ngFor="let r of regions" [value]="r">{{ r }}</mat-option>
       </mat-select>
-             <mat-error
-          *ngIf="locationForm.get('regionName')?.touched && locationForm.get('regionName')?.invalid">
-          Region Name is required
-        </mat-error>
+      <mat-error *ngIf="locationForm.get('regionName')?.touched && locationForm.get('regionName')?.invalid">
+        Region Name is required
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -26,51 +25,147 @@
         <mat-option value=""> Select </mat-option>
         <mat-option *ngFor="let o of officeTypes" [value]="o">{{ o }}</mat-option>
       </mat-select>
-      <mat-error
-          *ngIf="locationForm.get('officeTypeName')?.touched && locationForm.get('officeTypeName')?.invalid">
-          Office Type Name is required
-        </mat-error>
+      <mat-error *ngIf="locationForm.get('officeTypeName')?.touched && locationForm.get('officeTypeName')?.invalid">
+        Office Type Name is required
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Area/Dept Name</mat-label>
       <mat-select formControlName="areaDeptName">
         <mat-option value=""> Select </mat-option>
-        <mat-option *ngFor="let a of areas" [value]="a">{{ a }}</mat-option>
+        <!-- Area -->
+        <ng-container *ngIf="locationForm.get('officeTypeName')?.value === 'Area'">
+          <ng-container *ngIf="locationForm.get('regionName')?.value === 'North'">
+            <mat-option *ngFor="let a of northareas" [value]="a">{{ a }}</mat-option>
+          </ng-container>
+          <ng-container *ngIf="locationForm.get('regionName')?.value === 'North East'">
+            <mat-option *ngFor="let a of northeastareas" [value]="a">{{ a }}</mat-option>
+          </ng-container>
+          <ng-container *ngIf="locationForm.get('regionName')?.value === 'Central'">
+            <mat-option *ngFor="let a of centralareas" [value]="a">{{ a }}</mat-option>
+          </ng-container>
+          <ng-container *ngIf="locationForm.get('regionName')?.value === 'South West'">
+            <mat-option *ngFor="let a of southwestareas" [value]="a">{{ a }}</mat-option>
+          </ng-container>
+          <ng-container *ngIf="locationForm.get('regionName')?.value === 'South'">
+            <mat-option *ngFor="let a of southareas" [value]="a">{{ a }}</mat-option>
+          </ng-container>
+          <ng-container *ngIf="locationForm.get('regionName')?.value === 'Water Source and Treatment'">
+            <mat-option *ngFor="let a of watersourceareas" [value]="a">{{ a }}</mat-option>
+          </ng-container>
+          <ng-container *ngIf="locationForm.get('regionName')?.value === 'Sewer Treatment and Plant'">
+            <mat-option *ngFor="let a of sewagetreatmentareas" [value]="a">{{ a }}</mat-option>
+          </ng-container>
+        </ng-container>
+
+        <!-- Department -->
+        <ng-container *ngIf="locationForm.get('officeTypeName')?.value === 'Department'">
+          <ng-container *ngIf="locationForm.get('regionName')?.value === 'Water Source and Treatment'">
+            <mat-option *ngFor="let d of watersourcedept" [value]="d">{{ d }}</mat-option>
+          </ng-container>
+          <ng-container *ngIf="locationForm.get('regionName')?.value === 'Sewer Treatment and Plant'">
+            <mat-option *ngFor="let d of sewagetreatmentdept" [value]="d">{{ d }}</mat-option>
+          </ng-container>
+          <ng-container *ngIf="locationForm.get('regionName')?.value === 'Recycled water'">
+            <mat-option *ngFor="let d of recycledwaterdept" [value]="d">{{ d }}</mat-option>
+          </ng-container>
+          <ng-container *ngIf="locationForm.get('regionName')?.value === 'Head office'">
+            <mat-option *ngFor="let d of headofficedept" [value]="d">{{ d }}</mat-option>
+          </ng-container>
+        </ng-container>
+
       </mat-select>
-      <mat-error
-          *ngIf="locationForm.get('areaDeptName')?.touched && locationForm.get('areaDeptName')?.invalid">
-          Area/Dept Name is required
-        </mat-error>
+      <mat-error *ngIf="locationForm.get('areaDeptName')?.touched && locationForm.get('areaDeptName')?.invalid">
+        Area/Dept Name is required
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Sub Office Type Name</mat-label>
       <mat-select formControlName="subOfficeTypeName">
         <mat-option value=""> Select </mat-option>
-        <mat-option *ngFor="let s of subOffices" [value]="s">{{ s }}</mat-option>
+        <ng-container *ngIf="locationForm.get('officeTypeName')?.value === 'Area'">
+          <mat-option *ngFor="let a of areasubOffices" [value]="a">{{ a }}</mat-option>
+        </ng-container>
+        <ng-container *ngIf="locationForm.get('officeTypeName')?.value === 'Department'">
+          <mat-option *ngFor="let d of deptsubOffices" [value]="d">{{ d }}</mat-option>
+        </ng-container>
+        <!-- <mat-option *ngFor="let s of areasubOffices" [value]="s">{{ s }}</mat-option> -->
       </mat-select>
       <mat-error
-          *ngIf="locationForm.get('subOfficeTypeName')?.touched && locationForm.get('subOfficeTypeName')?.invalid">
-          Sub Office Type Name is required
-        </mat-error>
+        *ngIf="locationForm.get('subOfficeTypeName')?.touched && locationForm.get('subOfficeTypeName')?.invalid">
+        Sub Office Type Name is required
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Depot/Location</mat-label>
       <mat-select formControlName="depotLocation">
         <mat-option value=""> Select </mat-option>
-        <mat-option *ngFor="let d of depots" [value]="d">{{ d }}</mat-option>
+        <ng-container *ngIf="locationForm.get('areaDeptName')?.value === 'Area 1 - Thiruvottriyur'">
+          <ng-container *ngIf="locationForm.get('subOfficeTypeName')?.value === 'Area Office'">
+            <mat-option value="Area 1 - Office"> Area 1 - Office </mat-option>
+          </ng-container>
+          <ng-container *ngIf="locationForm.get('subOfficeTypeName')?.value === 'Depot'">
+            <mat-option *ngFor="let area1 of area1depots" [value]="area1"> {{area1}} </mat-option>
+          </ng-container>
+          <ng-container *ngIf="locationForm.get('subOfficeTypeName')?.value === 'FP'">
+            <mat-option *ngFor="let area1 of area1fp" [value]="area1"> {{area1}} </mat-option>
+          </ng-container>
+          <ng-container *ngIf="locationForm.get('subOfficeTypeName')?.value === 'SPS'">
+            <mat-option *ngFor="let area1 of area1sps" [value]="area1"> {{area1}} </mat-option>
+          </ng-container>
+          <ng-container *ngIf="locationForm.get('subOfficeTypeName')?.value === 'WDS'">
+            <mat-option *ngFor="let area1 of area1wds" [value]="area1"> {{area1}} </mat-option>
+          </ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="locationForm.get('areaDeptName')?.value === 'Area 2 - Manali'">
+          <ng-container *ngIf="locationForm.get('subOfficeTypeName')?.value === 'Area Office'">
+            <mat-option value="Area 2 - Office"> Area 2 - Office </mat-option>
+          </ng-container>
+          <ng-container *ngIf="locationForm.get('subOfficeTypeName')?.value === 'Depot'">
+            <mat-option *ngFor="let area2 of area2depots" [value]="area2"> {{area2}} </mat-option>
+          </ng-container>
+          <ng-container *ngIf="locationForm.get('subOfficeTypeName')?.value === 'FP'">
+            <mat-option *ngFor="let area2 of area2fp" [value]="area2"> {{area2}} </mat-option>
+          </ng-container>
+          <ng-container *ngIf="locationForm.get('subOfficeTypeName')?.value === 'SPS'">
+            <mat-option *ngFor="let area2 of area2sps" [value]="area2"> {{area2}} </mat-option>
+          </ng-container>
+          <ng-container *ngIf="locationForm.get('subOfficeTypeName')?.value === 'WDS'">
+            <mat-option *ngFor="let area2 of area2wds" [value]="area2"> {{area2}} </mat-option>
+          </ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="locationForm.get('areaDeptName')?.value === 'Area 3 - Madhavaram'">
+          <ng-container *ngIf="locationForm.get('subOfficeTypeName')?.value === 'Area Office'">
+            <mat-option value="Area 3 - Office"> Area 3 - Office </mat-option>
+          </ng-container>
+          <ng-container *ngIf="locationForm.get('subOfficeTypeName')?.value === 'Depot'">
+            <mat-option *ngFor="let area3 of area3depots" [value]="area3"> {{area3}} </mat-option>
+          </ng-container>
+          <ng-container *ngIf="locationForm.get('subOfficeTypeName')?.value === 'FP'">
+            <mat-option *ngFor="let area3 of area3fp" [value]="area3"> {{area3}} </mat-option>
+          </ng-container>
+          <ng-container *ngIf="locationForm.get('subOfficeTypeName')?.value === 'SPS'">
+            <mat-option *ngFor="let area3 of area3sps" [value]="area3"> {{area3}} </mat-option>
+          </ng-container>
+          <ng-container *ngIf="locationForm.get('subOfficeTypeName')?.value === 'WDS'">
+            <mat-option *ngFor="let area3 of area3wds" [value]="area3"> {{area3}} </mat-option>
+          </ng-container>
+        </ng-container>
+
       </mat-select>
-      <mat-error
-          *ngIf="locationForm.get('depotLocation')?.touched && locationForm.get('depotLocation')?.invalid">
-          Depot/Location is required
-        </mat-error>
+      <mat-error *ngIf="locationForm.get('depotLocation')?.touched && locationForm.get('depotLocation')?.invalid">
+        Depot/Location is required
+      </mat-error>
     </mat-form-field>
   </div>
 </mat-dialog-content>
 
-<mat-dialog-actions  class="dialog-actions">
+<mat-dialog-actions class="dialog-actions">
   <button mat-stroked-button class="back-btn" color="warn" (click)="close()">Cancel</button>
   <button mat-raised-button color="primary" (click)="save()">Save</button>
 </mat-dialog-actions>
