@@ -248,12 +248,17 @@
 }
 
 .action-btn {
-  // align-items: center;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 8px;
   margin-top: 11px;
+
+  .is-disabled {
+    opacity: 0.4 !important;
+    pointer-events: none !important;
+    cursor: not-allowed !important;
+  }
 
   .edit-icon {
     color: #02a852;

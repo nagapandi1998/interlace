@@ -92,23 +92,25 @@
                     <th mat-header-cell *matHeaderCellDef>Actions</th>
                     <td class="action-btn" mat-cell *matCellDef="let element">
 
-                        <!-- View: Always visible except maybe you can add conditions if needed -->
-                        <button mat-icon-button color="warn" type="button" matTooltip="View" matTooltipPosition="below"
-                            (click)="viewCase(element.id)"
-                            *ngIf="['Forward', 'Approved', 'Pending', 'Returned'].includes(element.approvalStatus)">
+                        <!-- View -->
+                        <button mat-icon-button matTooltip="View"
+                            [disabled]="!['Forward','Approved','Pending','Returned'].includes(element.approvalStatus)"
+                            [ngClass]="{'is-disabled': !['Forward','Approved','Pending','Returned'].includes(element.approvalStatus)}"
+                            (click)="viewCase(element.id)">
                             <mat-icon class="view-icon">visibility</mat-icon>
                         </button>
 
-                        <!-- Edit: Only for Returned or Pending -->
-                        <button mat-icon-button color="primary" type="button" matTooltip="Edit"
-                            matTooltipPosition="below" (click)="editCase(element.id)"
-                            *ngIf="['Returned', 'Pending'].includes(element.approvalStatus)">
+                        <!-- Edit -->
+                        <button mat-icon-button matTooltip="Edit"
+                            [disabled]="!['Returned','Pending'].includes(element.approvalStatus)"
+                            [ngClass]="{'is-disabled': !['Returned','Pending'].includes(element.approvalStatus)}"
+                            (click)="editCase(element.id)">
                             <mat-icon class="edit-icon">edit</mat-icon>
                         </button>
 
-                        <!-- Forward: Only for Pending -->
-                        <button mat-icon-button type="button" matTooltip="Forward" matTooltipPosition="below"
-                            *ngIf="element.approvalStatus === 'Pending'">
+                        <!-- Forward -->
+                        <button mat-icon-button matTooltip="Forward" [disabled]="element.approvalStatus !== 'Pending'"
+                            [ngClass]="{'is-disabled': element.approvalStatus !== 'Pending'}">
                             <mat-icon class="forward">send</mat-icon>
                         </button>
 

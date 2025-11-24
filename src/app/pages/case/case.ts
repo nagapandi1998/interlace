@@ -165,7 +165,7 @@ export class Case {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.isViewMode = this.route.snapshot.queryParamMap.get('view') === 'true';
 
-    if (!id) return; // no edit, no view → create mode
+    if (!id) return; // no edit, no view, create mode
 
     if (id && !this.isViewMode) {
       this.isEditMode = true;
