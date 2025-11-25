@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "demo": {
+    "dvac": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -64,10 +64,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "demo:build:production"
+              "buildTarget": "dvac:build:production"
             },
             "development": {
-              "buildTarget": "demo:build:development"
+              "buildTarget": "dvac:build:development"
             }
           },
           "defaultConfiguration": "development"
