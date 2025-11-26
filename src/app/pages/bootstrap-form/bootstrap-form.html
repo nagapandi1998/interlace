@@ -49,7 +49,7 @@
         <label for="department" class="form-label">Department <span>*</span></label>
         <select id="department" class="form-select" formControlName="department"
           [ngClass]="{'is-invalid': employeeForm.get('department')?.invalid && employeeForm.get('department')?.touched}">
-          <option value="" disabled>-- Select --</option>
+          <option value="" disabled> --Select-- </option>
           <option *ngFor="let dept of departments" [value]="dept">{{ dept }}</option>
         </select>
         <div class="invalid-feedback">Department is required.</div>
@@ -59,7 +59,7 @@
         <label for="designation" class="form-label">Designation <span>*</span></label>
         <select id="designation" class="form-select" formControlName="designation"
           [ngClass]="{'is-invalid': employeeForm.get('designation')?.invalid && employeeForm.get('designation')?.touched}">
-          <option value="" disabled>-- Select --</option>
+          <option value="" disabled> --Select-- </option>
           <option *ngFor="let desig of designations" [value]="desig">{{ desig }}</option>
         </select>
         <div class="invalid-feedback">Designation is required.</div>
@@ -76,7 +76,7 @@
         <label for="reportingManager" class="form-label">Reporting Manager <span>*</span></label>
         <select id="reportingManager" class="form-select" formControlName="reportingManager"
           [ngClass]="{'is-invalid': employeeForm.get('reportingManager')?.invalid && employeeForm.get('reportingManager')?.touched}">
-          <option value="" disabled>-- Select --</option>
+          <option value="" disabled> --Select-- </option>
           <option *ngFor="let mgr of managers" [value]="mgr">{{ mgr }}</option>
         </select>
         <div class="invalid-feedback">Reporting Manager is required.</div>
@@ -86,7 +86,7 @@
         <label for="bloodGroup" class="form-label">Blood Group <span>*</span></label>
         <select id="bloodGroup" class="form-select" formControlName="bloodGroup"
           [ngClass]="{'is-invalid': employeeForm.get('bloodGroup')?.invalid && employeeForm.get('bloodGroup')?.touched}">
-          <option value="" disabled>-- Select --</option>
+          <option value="" disabled> --Select-- </option>
           <option *ngFor="let bg of bloodGroups" [value]="bg">{{ bg }}</option>
         </select>
         <div class="invalid-feedback">Blood Group is required.</div>
@@ -96,7 +96,7 @@
         <label for="gender" class="form-label">Gender <span>*</span></label>
         <select id="gender" class="form-select" formControlName="gender"
           [ngClass]="{'is-invalid': employeeForm.get('gender')?.invalid && employeeForm.get('gender')?.touched}">
-          <option value="" disabled>-- Select --</option>
+          <option value="" disabled> --Select-- </option>
           <option *ngFor="let g of ['male','female','other']" [value]="g">{{ g | titlecase }}</option>
         </select>
         <div class="invalid-feedback"
@@ -109,7 +109,7 @@
         <label for="qualification" class="form-label">Qualification <span>*</span></label>
         <select id="qualification" class="form-select" formControlName="qualification"
           [ngClass]="{'is-invalid': employeeForm.get('qualification')?.invalid && employeeForm.get('qualification')?.touched}">
-          <option value="" disabled>-- Select --</option>
+          <option value="" disabled> --Select-- </option>
           <option *ngFor="let qual of qualifications" [value]="qual">{{ qual }}</option>
         </select>
         <div class="invalid-feedback">Qualification is required.</div>
@@ -166,7 +166,7 @@
         <label for="maritalStatus" class="form-label">Marital Status <span>*</span></label>
         <select id="maritalStatus" class="form-select" formControlName="maritalStatus"
           [ngClass]="{'is-invalid': employeeForm.get('maritalStatus')?.invalid && employeeForm.get('maritalStatus')?.touched}">
-          <option value="" disabled>-- Select --</option>
+          <option value="" disabled> --Select-- </option>
           <option value="Single">Single</option>
           <option value="Married">Married</option>
         </select>
@@ -185,7 +185,7 @@
         <label for="status" class="form-label">Status <span>*</span></label>
         <select id="status" class="form-select" formControlName="status"
           [ngClass]="{'is-invalid': employeeForm.get('status')?.invalid && employeeForm.get('status')?.touched}">
-          <option value="" disabled>-- Select --</option>
+          <option value=""> --Select-- </option>
           <option value="Active">Active</option>
           <option value="Inactive">Inactive</option>
         </select>

@@ -44,6 +44,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Gender</mat-label>
         <mat-select formControlName="gender">
+          <mat-option value=""> Select </mat-option>
           <mat-option value="male">Male</mat-option>
           <mat-option value="female">Female</mat-option>
           <mat-option value="other">Other</mat-option>
@@ -56,6 +57,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Qualification</mat-label>
         <mat-select formControlName="qualification">
+          <mat-option value=""> Select </mat-option>
           <mat-option *ngFor="let qual of qualifications" [value]="qual">{{ qual }}</mat-option>
         </mat-select>
         <mat-error *ngIf="
@@ -68,6 +70,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Marital Status</mat-label>
         <mat-select formControlName="maritalStatus">
+          <mat-option value=""> Select </mat-option>
           <mat-option value="single">Single</mat-option>
           <mat-option value="married">Married</mat-option>
         </mat-select>
@@ -81,6 +84,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Department</mat-label>
         <mat-select formControlName="department">
+          <mat-option value=""> Select </mat-option>
           <mat-option *ngFor="let dept of departments" [value]="dept">{{ dept }}</mat-option>
         </mat-select>
         <mat-error *ngIf="employeeForm.get('department')?.touched && employeeForm.get('department')?.invalid">
@@ -91,6 +95,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Designation</mat-label>
         <mat-select formControlName="designation">
+          <mat-option value=""> Select </mat-option>
           <mat-option *ngFor="let des of designations" [value]="des">{{ des }}</mat-option>
         </mat-select>
         <mat-error *ngIf="
@@ -171,6 +176,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Reporting Manager</mat-label>
         <mat-select formControlName="reportingManager">
+          <mat-option value=""> Select </mat-option>
           <mat-option *ngFor="let manager of managers" [value]="manager">{{ manager }}</mat-option>
         </mat-select>
         <mat-error *ngIf="
@@ -184,6 +190,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Blood Group</mat-label>
         <mat-select formControlName="bloodGroup">
+          <mat-option value=""> Select </mat-option>
           <mat-option *ngFor="let bg of bloodGroups" [value]="bg">{{ bg }}</mat-option>
         </mat-select>
         <mat-error *ngIf="employeeForm.get('bloodGroup')?.touched && employeeForm.get('bloodGroup')?.invalid">
@@ -201,6 +208,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Status</mat-label>
         <mat-select formControlName="status">
+          <mat-option value=""> Select </mat-option>
           <mat-option value="Active">Active</mat-option>
           <mat-option value="Inactive">Inactive</mat-option>
         </mat-select>
