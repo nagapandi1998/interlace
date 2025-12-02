@@ -1,0 +1,19 @@
+<app-loader [loading]="loading"></app-loader>
+
+<div class="add-button">
+  <div class="file-upload-container">
+    <button class="custom-file-upload-button" (click)="openFile()">
+      <mat-icon>download</mat-icon> Import DOCX
+    </button>
+
+    <input type="file" #fileInput hidden (change)="onFileSelected($event)" />
+  </div>
+
+  <button (click)="exportDocx()">
+    <mat-icon>upload</mat-icon> Export DOCX
+  </button>
+</div>
+
+<!-- SuperDoc container -->
+<div id="superdoc-toolbar"></div>
+<div id="superdoc" style="height: 700px"></div>

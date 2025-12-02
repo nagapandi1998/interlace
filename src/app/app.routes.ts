@@ -46,6 +46,18 @@ export const routes: Routes = [
         path: 'allcases',
         loadComponent: () => import('./pages/all-cases/all-cases').then((m) => m.AllCases),
       },
+      {
+        path: 'tinytexteditor',
+        loadComponent: () =>
+          import('./pages/tiny-mce-text-editor/tiny-mce-text-editor').then(
+            (m) => m.TinyMCETextEditor
+          ),
+      },
+      {
+        path: 'texteditor',
+        loadComponent: () =>
+          import('./pages/text-editor/text-editor').then((m) => m.TextEditor),
+      }
     ],
   },
 ];

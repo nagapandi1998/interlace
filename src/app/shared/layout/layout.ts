@@ -112,6 +112,25 @@ export class Layout implements OnInit {
         },
       ],
     },
+    {
+      key: 'textEditor',
+      label: 'Text Editor',
+      icon: 'description',
+      children: [
+        {
+          key: 'TinyMCEEditor',
+          label: 'TinyMCE Editor',
+          route: '/tinytexteditor',
+          icon: 'editor',
+        },
+        {
+          key: 'textEditor',
+          label: 'Superdoc Editor',
+          route: '/texteditor',
+          icon: 'edit',
+        },
+      ],
+    },
   ];
 
   constructor(private router: Router) {}
