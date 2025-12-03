@@ -5,7 +5,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Loader } from '../../shared/components/loader/loader';
 
 import { SuperDoc } from '@harbour-enterprises/superdoc';
-import '@harbour-enterprises/superdoc/style.css';
+// import '@harbour-enterprises/superdoc/style.css';
 
 
 @Component({
