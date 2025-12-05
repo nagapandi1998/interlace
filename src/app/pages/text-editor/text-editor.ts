@@ -56,35 +56,23 @@ export class TextEditor implements AfterViewInit {
         this.initEditor(file);
         this.loading = false;
 
-        this.snackBar.open(`"${file.name}" imported successfully!`, '', {
-          duration: 3000,
-          verticalPosition: 'top',
-          panelClass: ['success-snackbar'],
-        });
+        this.showSuccess(`"${file.name}" imported successfully!`);
+
+        // Allow re-import of the same file
+        this.fileInput.nativeElement.value = '';
       }, 200);
     }
   }
 
   clearEditor() {
-    if (!this.editor || !this.editor.activeEditor) return;
+    this.initEditor(null);
 
-    const view = this.editor.activeEditor.view;
+    // Reset file
+    if (this.fileInput && this.fileInput.nativeElement) {
+      this.fileInput.nativeElement.value = '';
+    }
 
-    // Create a new empty document using ProseMirror schema
-    const { schema } = this.editor.activeEditor;
-    const emptyDoc = schema.topNodeType.createAndFill();
-
-    // Replace the current document with the empty document
-    view.dispatch(view.state.tr.replaceWith(0, view.state.doc.content.size, emptyDoc!.content));
-
-    // Optional: reset scroll to top
-    view.scrollDOM.scrollTop = 0;
-
-    this.snackBar.open('Editor cleared!', '', {
-      duration: 2000,
-      verticalPosition: 'top',
-      panelClass: ['success-snackbar'],
-    });
+    this.showSuccess('Editor cleared!');
   }
 
   // async exportDocx(): Promise<void> {
