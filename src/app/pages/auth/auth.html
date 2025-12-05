@@ -1,50 +1,109 @@
 <div class="login-container">
-  <app-loader [loading]="loading"></app-loader>
-  <mat-card class="login-card">
-    <div class="card-left">
-      <!-- <ngb-carousel [interval]="3000" [wrap]="true" [keyboard]="false" [pauseOnHover]="false"
-        [showNavigationArrows]="false" [showNavigationIndicators]="true">
-        <ng-template ngbSlide>
-          <img src="assets/images/dvac.png" alt="Angular" />
-        </ng-template>
-        <ng-template ngbSlide>
-          <img src="assets/images/dvac.png" alt="Bootstrap" />
-        </ng-template>
-      </ngb-carousel> -->
-      <img src="assets/images/dvac.png" alt="">
+  <div class="login-card">
+    <!-- Left Side - Logo and Branding -->
+    <div class="left-panel">
+      <!-- Decorative Background Elements -->
+      <div class="decorative-circle circle-1"></div>
+      <div class="decorative-circle circle-2"></div>
+      <!-- <div class="decorative-circle circle-3"></div> -->
+
+      <!-- Content -->
+      <div class="left-content">
+        <div class="logo-section">
+          <!-- Logo with glow effect -->
+          <div class="logo-container">
+            <div class="logo-glow"></div>
+            <img src="assets/images/dvac.png" class="logo" alt="DVAC Logo" />
+          </div>
+
+          <!-- Title and Description -->
+          <div class="title-section">
+            <h1 class="main-title">DVAC</h1>
+            <div class="description">
+              <h2 class="system-title">Management System</h2>
+              <p class="department-subtitle">Directorate of Vigilance & Anti-Corruption</p>
+            </div>
+          </div>
+
+          <!-- Decorative Line -->
+          <div class="decorative-line">
+            <div class="line-segment"></div>
+            <div class="dot"></div>
+            <div class="line-segment"></div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="card-right">
-      <h2 class="login-title">Login</h2>
-
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Email</mat-label>
-          <mat-icon matPrefix>email</mat-icon>
-          <input matInput type="email" formControlName="email" placeholder="Enter your email" />
-          <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Email is required</mat-error>
-          <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Invalid email address</mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Password</mat-label>
-          <mat-icon matPrefix>lock</mat-icon>
-          <input matInput [type]="hide ? 'password' : 'text'" formControlName="password"
-            placeholder="Enter your password" />
-          <button mat-icon-button matSuffix type="button" (click)="hide = !hide">
-            <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
-          </button>
-          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password is required</mat-error>
-        </mat-form-field>
-
-        <div class="forgot-password">
-          <a routerLink="/forgot-password" (click)="forgotpassword()">Forgot Password?</a>
+    <!-- Right Side - Login Form -->
+    <div class="right-panel">
+      <div class="right-content">
+        <!-- Mobile Logo -->
+        <div class="mobile-logo">
+          <img src="assets/images/dvac.png" alt="DVAC Logo" class="mobile-logo-img" />
+          <h4 class="mobile-title">DVAC Management System</h4>
         </div>
 
-        <button mat-flat-button class="login-button full-width" type="submit">
-          <mat-icon>login</mat-icon> &nbsp; Login
-        </button>
-      </form>
+        <!-- Form Container -->
+        <div class="form-container">
+          <!-- Form Header -->
+          <div class="form-header">
+            <h2 class="welcome-title">Welcome Back</h2>
+            <!-- <p class="welcome-subtitle">Sign in to your account to continue</p> -->
+          </div>
+
+          <!-- Login Form -->
+          <div class="form-card">
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Username</mat-label>
+                <mat-icon matPrefix>email</mat-icon>
+                <input
+                  matInput
+                  type="email"
+                  formControlName="email"
+                  placeholder="Enter your email"
+                />
+                <mat-error *ngIf="loginForm.get('email')?.hasError('required')"
+                  >Username is required</mat-error
+                >
+                <mat-error *ngIf="loginForm.get('email')?.hasError('email')"
+                  >Invalid email address</mat-error
+                >
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Password</mat-label>
+                <mat-icon matPrefix>lock</mat-icon>
+                <input
+                  matInput
+                  [type]="hide ? 'password' : 'text'"
+                  formControlName="password"
+                  placeholder="Enter your password"
+                />
+                <button mat-icon-button matSuffix type="button" (click)="hide = !hide">
+                  <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+                </button>
+                <mat-error *ngIf="loginForm.get('password')?.hasError('required')"
+                  >Password is required</mat-error
+                >
+              </mat-form-field>
+
+              <!-- Remember Me & Forgot Password -->
+              <div class="form-options">
+                <button type="button" class="forgot-password">Forgot password?</button>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" class="submit-button">
+                <span *ngIf="!loading">Sign In</span>
+                <app-loader *ngIf="loading" size="small"></app-loader>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
-  </mat-card>
+  </div>
 </div>
+<app-loader [loading]="loading"></app-loader>

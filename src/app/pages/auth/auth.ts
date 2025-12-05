@@ -5,7 +5,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatCard } from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
@@ -21,9 +22,10 @@ import { Loader } from '../../shared/components/loader/loader';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatCard,
+    MatCardModule,
     MatSnackBarModule,
     NgbCarouselModule,
+    MatCheckboxModule,
     Loader,
   ],
   templateUrl: './auth.html',
@@ -51,7 +53,7 @@ export class Auth {
         setTimeout(() => {
           this.loading = false;
           this.router.navigate(['/allcases']);
-        }, 700);
+        }, 1000);
       } else if (email !== 'admin@gmail.com') {
         setTimeout(() => {
           this.loading = false;

@@ -73,56 +73,56 @@ export class Layout implements OnInit {
         },
       ],
     },
-    {
-      key: 'employee',
-      label: 'Employees',
-      icon: 'people_alt',
-      children: [
-        {
-          key: 'allEmployees',
-          label: 'All Employees',
-          route: '/home',
-          icon: 'list_alt',
-        },
-        {
-          key: 'addEmployee',
-          label: 'Add Employees',
-          icon: 'person_add',
-          children: [
-            {
-              key: 'uiLibrary',
-              label: 'UI Library',
-              icon: 'integration_instructions',
-              children: [
-                {
-                  key: 'materialForm',
-                  label: 'Angular Material',
-                  route: '/materialform',
-                  icon: 'widgets',
-                },
-                {
-                  key: 'ngBootstrap',
-                  label: 'Ng Bootstrap',
-                  route: '/bootstrapform',
-                  icon: 'grid_view',
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
+    // {
+    //   key: 'employee',
+    //   label: 'Employees',
+    //   icon: 'people_alt',
+    //   children: [
+    //     {
+    //       key: 'allEmployees',
+    //       label: 'All Employees',
+    //       route: '/home',
+    //       icon: 'list_alt',
+    //     },
+    //     {
+    //       key: 'addEmployee',
+    //       label: 'Add Employees',
+    //       icon: 'person_add',
+    //       children: [
+    //         {
+    //           key: 'uiLibrary',
+    //           label: 'UI Library',
+    //           icon: 'integration_instructions',
+    //           children: [
+    //             {
+    //               key: 'materialForm',
+    //               label: 'Angular Material',
+    //               route: '/materialform',
+    //               icon: 'widgets',
+    //             },
+    //             {
+    //               key: 'ngBootstrap',
+    //               label: 'Ng Bootstrap',
+    //               route: '/bootstrapform',
+    //               icon: 'grid_view',
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //     },
+    //   ],
+    // },
     {
       key: 'textEditor',
       label: 'Text Editor',
       icon: 'description',
       children: [
-        {
-          key: 'TinyMCEEditor',
-          label: 'TinyMCE Editor',
-          route: '/tinytexteditor',
-          icon: 'editor',
-        },
+        // {
+        //   key: 'TinyMCEEditor',
+        //   label: 'TinyMCE Editor',
+        //   route: '/tinytexteditor',
+        //   icon: 'editor',
+        // },
         {
           key: 'textEditor',
           label: 'Superdoc Editor',

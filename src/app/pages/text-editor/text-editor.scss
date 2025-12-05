@@ -1,48 +1,117 @@
-.add-button{
+$primary-color: #75151d;
+$primary-light: #891b24;
+$secondary-color: #7f403d;
+$secondary-light: #891b24;
+
+.app-primary-button {
+  background-color: $primary-color;
+  color: #fff;
+  padding: 8px 18px;
+  font-weight: 600;
+  font-size: 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+
+  transition: background-color 0.18s ease, transform 0.12s ease, box-shadow 0.18s ease;
+
+  &:hover {
+    background-color: $primary-light;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+}
+
+.add-button {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 8px;
-  input, button {
-    padding: 5px;
-    font-weight: 500;
-    font-size: 16px;
-    border-radius: 5px;
-    border: none;
-    color: white;
-    background-color: #ec1562;
-
-    &:hover {
-      background-color: #f50458;
-    }
-  }
+  margin-bottom: 12px;
+  gap: 10px;
 }
 
 .file-upload-container {
   display: flex;
   align-items: center;
   gap: 10px;
+}
 
-  .custom-file-upload-button {
-    background-color: #ec1562;
-    color: white;
-    padding: 8px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
+.clear-btn {
+  background-color: $secondary-color !important;
 
-    &:hover {
-      background-color: #f50458;
-    }
-  }
-
-  .selected-file-name {
-    font-style: italic;
-    color: #555;
+  &:hover {
+    background-color: $secondary-light !important;
   }
 }
 
-mat-icon {
-  vertical-align: middle;
-  margin-right: 5px;
+//editor styles
+
+::ng-deep .superdoc__tools {
+  display: none !important;
+}
+
+.superdoc-container {
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  border: 1px solid #ccc;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: scroll;
+  margin-top: 15px;
+
+  #superdoc-toolbar {
+    border-bottom: 1px solid #eee;
+    background-color: #f9f9f9;
+    padding: 10px;
+
+    .toolbar-inner {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      /* allow wrapping to the next row when there's room */
+      flex-wrap: wrap !important;
+
+      /* allow horizontal scrolling when content can't fit (esp. on small screens) */
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 6px; /* give space for scrollbar */
+    }
+
+    button {
+      /* keep buttons at their intrinsic width so they don't shrink unexpectedly */
+      flex: 0 0 auto;
+
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 4px;
+      transition: background-color 0.2s ease-in-out;
+
+      &:hover {
+        background-color: #ececec;
+      }
+    }
+
+    /* on narrow viewports prefer horizontal scroll instead of many wrapped rows */
+    @media (max-width: 1024px) {
+      .toolbar-inner {
+        flex-wrap: nowrap !important;
+      }
+    }
+  }
+
+  #superdoc {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    overflow: auto;
+  }
 }

@@ -2,18 +2,16 @@
 
 <div class="add-button">
   <div class="file-upload-container">
-    <button class="custom-file-upload-button" (click)="openFile()">
-      <mat-icon>download</mat-icon> Import DOCX
-    </button>
+    <button class="app-primary-button" (click)="openFile()">Import DOCX</button>
 
-    <input type="file" #fileInput hidden (change)="onFileSelected($event)" />
+    <input type="file" #fileInput hidden (change)="onFileSelected($event)" accept=".docx" />
+    <button class="app-primary-button clear-btn" (click)="clearEditor()">Clear Editor</button>
   </div>
 
-  <button (click)="exportDocx()">
-    <mat-icon>upload</mat-icon> Export DOCX
-  </button>
+  <button class="app-primary-button" (click)="exportDocx()">Export DOCX</button>
 </div>
 
-<!-- SuperDoc container -->
-<div id="superdoc-toolbar"></div>
-<div id="superdoc" style="height: 700px"></div>
+<div class="superdoc-container">
+  <div id="superdoc-toolbar"></div>
+  <div id="superdoc"></div>
+</div>

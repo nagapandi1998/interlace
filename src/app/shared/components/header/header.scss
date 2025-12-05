@@ -1,3 +1,8 @@
+$primary-color: #75151d;
+$primary-light: #891b24;
+$secondary-color: #7f403d;
+$secondary-light: #891b24;
+
 .header-toolbar {
   display: flex;
   justify-content: space-between;
@@ -21,7 +26,7 @@
   height: 40px;
   border-radius: 50%;
   overflow: hidden;
-  border: solid 1px #f5045847;
+  border: solid 1px $primary-color;
   vertical-align: middle ;
 }
 
@@ -71,7 +76,7 @@
       &:hover {
         background-color: #fff;
         border-radius: 10px;
-        color: #e30536;
+        color: $primary-color;
       }
     }
   }

@@ -1,3 +1,8 @@
+$primary-color: #75151d;
+$primary-light: #891b24;
+$secondary-color: #7f403d;
+$secondary-light: #891b24;
+
 .form-container {
   // max-width: 1200px;
   margin: auto;
@@ -10,7 +15,7 @@
 .card-header {
   h2 {
     text-align: center;
-    color: #ec1562;
+    color: $primary-color;
     margin-bottom: 20px;
   }
 }
@@ -29,7 +34,7 @@
     left: 0;
     width: 50px;
     height: 3px;
-    background-color: #ec1562;
+    background-color: $primary-color;
   }
 }
 
@@ -83,18 +88,19 @@ mat-form-field {
     font-size: 16px;
     border-radius: 5px;
     color: white;
-    background-color: #ec1562;
+    background-color: $primary-color;
 
     &:hover {
-      background-color: #f50458;
+      background-color: $primary-light;
     }
   }
 
   .back-btn {
-    background-color: #a61eea;
+    background-color: $secondary-color;
 
     &:hover {
-      background-color: #a109ed;
+      background-color: $secondary-light;
+
     }
   }
 }
@@ -110,9 +116,9 @@ mat-form-field {
 }
 
 /* Header */
-:host ::ng-deep .mat-header-row {
-  background-color: #1976d2 !important;
-}
+// :host ::ng-deep .mat-header-row {
+//   background-color: #1976d2 !important;
+// }
 
 .mat-mdc-table {
   white-space: nowrap !important;
@@ -159,10 +165,10 @@ mat-form-field {
     border-radius: 5px;
 
     color: white;
-    background-color: #ec1562;
+    background-color: $primary-color;
 
     &:hover {
-      background-color: #f50458;
+      background-color: $primary-light;
     }
   }
 }
@@ -213,7 +219,7 @@ mat-form-field {
   font-size: 20px !important;
   font-weight: 600;
   margin-bottom: 0px !important;
-  color: #ec1562 !important;
+  color: $primary-color !important;
   background: #fafafa;
   border-bottom: 1px solid #e0e0e0;
 }
@@ -238,18 +244,18 @@ mat-form-field {
     font-size: 16px;
     border-radius: 5px;
     color: white;
-    background-color: #ec1562;
+    background-color: $primary-color;
 
     &:hover {
-      background-color: #f50458;
+      background-color: $primary-light;
     }
   }
 
   .back-btn {
-    background-color: #a61eea;
+    background-color: $secondary-color;
 
     &:hover {
-      background-color: #a109ed;
+      background-color: $secondary-light
     }
   }
 }

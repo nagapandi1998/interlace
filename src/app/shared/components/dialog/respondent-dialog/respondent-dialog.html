@@ -1,5 +1,5 @@
 <app-loader [loading]="loading"></app-loader>
-<h2 mat-dialog-title class="dialog-header">
+<h2 class="dialog-header">
   <span>Respondent Details</span>
   <button mat-icon-button (click)="close()" class="close-btn">
     <mat-icon>close</mat-icon>
@@ -158,6 +158,6 @@
 
 
 <mat-dialog-actions class="dialog-actions">
-  <button mat-stroked-button class="back-btn" color="warn" (click)="close()">Cancel</button>
+  <button mat-stroked-button class="back-btn" (click)="close()">Cancel</button>
   <button mat-raised-button color="primary" (click)="save()">Save</button>
 </mat-dialog-actions>
