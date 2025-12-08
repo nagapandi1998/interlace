@@ -32,8 +32,8 @@ $primary-light: #a61e2f;
     display: flex;
     align-items: center;
     gap: 4px;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 13px;
+    font-weight: 400;
 
     .home {
       text-decoration: none;
@@ -52,7 +52,7 @@ $primary-light: #a61e2f;
     }
 
     .breadcrumb-name {
-      color: $primary-color;
+      color: #6c757d;
     }
   }
 }
