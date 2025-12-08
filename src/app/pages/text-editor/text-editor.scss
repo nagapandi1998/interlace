@@ -3,6 +3,15 @@ $primary-light: #891b24;
 $secondary-color: #7f403d;
 $secondary-light: #891b24;
 
+.card {
+  background: #fff;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: auto;
+  padding: 24px;
+}
+
 .app-primary-button {
   background-color: $primary-color;
   color: #fff;

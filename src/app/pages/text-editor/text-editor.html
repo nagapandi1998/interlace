@@ -1,17 +1,19 @@
 <app-loader [loading]="loading"></app-loader>
 
-<div class="add-button">
-  <div class="file-upload-container">
-    <button class="app-primary-button" (click)="openFile()">Import DOCX</button>
+<mat-card class="card" appearance="outlined">
+  <div class="add-button">
+    <div class="file-upload-container">
+      <button class="app-primary-button" (click)="openFile()">Import DOCX</button>
 
-    <input type="file" #fileInput hidden (change)="onFileSelected($event)" accept=".docx" />
-    <button class="app-primary-button clear-btn" (click)="clearEditor()">Clear Editor</button>
+      <input type="file" #fileInput hidden (change)="onFileSelected($event)" accept=".docx" />
+      <button class="app-primary-button clear-btn" (click)="clearEditor()">Clear Editor</button>
+    </div>
+
+    <button class="app-primary-button" (click)="exportDocx()">Export DOCX</button>
   </div>
 
-  <button class="app-primary-button" (click)="exportDocx()">Export DOCX</button>
-</div>
-
-<div class="superdoc-container">
-  <div id="superdoc-toolbar"></div>
-  <div id="superdoc"></div>
-</div>
+  <div class="superdoc-container">
+    <div id="superdoc-toolbar"></div>
+    <div id="superdoc"></div>
+  </div>
+</mat-card>

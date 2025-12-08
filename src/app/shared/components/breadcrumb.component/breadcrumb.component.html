@@ -1,0 +1,16 @@
+<nav class="breadcrumb-container">
+  <!-- LEFT SIDE -->
+  <div class="breadcrumb-left">
+    <h3>{{ breadcrumb$ | async }}</h3>
+    <span>DVAC</span>
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="breadcrumb-right">
+    <a routerLink="/allcases" class="home">
+      <mat-icon fontSet="material-icons-outlined"  class="home-icon">home</mat-icon>
+    </a>
+    <span class="slash">/</span>
+    <span class="breadcrumb-name">{{ breadcrumb$ | async }}</span>
+  </div>
+</nav>

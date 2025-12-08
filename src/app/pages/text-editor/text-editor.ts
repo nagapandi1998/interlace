@@ -2,13 +2,14 @@ import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SuperDoc } from '@harbour-enterprises/superdoc';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Loader } from '../../shared/components/loader/loader';
 
 @Component({
   selector: 'app-text-editor',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatSnackBarModule, Loader],
+  imports: [CommonModule, MatIconModule, MatCardModule, MatSnackBarModule, Loader],
   templateUrl: './text-editor.html',
   styleUrl: './text-editor.scss',
 })

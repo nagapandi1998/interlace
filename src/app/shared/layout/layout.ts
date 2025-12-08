@@ -12,6 +12,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { Header } from '../components/header/header';
 import { Footer } from '../components/footer/footer';
+import { BreadcrumbComponent } from '../components/breadcrumb.component/breadcrumb.component';
 
 interface MenuItem {
   key: string;
@@ -37,6 +38,7 @@ interface MenuItem {
     MatTooltipModule,
     Header,
     Footer,
+    BreadcrumbComponent
   ],
   templateUrl: './layout.html',
   styleUrl: './layout.scss',

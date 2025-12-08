@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Superdoc } from './superdoc';
+import { BreadcrumbService } from './breadcrumb.service';
 
-describe('Superdoc', () => {
-  let service: Superdoc;
+describe('BreadcrumbService', () => {
+  let service: BreadcrumbService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(Superdoc);
+    service = TestBed.inject(BreadcrumbService);
   });
 
   it('should be created', () => {
