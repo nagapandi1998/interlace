@@ -63,76 +63,35 @@ $secondary-light: #891b24;
   display: none !important;
 }
 
-.superdoc-container {
+.toolbar-wrapper {
+  overflow-x: auto;
+  overflow-y: visible;
+  position: relative;
+  width: 100%;
+  white-space: nowrap;
+}
+
+::ng-deep .overflow-menu {
+  .overflow-menu_items {
+    position: absolute;
+    top: calc(100% + -40px) !important;
+    right: 30px !important;
+    z-index: 9999 !important;
+  }
+}
+
+#superdoc {
   display: flex;
-  flex-direction: column;
-  height: 80vh;
-  border: 1px solid #ccc;
-  background-color: white;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  overflow: scroll;
-  margin-top: 15px;
-
-  #superdoc-toolbar {
-    border-bottom: 1px solid #eee;
-    background-color: #f9f9f9;
-    padding: 10px;
-
-    .toolbar-inner {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-
-      /* allow wrapping to the next row when there's room */
-      flex-wrap: wrap !important;
-
-      /* allow horizontal scrolling when content can't fit (esp. on small screens) */
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      padding-bottom: 6px; /* give space for scrollbar */
-    }
-
-    button {
-      /* keep buttons at their intrinsic width so they don't shrink unexpectedly */
-      flex: 0 0 auto;
-
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 5px 10px;
-      border-radius: 4px;
-      transition: background-color 0.2s ease-in-out;
-
-      &:hover {
-        background-color: #ececec;
-      }
-    }
-
-    /* on narrow viewports prefer horizontal scroll instead of many wrapped rows */
-    @media (max-width: 1024px) {
-      .toolbar-inner {
-        flex-wrap: nowrap !important;
-      }
-    }
-  }
-
-  #superdoc {
-    display: flex;
-    justify-content: center;
-    flex: 1;
-    overflow: auto;
-  }
+  justify-content: center;
 }
 
 @media (max-width: 480px) {
   .add-button {
     display: flex;
     justify-content: center !important;
-    gap: 5px !important;
   }
 
-  .file-upload-container {
-    gap: 5px !important;
+  .app-primary-button {
+    padding: 5px 10px !important;
   }
 }
