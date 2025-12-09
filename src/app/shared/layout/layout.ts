@@ -38,13 +38,14 @@ interface MenuItem {
     MatTooltipModule,
     Header,
     Footer,
-    BreadcrumbComponent
+    BreadcrumbComponent,
   ],
   templateUrl: './layout.html',
   styleUrl: './layout.scss',
 })
 export class Layout implements OnInit {
-  isSidebarOpen = true;
+  // isSidebarOpen = true;
+  isSlim = false;
   isMobile = window.innerWidth <= 768;
   openMenus: { [key: string]: boolean } = {};
 
@@ -139,77 +140,49 @@ export class Layout implements OnInit {
 
   ngOnInit() {
     if (this.isMobile) {
-      this.isSidebarOpen = false;
+      this.isSlim = true;
     }
 
-    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
+    this.router.events.pipe(filter((ev) => ev instanceof NavigationEnd)).subscribe(() => {
       if (this.isMobile) {
-        this.isSidebarOpen = false;
+        this.isSlim = true;
+        this.openMenus = {};
       }
     });
   }
 
-  toggleSidebar(): void {
-    this.isSidebarOpen = !this.isSidebarOpen;
-  }
+  toggleSidebarMode() {
+    this.isSlim = !this.isSlim;
 
-  private getAllDescendantKeys(menu: MenuItem): string[] {
-    const keys: string[] = [menu.key];
-
-    if (menu.children) {
-      menu.children.forEach((child) => {
-        keys.push(...this.getAllDescendantKeys(child));
-      });
-    }
-
-    return keys;
-  }
-
-  toggleMenu(menuKey: string, level: number = 1) {
-    const isAlreadyOpen = this.openMenus[menuKey];
-
-    if (level === 1) {
-      this.menus.forEach((menu) => {
-        if (menu.key !== menuKey) {
-          this.openMenus[menu.key] = false;
-
-          const allChildKeys = this.getAllDescendantKeys(menu);
-          allChildKeys.forEach((key) => (this.openMenus[key] = false));
-        }
-      });
-    }
-
-    this.openMenus[menuKey] = !isAlreadyOpen;
-  }
-
-  onSidebarToggle(): void {
-    this.toggleSidebar();
-    if (!this.isSidebarOpen) {
+    if (this.isSlim) {
       this.openMenus = {};
     }
   }
 
-  hasChildren(menu: MenuItem): boolean {
-    return !!menu.children && menu.children.length > 0;
+  toggleMenu(key: string) {
+    if (this.isSlim) return;
+    this.openMenus[key] = !this.openMenus[key];
+  }
+
+  hasChildren(item: MenuItem) {
+    return item.children && item.children.length > 0;
   }
 
   isMenuActive(menu: MenuItem): boolean {
-    if (menu.route) {
-      return this.router.isActive(menu.route, false);
-    }
-    if (menu.children) {
-      return menu.children.some((child) => this.isMenuActive(child));
-    }
-    return false;
+    if (menu.route)
+      return this.router.isActive(menu.route, {
+        paths: 'exact',
+        queryParams: 'ignored',
+        fragment: 'ignored',
+        matrixParams: 'ignored',
+      });
+    return menu.children?.some((child) => this.isMenuActive(child)) || false;
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    this.isMobile = (event.target as Window).innerWidth <= 768;
-    if (!this.isMobile) {
-      this.isSidebarOpen = true;
-    } else {
-      this.isSidebarOpen = false;
-    }
+  onResize(e: Event) {
+    this.isMobile = (e.target as Window).innerWidth <= 768;
+    if (this.isMobile) this.isSlim = true;
   }
+  
 }

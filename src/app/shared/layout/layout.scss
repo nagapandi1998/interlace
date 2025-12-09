@@ -1,504 +1,230 @@
-// Variables
-$sidebar-bg: linear-gradient(180deg, #500000 0%, #6e0d18 50%, #62000f 100%); //linear-gradient(180deg, #a1144d 0%, #8a1241 50%, #a1144d 100%);
-$sidebar-width: 290px; //auto;
-$sidebar-collapsed-width: 0px;
+// VARIABLES
+$sidebar-bg: linear-gradient(180deg, #500000 0%, #6e0d18 50%, #62000f 100%);
+$sidebar-width: 290px;
+$sidebar-slim-width: 70px;
 $primary-color: #75151d;
 $accent-color: #b34d55;
 $text-primary: #ffffff;
 $text-secondary: #ffffff;
 $text-muted: #ffffff;
-$success-color: #2ecc71;
 $shadow-light: rgba(0, 0, 0, 0.1);
 $shadow-medium: rgba(0, 0, 0, 0.15);
 $shadow-dark: rgba(0, 0, 0, 0.2);
 $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
-// Main Layout Container
+// LAYOUT CONTAINER
 .layout-container {
   height: 100vh;
   width: 100vw;
-  overflow: hidden;
   display: flex;
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+  overflow: hidden;
 }
 
-// Enhanced Sidebar
+// SIDEBAR
 .sidenav {
   width: $sidebar-width;
-  background: $sidebar-bg;
   flex-shrink: 0;
+  background: $sidebar-bg;
   transition: $transition;
-  box-shadow: 4px 0 20px $shadow-medium, inset -1px 0 0 rgba(255, 255, 255, 0.1);
-  position: relative;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  position: relative;
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  }
-
-  // Collapsed State
-  &.collapsed {
-    width: $sidebar-collapsed-width;
-    transition: $transition;
-
-    .user-info {
-      padding: 10px 0;
-      text-align: center;
-
-      .user-avatar-container {
-        margin: 0 auto;
-      }
-
-      .user-name,
-      .user-role,
-      .label,
-      .right-icon {
-        opacity: 0;
-        pointer-events: none;
-      }
-
-      .user-avatar {
-        width: 40px;
-        height: 40px;
-        margin-bottom: 0;
-      }
+  // SLIM MODE
+  &.slim {
+    width: $sidebar-slim-width;
+    .logo {
+      height: 50px !important;
     }
 
-    .nav-item {
-      justify-content: center;
-      padding: 12px !important;
+    .user-info,
+    .label,
+    .right-icon {
+      display: none;
+    }
 
-      .left-icon {
-        margin-right: 0 !important;
-      }
+    .left-icon {
+      margin: 0 auto;
     }
   }
 
-  // Toolbar Styles
+  .nav-item.level-1 {
+    padding-left: 10px;
+  }
+  .nav-item.level-2 {
+    padding-left: 20px;
+  }
+  .nav-item.level-3 {
+    padding-left: 30px;
+  }
+  .nav-item.level-4 {
+    padding-left: 40px;
+  }
+
+  // SIDEBAR TOOLBAR
+
   .sidenav-toolbar {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     padding: 1rem;
+    min-height: 60px;
     background: transparent;
     box-shadow: none;
-    min-height: 60px;
-    position: relative;
 
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 20px;
-      right: 20px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    .logo {
+      height: 65px;
+      transition: $transition;
     }
 
-    .logo-link {
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-      color: inherit;
+    .logo-text {
+      color: $text-primary;
+      font-weight: 600;
+      margin-left: 10px;
+      transition: $transition;
+      display: inline-block;
+    }
 
-      .logo {
-        height: 65px;
-        transition: $transition;
-      }
-
-      .logo-text {
-        color: $text-primary;
-        font-weight: 600;
-        font-size: 18px;
-        margin-left: 12px;
-        letter-spacing: 0.5px;
-        transition: $transition;
-      }
+    &.slim .logo-text {
+      display: none;
     }
   }
 
-  // User Info Section
+  // USER INFO
   .user-info {
     text-align: center;
     color: $text-primary;
     padding: 25px 20px;
-    position: relative;
-    transition: $transition;
 
-    .user-avatar-container {
-      position: relative;
-      display: inline-block;
-
-      .user-avatar {
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
-        margin-bottom: 15px;
-        border: 3px solid rgba(255, 255, 255, 0.2);
-        transition: $transition;
-        box-shadow: 0 4px 15px $shadow-dark;
-      }
+    .user-avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 3px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 15px $shadow-dark;
+      margin-bottom: 10px;
+      transition: $transition;
     }
 
     .user-name {
-      margin: 8px 0 0;
       font-size: 15px;
       font-weight: 600;
-      letter-spacing: 0.5px;
-      opacity: 0.95;
     }
 
     .user-role {
-      margin: 4px 0 0;
       font-size: 12px;
-      color: $text-primary;
       font-weight: 500;
       opacity: 0.8;
       background: rgba(255, 255, 255, 0.1);
-      padding: 4px 12px;
+      padding: 3px 10px;
       border-radius: 12px;
       display: inline-block;
+      margin-top: 5px;
     }
   }
 
-  // Navigation List
+  // NAV LIST
   .nav-list {
-    padding: 0 15px;
     flex: 1;
     overflow-y: auto;
+    padding: 0 10px;
 
     &::-webkit-scrollbar {
       width: 4px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.1);
     }
 
     &::-webkit-scrollbar-thumb {
       background: rgba(255, 255, 255, 0.3);
       border-radius: 2px;
     }
-
-    &::-webkit-scrollbar-thumb:hover {
-      background: rgba(255, 255, 255, 0.5);
-    }
   }
 
-  // Menu Sections
-  .menu-section {
-    margin-bottom: 8px;
-  }
-
-  // Navigation Items
+  // NAV ITEMS
   .nav-item,
-  .sub-menu-item,
-  .deep-menu-item {
-    border-radius: 12px !important;
-    margin-bottom: 4px !important;
-    transition: $transition !important;
+  .sub-menu-item {
+    display: flex;
+    align-items: center;
+    border-radius: 12px;
+    margin-bottom: 5px;
+    padding: 10px;
     position: relative;
-    overflow: hidden;
+    color: $text-secondary;
+    transition: $transition;
+    cursor: pointer;
 
-    &::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 3px;
-      background: linear-gradient(180deg, $primary-color, $accent-color);
-      transform: scaleY(0);
-      transition: transform 0.3s ease;
-    }
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.1) !important;
-
-      &::before {
-        transform: scaleY(1);
-      }
-
-      .left-icon,
-      .submenu-icon,
-      .deepmenu-icon {
-        transform: scale(1.1);
-      }
-    }
-
-    // Active State
-    &.active {
-      background: rgba(255, 255, 255, 0.1) !important;
-
-      &::before {
-        transform: scaleY(1);
-      }
-
-      .left-icon,
-      .submenu-icon,
-      .deepmenu-icon,
-      .label {
-        color: white !important;
-        font-weight: 600;
-      }
-
-      .active-indicator {
-        opacity: 1;
-      }
-    }
-
-    // Active Indicator
-    .active-indicator {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 6px;
-      height: 6px;
-      background: white;
-      border-radius: 50%;
-      opacity: 0;
-      transition: $transition;
-      box-shadow: 0 0 8px $primary-color;
-      transform: translateY(0%);
-    }
-
-    // Icons and Labels
     .left-icon {
-      margin-right: 16px;
       font-size: 20px;
-      color: $text-secondary !important;
-      transition: $transition;
-      min-width: 24px;
-      transform: translateY(40%);
-    }
-
-    .submenu-icon {
-      font-size: 18px !important;
-      margin-right: 12px !important;
-      color: $text-secondary !important;
-      transition: $transition;
-      transform: translateY(40%);
-    }
-
-    .deepmenu-icon {
-      font-size: 16px !important;
-      margin-right: 12px !important;
-      color: $text-muted !important;
+      color: $text-secondary;
+      margin-right: 15px;
       transition: $transition;
       transform: translateY(40%);
     }
 
     .label {
       flex-grow: 1;
-      color: $text-primary !important;
-      font-weight: 500;
       font-size: 14px;
+      color: $text-primary;
       transition: $transition;
-      letter-spacing: 0.3px;
     }
 
     .right-icon {
-      // margin-left: 16px;
-      position: absolute;
-      right: 5px;
-      color: $text-muted !important;
+      font-size: 18px;
+      color: $text-muted;
       transition: $transition;
+      position: absolute;
+      right: 10px;
       font-size: 18px;
       transform: translateY(50%);
     }
-  }
 
-  // Parent Menu Items
-  .parent-menu {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    position: relative;
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
 
-    &.expanded {
-      .right-icon {
-        transform: translateY(10px);
-        color: white !important;
+      .left-icon {
+        transform: scale(1.1);
+      }
+    }
+
+    &.active {
+      background: rgba(255, 255, 255, 0.15);
+
+      .label {
+        font-weight: 600;
+        color: white;
+      }
+
+      .left-icon {
+        color: white;
       }
     }
   }
 
-  // Submenu (Level 2)
+  // PARENT & SUBMENU
+  .parent {
+    justify-content: space-between;
+  }
+
   .sub-menu {
-    padding-left: 15px;
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    margin: 4px 0;
+    padding-left: 10px;
     animation: slideDown 0.3s ease-out;
 
-    .nested-menu {
+    .sub-menu-item {
       padding-left: 15px;
-      cursor: pointer;
-      border-radius: 8px !important;
-
-      .label {
-        font-size: 13px;
-        color: $text-secondary !important;
-      }
-
-      &:hover .label {
-        color: $text-primary;
-      }
-
-      &.expanded .right-icon {
-        transform: translateY(10px);
-        color: white !important;
-      }
-    }
-
-    // Sub-Sub menu (Level 3)
-    .sub-sub-menu {
-      padding-left: 20px;
-      animation: slideDown 0.2s ease-out;
-
-      .deep-menu-item {
-        padding-left: 20px !important;
-        border-radius: 6px !important;
-
-        .label {
-          font-size: 12px;
-          color: $text-muted !important;
-        }
-
-        &:hover .label {
-          color: $text-primary;
-        }
-
-        &.active .label {
-          color: white !important;
-          font-weight: 600;
-        }
-      }
-    }
-  }
-
-  .sub-grandchild {
-    padding-left: 10px;
-    margin: 4px 0;
-
-    .deep-menu-item {
-      padding-left: 10px !important;
-      border-radius: 8px !important;
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      transition: $transition;
-
-      .deepmenu-icon {
-        font-size: 16px !important;
-        margin-right: 12px !important;
-        color: $text-muted !important;
-        transition: $transition;
-        transform: translateY(40%);
-      }
-
-      .label {
-        flex: 1;
-        font-size: 13px;
-        color: $text-secondary !important;
-        font-weight: 500;
-      }
-
-      .right-icon {
-        font-size: 18px;
-        // margin-left: 10px;
-        color: $text-muted !important;
-        transition: $transition;
-      }
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.1);
-
-        &::before {
-          transform: scaleY(1);
-        }
-
-        .left-icon,
-        .submenu-icon,
-        .deepmenu-icon {
-          transform: scale(1.1);
-        }
-      }
-
-      &.expanded .right-icon {
-        // transform: rotate(90deg);
-        color: white !important;
-      }
-    }
-
-    .level-4 {
-      padding-left: 25px;
-      animation: slideDown 0.2s ease-out;
-
-      .level-4-item {
-        padding-left: 25px !important;
-        border-radius: 6px;
-        font-size: 12px !important;
-
-        .deepmenu-icon {
-          font-size: 16px !important;
-          margin-right: 12px !important;
-          color: $text-muted !important;
-          transition: $transition;
-          transform: translateY(40%);
-        }
-
-        .label {
-          color: $text-muted !important;
-          font-size: 12px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          display: inline-block;
-          max-width: 70%;
-          transform: translateY(7px);
-        }
-
-        &:hover {
-          background: rgba(255, 255, 255, 0.1);
-
-          &::before {
-            transform: scaleY(1);
-          }
-
-          .left-icon,
-          .submenu-icon,
-          .deepmenu-icon {
-            transform: scale(1.1);
-          }
-        }
-
-        &.active .label {
-          color: white !important;
-        }
-      }
+      font-size: 13px;
     }
   }
 }
 
-// Main Content Area
+// MAIN CONTENT
 .main-content {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
   overflow: hidden;
-  min-width: 0;
-  transition: margin-left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: margin-left 0.3s ease;
   background: #f8f9fa;
   margin-left: 0px !important;
 }
@@ -506,22 +232,20 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 .content-wrapper {
   flex: 1;
   overflow-y: auto;
-  padding: 2rem;
-  min-width: 0;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px $shadow-light;
+  padding: 1rem;
 }
 
-// Header & Footer Components
+// HEADER & FOOTER
 app-header,
 app-footer {
   position: sticky;
+  top: 0;
   z-index: 1000;
   background: white;
-  box-shadow: 0 2px 15px $shadow-light;
+  box-shadow: 0 2px 10px $shadow-light;
 }
 
-// Animations
+// ANIMATIONS
 @keyframes slideDown {
   from {
     opacity: 0;
@@ -532,109 +256,5 @@ app-footer {
     opacity: 1;
     transform: translateY(0);
     max-height: 500px;
-  }
-}
-
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 6px rgba(46, 204, 113, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-// Animation Classes
-.animate-slideDown {
-  animation: slideDown 0.3s ease-out;
-}
-
-.animate-fadeIn {
-  animation: fadeIn 0.3s ease-out;
-}
-
-// Responsive Design
-@media (max-width: 768px) {
-  .sidenav {
-    width: $sidebar-width;
-    position: fixed;
-    z-index: 1000;
-    height: 100vh;
-
-    &.collapsed {
-      transition: $transition;
-      transform: translateX(-100%);
-    }
-  }
-
-  .content-wrapper {
-    padding: 1rem;
-    border-radius: 12px;
-  }
-
-  .user-info {
-    padding: 20px 15px;
-
-    .user-avatar {
-      width: 60px;
-      height: 60px;
-    }
-  }
-
-  .nav-list {
-    padding: 0 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .sidenav {
-    width: $sidebar-width;
-  }
-
-  .content-wrapper {
-    padding: 0.75rem;
-  }
-}
-
-// Print Styles
-@media print {
-  .sidenav {
-    display: none;
-  }
-
-  .main-content {
-    margin-left: 0 !important;
-  }
-}
-
-// High Contrast Mode
-@media (prefers-contrast: high) {
-  .sidenav {
-    background: #1a1a1a;
-
-    .nav-item.active {
-      background: white !important;
-    }
-  }
-}
-
-// Reduced Motion Support
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
   }
 }

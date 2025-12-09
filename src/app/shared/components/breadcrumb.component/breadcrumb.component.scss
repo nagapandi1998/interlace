@@ -56,3 +56,11 @@ $primary-light: #a61e2f;
     }
   }
 }
+
+@media (max-width: 480px) {
+  .breadcrumb-container {
+    display: flex;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+}

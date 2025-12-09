@@ -1,139 +1,79 @@
 <mat-sidenav-container class="layout-container">
-  <mat-sidenav #sidenav [mode]="isMobile ? 'over' : 'side'" [(opened)]="isSidebarOpen"
-    [ngClass]="{ 'collapsed': !isSidebarOpen }" class="sidenav">
-
-    <!-- Logo Section -->
+  <mat-sidenav #sidenav class="sidenav" [ngClass]="{ slim: isSlim }" mode="side" opened="true">
+    <!-- LOGO -->
     <mat-toolbar class="sidenav-toolbar">
-      <a routerLink="/home" class="logo-link">
-        <img src="assets/images/logo.png" alt="Company Logo" class="logo" />
+      <a routerLink="/allcases">
+        <img src="assets/images/logo.png" class="logo" />
       </a>
     </mat-toolbar>
 
-    <!-- User Profile Section -->
-    <div class="user-info" *ngIf="isSidebarOpen">
-      <div class="user-avatar-container">
-        <img src="assets/images/avatar.jpg" alt="avatar" class="user-avatar">
-        <div class="online-indicator"></div>
-      </div>
-      <h6 class="user-name">Nagapandi G</h6>
-      <p class="user-role">Admin</p>
+    <!-- USER INFO -->
+    <div class="user-info">
+      <img src="assets/images/avatar.jpg" class="user-avatar" />
+      <div class="user-name">Nagapandi G</div>
+      <div class="user-role">Admin</div>
     </div>
 
-    <!-- Navigation Menu - Loop through menus -->
+    <!-- NAVIGATION -->
     <mat-nav-list class="nav-list">
+      <ng-template #recursiveMenu let-items let-level="level">
+        <ng-container *ngFor="let item of items">
+          <!-- ITEM WITHOUT CHILDREN -->
+          <a
+            *ngIf="!hasChildren(item)"
+            mat-list-item
+            class="nav-item"
+            [ngClass]="['level-' + level, isMenuActive(item) ? 'active' : '']"
+            [routerLink]="item.route"
+            routerLinkActive="active"
+            (click)="$event.stopPropagation()"
+          >
+            <mat-icon class="left-icon">{{ item.icon }}</mat-icon>
+            <span class="label">{{ item.label }}</span>
+          </a>
 
-      <!-- Loop through main menus -->
-      <ng-container *ngFor="let menu of menus">
+          <!-- ITEM WITH CHILDREN -->
+          <div *ngIf="hasChildren(item)">
+            <mat-list-item
+              class="nav-item parent"
+              [ngClass]="['level-' + level, isMenuActive(item) ? 'active' : '']"
+              (click)="toggleMenu(item.key)"
+            >
+              <mat-icon class="left-icon">{{ item.icon }}</mat-icon>
+              <span class="label">{{ item.label }}</span>
 
-        <!-- Single Menu Item (without children) -->
-        <a *ngIf="!hasChildren(menu)" mat-list-item [routerLink]="menu.route" routerLinkActive="active"
-          class="nav-item">
-          <mat-icon class="left-icon">{{ menu.icon }}</mat-icon>
-          <span class="label">{{ menu.label }}</span>
-          <div class="active-indicator"></div>
-        </a>
+              <mat-icon class="right-icon" *ngIf="!isSlim">
+                {{ openMenus[item.key] ? 'expand_more' : 'chevron_right' }}
+              </mat-icon>
+            </mat-list-item>
 
-        <!-- Parent Menu Item (with children) -->
-        <div *ngIf="hasChildren(menu)" class="menu-section">
-          <mat-list-item (click)="toggleMenu(menu.key, 1)" class="parent-menu nav-item"
-            [ngClass]="{ 'expanded': openMenus[menu.key] }">
-            <mat-icon class="left-icon">{{ menu.icon }}</mat-icon>
-            <span class="label">{{ menu.label }}</span>
-            <mat-icon class="right-icon">
-              {{ openMenus[menu.key] ? 'expand_more' : 'chevron_right' }}
-            </mat-icon>
-            <div class="active-indicator"></div>
-          </mat-list-item>
-
-          <!-- Submenu - Loop through children -->
-          <div *ngIf="openMenus[menu.key]" class="sub-menu animate-slideDown">
-
-            <ng-container *ngFor="let child of menu.children">
-
-              <!-- Child without further children -->
-              <a *ngIf="!hasChildren(child)" mat-list-item [routerLink]="child.route" routerLinkActive="active"
-                class="sub-menu-item">
-                <mat-icon class="submenu-icon">{{ child.icon }}</mat-icon>
-                <span class="label">{{ child.label }}</span>
-                <div class="active-indicator"></div>
-              </a>
-
-              <div *ngIf="hasChildren(child)" class="nested-menu-container">
-                <mat-list-item (click)="toggleMenu(child.key, 2)" class="nested-menu sub-menu-item"
-                  [ngClass]="{ 'expanded': openMenus[child.key] }">
-                  <mat-icon class="submenu-icon">{{ child.icon }}</mat-icon>
-                  <span class="label">{{ child.label }}</span>
-
-                  <mat-icon class="right-icon">
-                    {{ openMenus[child.key] ? 'expand_more' : 'chevron_right' }}
-                  </mat-icon>
-                </mat-list-item>
-
-                <!-- sub-sub-menu -->
-                <div *ngIf="openMenus[child.key]" class="sub-sub-menu animate-slideDown">
-
-                  <ng-container *ngFor="let grandChild of child.children">
-
-                    <!-- Grandchild with NO children -->
-                    <a *ngIf="!hasChildren(grandChild)" mat-list-item [routerLink]="grandChild.route"
-                      class="deep-menu-item" routerLinkActive="active">
-                      <mat-icon class="deepmenu-icon">{{ grandChild.icon }}</mat-icon>
-                      <span class="label">{{ grandChild.label }}</span>
-                    </a>
-
-                    <!-- Grandchild with CHILDREN -->
-                    <div *ngIf="hasChildren(grandChild)" class="sub-grandchild">
-                      <mat-list-item (click)="toggleMenu(grandChild.key, 3)" class="deep-menu-item"
-                        [ngClass]="{ 'expanded': openMenus[grandChild.key] }">
-
-                        <mat-icon class="deepmenu-icon">{{ grandChild.icon }}</mat-icon>
-                        <span class="label">{{ grandChild.label }}</span>
-
-                        <mat-icon class="right-icon">
-                          {{ openMenus[grandChild.key] ? 'expand_more' : 'chevron_right' }}
-                        </mat-icon>
-                      </mat-list-item>
-
-                      <div *ngIf="openMenus[grandChild.key]" class="level-4 animate-slideDown">
-                        <a *ngFor="let great of grandChild.children" mat-list-item [routerLink]="great.route"
-                          routerLinkActive="active" class="level-4-item">
-                          <mat-icon class="deepmenu-icon">{{ great.icon }}</mat-icon>
-                          <span class="label" matTooltip="{{ great.label }}" matTooltipPosition="right">{{ great.label
-                            }}</span>
-                        </a>
-                      </div>
-
-                    </div>
-
-                  </ng-container>
-
-                </div>
-              </div>
-
-
-            </ng-container>
+            <!-- SUB MENU -->
+            <div class="sub-menu" *ngIf="openMenus[item.key] && !isSlim">
+              <ng-container
+                *ngTemplateOutlet="
+                  recursiveMenu;
+                  context: { $implicit: item.children, level: level + 1 }
+                "
+              ></ng-container>
+            </div>
           </div>
-        </div>
-      </ng-container>
+        </ng-container>
+      </ng-template>
 
+      <!-- ROOT MENU CALL -->
+      <ng-container
+        *ngTemplateOutlet="recursiveMenu; context: { $implicit: menus, level: 1 }"
+      ></ng-container>
     </mat-nav-list>
-
-
   </mat-sidenav>
 
-  <!-- Main Content Area -->
+  <!-- MAIN CONTENT -->
   <mat-sidenav-content class="main-content">
-    <!-- Header Component -->
-    <app-header (toggleSidebar)="onSidebarToggle()"></app-header>
-
-    <!-- Main Content Wrapper -->
+    <app-header (toggleSidebar)="toggleSidebarMode()"></app-header>
     <div class="content-wrapper">
-     <app-breadcrumb></app-breadcrumb>
-      <!-- Page Content -->
+      <app-breadcrumb></app-breadcrumb>
       <router-outlet></router-outlet>
     </div>
-
-    <!-- Footer Component -->
     <app-footer></app-footer>
   </mat-sidenav-content>
 </mat-sidenav-container>

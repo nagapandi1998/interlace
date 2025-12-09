@@ -124,3 +124,15 @@ $secondary-light: #891b24;
     overflow: auto;
   }
 }
+
+@media (max-width: 480px) {
+  .add-button {
+    display: flex;
+    justify-content: center !important;
+    gap: 5px !important;
+  }
+
+  .file-upload-container {
+    gap: 5px !important;
+  }
+}
