@@ -1,10 +1,7 @@
-$primary-color: #75151d;
-$primary-light: #891b24;
-$secondary-color: #7f403d;
-$secondary-light: #891b24;
+@use '../../../assets/scss/variable' as *;
 
 .card {
-  background: #fff;
+  background: $white-color;
   border-radius: 8px;
   font-family: 'Poppins', sans-serif !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -14,14 +11,13 @@ $secondary-light: #891b24;
 
 .app-primary-button {
   background-color: $primary-color;
-  color: #fff;
+  color: $white-color;
   padding: 8px 18px;
   font-weight: 600;
   font-size: 15px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-
   transition: background-color 0.18s ease, transform 0.12s ease, box-shadow 0.18s ease;
 
   &:hover {
@@ -71,7 +67,7 @@ $secondary-light: #891b24;
   // position: relative;
   width: 100%;
   white-space: nowrap;
-  background-color: white;
+  background-color: $white-color;
   z-index: 9999;
 }
 

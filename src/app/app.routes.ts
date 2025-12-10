@@ -9,7 +9,7 @@ export const routes: Routes = [
   },
   {
     path: 'auth',
-    loadComponent: () => import('./pages/auth/auth').then((m) => m.Auth),
+    loadComponent: () => import('./pages/auth/auth.page').then((m) => m.AuthPage),
     data: { breadcrumb: 'Auth' }
   },
   {
@@ -17,54 +17,29 @@ export const routes: Routes = [
     component: Layout,
     children: [
       {
-        path: 'home',
-        loadComponent: () => import('./pages/home/home').then((m) => m.Home),
-        data: { breadcrumb: 'Home' }
-      },
-      {
-        path: 'materialform',
-        loadComponent: () =>
-          import('./pages/material-form/material-form').then((m) => m.MaterialForm),
-          data: { breadcrumb: 'Material Form' }
-      },
-      {
-        path: 'bootstrapform',
-        loadComponent: () =>
-          import('./pages/bootstrap-form/bootstrap-form').then((m) => m.BootstrapForm),
-          data: { breadcrumb: 'Bootstrap Form' }
-      },
-      {
         path: 'casecreation',
         children: [
           {
             path: '',
-            loadComponent: () => import('./pages/case/case').then((m) => m.Case),
+            loadComponent: () => import('./pages/case/case.page').then((m) => m.CasePage),
             data: { breadcrumb: 'Case Creation' }
           },
           {
             path: ':id',
-            loadComponent: () => import('./pages/case/case').then((m) => m.Case),
+            loadComponent: () => import('./pages/case/case.page').then((m) => m.CasePage),
             data: { breadcrumb: 'Case Details' }
           },
         ],
       },
       {
         path: 'allcases',
-        loadComponent: () => import('./pages/all-cases/all-cases').then((m) => m.AllCases),
+        loadComponent: () => import('./pages/all-cases/all-cases.page').then((m) => m.AllCasesPage),
         data: { breadcrumb: 'All Cases' }
-      },
-      {
-        path: 'tinytexteditor',
-        loadComponent: () =>
-          import('./pages/tiny-mce-text-editor/tiny-mce-text-editor').then(
-            (m) => m.TinyMCETextEditor
-          ),
-          data: { breadcrumb: 'TinyMCE Text Editor' }
       },
       {
         path: 'texteditor',
         loadComponent: () =>
-          import('./pages/text-editor/text-editor').then((m) => m.TextEditor),
+          import('./pages/text-editor/text-editor.page').then((m) => m.TextEditorPage),
           data: { breadcrumb: 'Text Editor' }
       }
     ],

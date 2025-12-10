@@ -28,10 +28,10 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatInputModule,
   ],
-  templateUrl: './all-cases.html',
-  styleUrl: './all-cases.scss',
+  templateUrl: './all-cases.page.html',
+  styleUrl: './all-cases.page.scss',
 })
-export class AllCases {
+export class AllCasesPage {
   loading = false;
   displayedColumns: string[] = [
     'id',

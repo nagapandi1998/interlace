@@ -1,3 +1,5 @@
+@use '../../../../assets/scss/variable' as *;
+
 .loader-overlay {
   position: fixed;
   top: 0;
@@ -17,7 +19,7 @@
   border-radius: 50%;
   width: 48px;
   height: 48px;
-  color: #ffffff; //#fff;
+  color: $white-color; //#fff;
   position: relative;
 }
 
@@ -36,7 +38,7 @@
 }
 
 .loader:after {
-  color: #75151d; //#FF3D00;
+  color: $primary-color; //#FF3D00;
   transform: rotateY(70deg);
   animation-delay: .4s;
 }

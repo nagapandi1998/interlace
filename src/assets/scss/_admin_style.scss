@@ -1,7 +1,4 @@
-$primary-color: #75151d;
-$primary-light: #891b24;
-$secondary-color: #7f403d;
-$secondary-light: #891b24;
+@use '_variable' as *;
 
 .card-header {
   background-color: #ffffff;
@@ -13,10 +10,10 @@ $secondary-light: #891b24;
   margin-bottom: 15px;
 }
 
-.card-body {
-  padding: 30px;
-  background-color: transparent;
-}
+// .card-body {
+//   padding: 30px;
+//   background-color: transparent;
+// }
 
 
 /* Dialog box designs start */

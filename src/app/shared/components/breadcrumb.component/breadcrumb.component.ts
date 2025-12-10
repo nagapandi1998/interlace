@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { BreadcrumbService } from '../../service/breadcrumb.service';
+import { BreadcrumbService } from '../../service/breadcrumb/breadcrumb.service';
 
 @Component({
   selector: 'app-breadcrumb',

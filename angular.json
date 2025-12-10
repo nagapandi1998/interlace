@@ -21,31 +21,28 @@
             "polyfills": ["src/polyfills.ts"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-             "allowedCommonJsDependencies": [
-                    "mammoth",
-                    "file-saver",
-                    "buffer"
-             ],
+            "allowedCommonJsDependencies": ["buffer"],
             "assets": [
               {
                 "glob": "**/*",
                 "input": "public"
               },
-              "src/assets",
-              {
-                "glob": "**/*",
-                "input": "node_modules/tinymce",
-                "output": "tinymce/"
-              }
+              "src/assets"
             ],
-            "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.scss",
-              "src/assets/scss/style.scss"
-            ]
+            "styles": ["src/styles.scss", "src/assets/scss/style.scss"]
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractLicenses": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -57,8 +54,7 @@
                   "maximumWarning": "12kB",
                   "maximumError": "14kB"
                 }
-              ],
-              "outputHashing": "all"
+              ]
             },
             "development": {
               "optimization": false,
@@ -95,11 +91,7 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.scss",
-              "src/assets/scss/style.scss"
-            ]
+            "styles": ["src/styles.scss", "src/assets/scss/style.scss"]
           }
         }
       }

@@ -57,19 +57,18 @@
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
               <mat-form-field appearance="outline" class="form-field">
                 <mat-label>Username</mat-label>
-                <mat-icon matPrefix>email</mat-icon>
+                <mat-icon matPrefix>person</mat-icon>
                 <input
                   matInput
-                  type="email"
-                  formControlName="email"
-                  placeholder="Enter your email"
+                  formControlName="username"
+                  placeholder="Enter your username"
                 />
-                <mat-error *ngIf="loginForm.get('email')?.hasError('required')"
+                <mat-error *ngIf="loginForm.get('username')?.hasError('required')"
                   >Username is required</mat-error
                 >
-                <mat-error *ngIf="loginForm.get('email')?.hasError('email')"
+                <!-- <mat-error *ngIf="loginForm.get('username')?.hasError('email')"
                   >Invalid email address</mat-error
-                >
+                > -->
               </mat-form-field>
 
               <mat-form-field appearance="outline" class="form-field">
@@ -91,7 +90,7 @@
 
               <!-- Remember Me & Forgot Password -->
               <div class="form-options">
-                <button type="button" class="forgot-password">Forgot password?</button>
+                <button type="button" class="forgot-password" (click)="forgotpassword()">Forgot password?</button>
               </div>
 
               <!-- Submit Button -->

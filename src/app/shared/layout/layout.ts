@@ -120,12 +120,6 @@ export class Layout implements OnInit {
       label: 'Text Editor',
       icon: 'description',
       children: [
-        // {
-        //   key: 'TinyMCEEditor',
-        //   label: 'TinyMCE Editor',
-        //   route: '/tinytexteditor',
-        //   icon: 'editor',
-        // },
         {
           key: 'textEditor',
           label: 'Superdoc Editor',

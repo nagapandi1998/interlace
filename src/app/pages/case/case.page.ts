@@ -59,10 +59,10 @@ export const MY_DATE_FORMATS = {
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
   ],
-  templateUrl: './case.html',
-  styleUrl: './case.scss',
+  templateUrl: './case.page.html',
+  styleUrl: './case.page.scss',
 })
-export class Case {
+export class CasePage {
   @ViewChild('confirmDialog') confirmDialog!: TemplateRef<any>;
   formSubmitted = false;
   loading = false;

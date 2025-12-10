@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MaterialForm } from './material-form';
+import { TextEditorPage } from './text-editor.page';
 
-describe('MaterialForm', () => {
-  let component: MaterialForm;
-  let fixture: ComponentFixture<MaterialForm>;
+describe('TextEditor', () => {
+  let component: TextEditorPage;
+  let fixture: ComponentFixture<TextEditorPage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MaterialForm]
+      imports: [TextEditorPage]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MaterialForm);
+    fixture = TestBed.createComponent(TextEditorPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

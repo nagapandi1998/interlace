@@ -1,5 +1,4 @@
-$primary-color: #75151d;
-$primary-light: #a61e2f;
+@use '../../../../assets/scss/variable' as *;
 
 .breadcrumb-container {
   display: flex;

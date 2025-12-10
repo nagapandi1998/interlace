@@ -1,16 +1,9 @@
-// Variables
-$primary-color: #75151d;
-$primary-light: #891b24;
-$primary-dark: #59050c;
-$error-color: #dc3545;
-$background-light: #f8f9fa;
-$border-color: #e0e0e0;
-$shadow-color: rgba(0, 0, 0, 0.1);
+@use '../../../assets/scss/variable' as *;
 
 .login-container {
-  min-height: 100vh;
+  min-height: 90vh;
   display: flex;
-  background: linear-gradient(135deg, $background-light 0%, #ffffff 100%);
+  background: linear-gradient(135deg, $auth-bg-color 0%, $white-color 100%);
   // overflow: hidden;
 
   align-items: center;
@@ -22,7 +15,7 @@ $shadow-color: rgba(0, 0, 0, 0.1);
   display: flex;
   width: 100%;
   max-width: 950px;
-  background: #fff;
+  background: $white-color;
   border-radius: 16px;
   box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.12);
   overflow: hidden;
@@ -36,7 +29,7 @@ $shadow-color: rgba(0, 0, 0, 0.1);
 // Left Panel Styles
 .left-panel {
   flex: 1;
-  background-color: white;
+  background-color: $white-color;
   position: relative;
   overflow: hidden;
   border-right: 1.5px solid $primary-color;
@@ -92,7 +85,7 @@ $shadow-color: rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3rem;
+  padding: 2rem;
 }
 
 .logo-section {
@@ -104,7 +97,7 @@ $shadow-color: rgba(0, 0, 0, 0.1);
 .logo-container {
   position: relative;
   display: inline-block;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 
   .logo-glow {
     position: absolute;
@@ -116,8 +109,8 @@ $shadow-color: rgba(0, 0, 0, 0.1);
   }
 
   .logo {
-    width: 12rem;
-    height: 12rem;
+    width: 10rem;
+    height: 10rem;
     object-fit: contain;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
     transition: transform 0.3s ease;
@@ -126,7 +119,7 @@ $shadow-color: rgba(0, 0, 0, 0.1);
 }
 
 .title-section {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 
   .main-title {
     font-size: 2.5rem;

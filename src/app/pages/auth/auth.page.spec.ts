@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TinyMCETextEditor } from './tiny-mce-text-editor';
+import { AuthPage } from './auth.page';
 
-describe('TinyMCETextEditor', () => {
-  let component: TinyMCETextEditor;
-  let fixture: ComponentFixture<TinyMCETextEditor>;
+describe('Auth', () => {
+  let component: AuthPage;
+  let fixture: ComponentFixture<AuthPage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TinyMCETextEditor]
+      imports: [AuthPage]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TinyMCETextEditor);
+    fixture = TestBed.createComponent(AuthPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

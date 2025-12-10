@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TextEditor } from './text-editor';
+import { CasePage } from './case.page';
 
-describe('TextEditor', () => {
-  let component: TextEditor;
-  let fixture: ComponentFixture<TextEditor>;
+describe('Case', () => {
+  let component: CasePage;
+  let fixture: ComponentFixture<CasePage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TextEditor]
+      imports: [CasePage]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TextEditor);
+    fixture = TestBed.createComponent(CasePage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

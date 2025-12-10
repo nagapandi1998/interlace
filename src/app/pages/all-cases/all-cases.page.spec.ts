@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AllCases } from './all-cases';
+import { AllCasesPage } from './all-cases.page';
 
 describe('AllCases', () => {
-  let component: AllCases;
-  let fixture: ComponentFixture<AllCases>;
+  let component: AllCasesPage;
+  let fixture: ComponentFixture<AllCasesPage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AllCases]
+      imports: [AllCasesPage]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AllCases);
+    fixture = TestBed.createComponent(AllCasesPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

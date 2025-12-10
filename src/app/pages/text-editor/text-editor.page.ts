@@ -10,10 +10,10 @@ import { Loader } from '../../shared/components/loader/loader';
   selector: 'app-text-editor',
   standalone: true,
   imports: [CommonModule, MatIconModule, MatCardModule, MatSnackBarModule, Loader],
-  templateUrl: './text-editor.html',
-  styleUrl: './text-editor.scss',
+  templateUrl: './text-editor.page.html',
+  styleUrl: './text-editor.page.scss',
 })
-export class TextEditor implements AfterViewInit {
+export class TextEditorPage implements AfterViewInit {
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   editor: any = null;

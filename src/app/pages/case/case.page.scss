@@ -1,13 +1,10 @@
-$primary-color: #75151d;
-$primary-light: #891b24;
-$secondary-color: #7f403d;
-$secondary-light: #891b24;
+@use '../../../assets/scss/variable' as *;
 
 .form-container {
   // max-width: 1200px;
   margin: auto;
   padding: 24px;
-  background: #fff;
+  background: $white-color;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -87,7 +84,7 @@ mat-form-field {
     font-weight: 500;
     font-size: 16px;
     border-radius: 5px;
-    color: white;
+    color: $white-color;
     background-color: $primary-color;
 
     &:hover {
@@ -106,6 +103,13 @@ mat-form-field {
 }
 
 /* ---------- Table Styles ---------- */
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;   /* horizontal scroll if needed */
+  -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+}
+
 :host ::ng-deep .table-responsive table.mat-table {
   width: 100%;
   border-collapse: separate;
@@ -126,16 +130,16 @@ mat-form-field {
 
 :host ::ng-deep .mat-header-cell {
   font-weight: bold;
-  color: #fff !important;
+  color: $white-color !important;
   text-transform: capitalize;
   padding: 14px 16px;
-  border-bottom: 2px solid #1565c0;
+  // border-bottom: 2px solid #1565c0;
 }
 
 /* Body Rows */
 :host ::ng-deep .mat-row {
   &:nth-of-type(odd) {
-    background-color: #fff !important;
+    background-color: $white-color !important;
   }
 
   &:nth-of-type(even) {
@@ -164,7 +168,7 @@ mat-form-field {
     font-size: 16px;
     border-radius: 5px;
 
-    color: white;
+    color: $white-color;
     background-color: $primary-color;
 
     &:hover {
@@ -227,7 +231,7 @@ mat-form-field {
 /* Dialog content area */
 .dialog-content {
   padding: 14px !important;
-  background: #fff;
+  background: $white-color;
 }
 
 /*  Footer actions (Cancel / Save) */
@@ -243,7 +247,7 @@ mat-form-field {
     font-weight: 500;
     font-size: 16px;
     border-radius: 5px;
-    color: white;
+    color: $white-color;
     background-color: $primary-color;
 
     &:hover {
