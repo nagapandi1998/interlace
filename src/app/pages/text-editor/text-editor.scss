@@ -64,11 +64,15 @@ $secondary-light: #891b24;
 }
 
 .toolbar-wrapper {
+  position: sticky;
+  top: 0%;
   overflow-x: auto;
   overflow-y: visible;
-  position: relative;
+  // position: relative;
   width: 100%;
   white-space: nowrap;
+  background-color: white;
+  z-index: 9999;
 }
 
 ::ng-deep .overflow-menu {
