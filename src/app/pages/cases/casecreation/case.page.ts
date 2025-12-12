@@ -11,18 +11,18 @@ import {
   MAT_DATE_LOCALE,
   MAT_DATE_FORMATS,
 } from '@angular/material/core';
-import { Loader } from '../../shared/components/loader/loader';
+import { Loader } from '../../../shared/components/loader/loader';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { LocationDialog } from '../../shared/components/dialog/location-dialog/location';
-import { PetitionerDialog } from '../../shared/components/dialog/petitioner-dialog/petitioner';
-import { BoardStandingCounselDialog } from '../../shared/components/dialog/board-standing-counsel-dialog/board-standing-counsel-dialog';
-import { RespondentDialog } from '../../shared/components/dialog/respondent-dialog/respondent-dialog';
-import { DocumentDialog } from '../../shared/components/dialog/document-dialog/document-dialog';
-import { ToastService } from '../../shared/service/toaster/toast-service';
+import { LocationDialog } from '../../../shared/components/dialog/location-dialog/location';
+import { PetitionerDialog } from '../../../shared/components/dialog/petitioner-dialog/petitioner';
+import { BoardStandingCounselDialog } from '../../../shared/components/dialog/board-standing-counsel-dialog/board-standing-counsel-dialog';
+import { RespondentDialog } from '../../../shared/components/dialog/respondent-dialog/respondent-dialog';
+import { DocumentDialog } from '../../../shared/components/dialog/document-dialog/document-dialog';
+import { ToastService } from '../../../shared/service/toaster/toast-service';
 import { DatePipe } from '@angular/common';
 
 export const MY_DATE_FORMATS = {

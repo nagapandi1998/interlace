@@ -1,5 +1,8 @@
 import { Routes } from '@angular/router';
 import { MenuSidebar } from './shared/layout/menu-sidebar';
+import { authRoutes } from './pages/auth/auth-routing';
+import { caseRoutes } from './pages/cases/case-routing';
+import { texteditorRoutes } from './pages/texteditor/texteditor-routing';
 
 export const routes: Routes = [
   {
@@ -10,18 +13,7 @@ export const routes: Routes = [
   // Auth route
   {
     path: 'auth',
-    children: [
-      {
-        path: 'login',
-        loadComponent: () => import('./pages/auth/auth.page').then((m) => m.AuthPage),
-        data: { breadcrumb: 'Auth Login' },
-      },
-      {
-        path: 'changepassword',
-        loadComponent: () => import('./pages/change-password/change-password').then((m) => m.ChangePassword),
-        data: { breadcrumb: 'Change Password' },
-      }
-    ],
+    children: [...authRoutes],
   },
   // Menu wrapper for authorized pages
   {
@@ -30,35 +22,11 @@ export const routes: Routes = [
     children: [
       {
         path: 'courtcase',
-        children: [
-          {
-            path: 'allcases',
-            loadComponent: () =>
-              import('./pages/all-cases/all-cases.page').then((m) => m.AllCasesPage),
-            data: { breadcrumb: 'All Cases' },
-          },
-          {
-            path: 'casecreation',
-            loadComponent: () => import('./pages/case/case.page').then((m) => m.CasePage),
-            data: { breadcrumb: 'Case Creation' },
-          },
-          {
-            path: 'casecreation/:id',
-            loadComponent: () => import('./pages/case/case.page').then((m) => m.CasePage),
-            data: { breadcrumb: 'Case Details' },
-          },
-        ],
+        children: [...caseRoutes],
       },
       {
         path: 'texteditor',
-        children: [
-          {
-            path: 'editor',
-            loadComponent: () =>
-              import('./pages/text-editor/text-editor.page').then((m) => m.TextEditorPage),
-            data: { breadcrumb: 'Text Editor' },
-          },
-        ],
+        children: [...texteditorRoutes],
       },
     ],
   },

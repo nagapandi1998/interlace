@@ -3,15 +3,15 @@ import { CommonModule } from '@angular/common';
 import { SuperDoc } from '@harbour-enterprises/superdoc';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { ToastService } from '../../shared/service/toaster/toast-service';
-import { Loader } from '../../shared/components/loader/loader';
+import { ToastService } from '../../../shared/service/toaster/toast-service';
+import { Loader } from '../../../shared/components/loader/loader';
 
 @Component({
   selector: 'app-text-editor',
   standalone: true,
   imports: [CommonModule, MatIconModule, MatCardModule, Loader],
-  templateUrl: './text-editor.page.html',
-  styleUrl: './text-editor.page.scss',
+  templateUrl: './editor.page.html',
+  styleUrl: './editor.page.scss',
 })
 export class TextEditorPage implements AfterViewInit {
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;

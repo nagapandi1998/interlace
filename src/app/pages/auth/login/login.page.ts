@@ -6,10 +6,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { ToastService } from '../../shared/service/toaster/toast-service';
+import { ToastService } from '../../../shared/service/toaster/toast-service';
 import { Router } from '@angular/router';
-import { AuthService } from '../../shared/service/auth/auth.service';
-import { Loader } from '../../shared/components/loader/loader';
+import { AuthService } from '../../../shared/service/auth/auth.service';
+import { Loader } from '../../../shared/components/loader/loader';
 
 @Component({
   selector: 'app-auth',
@@ -24,8 +24,8 @@ import { Loader } from '../../shared/components/loader/loader';
     MatCardModule,
     Loader,
   ],
-  templateUrl: './auth.page.html',
-  styleUrl: './auth.page.scss',
+  templateUrl: './login.page.html',
+  styleUrl: './login.page.scss',
 })
 export class AuthPage implements OnInit {
   hide = true;

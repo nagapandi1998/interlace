@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TextEditorPage } from './text-editor.page';
+import { TextEditorPage } from './editor.page';
 
 describe('TextEditor', () => {
   let component: TextEditorPage;
