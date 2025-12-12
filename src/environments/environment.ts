@@ -1,7 +1,7 @@
-const apiBaseUrl = 'http://localhost:8080/';
+const apiBaseUrl = '/auth-api/';
 
 export const environment = {
   production: false,
-  authUrl: apiBaseUrl + 'auth-api/auth/login',
+  authUrl: apiBaseUrl + 'auth/login',
   menuUserUrl: apiBaseUrl + 'menu/user',
 };

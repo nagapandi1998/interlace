@@ -24,6 +24,7 @@ export class Header {
   }
 
   logout() {
-    this.router.navigate(['/auth']);
+    sessionStorage.removeItem('loginuser');
+    this.router.navigate(['/auth/login']);
   }
 }

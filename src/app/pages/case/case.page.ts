@@ -509,11 +509,11 @@ export class CasePage {
         verticalPosition: 'top',
         panelClass: ['success-snackbar'],
       });
-      this.router.navigate(['/allcases']);
+      this.router.navigate(['/courtcase/allcases']);
     }, 500);
   }
 
   goBack() {
-    this.router.navigate(['/allcases']);
+    this.router.navigate(['/courtcase/allcases']);
   }
 }

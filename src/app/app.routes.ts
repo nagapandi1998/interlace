@@ -1,47 +1,60 @@
 import { Routes } from '@angular/router';
-import { Layout } from './shared/layout/layout';
+import { MenuSidebar } from './shared/layout/menu-sidebar';
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'auth',
+    redirectTo: 'auth/login',
   },
+  // Auth route
   {
     path: 'auth',
-    loadComponent: () => import('./pages/auth/auth.page').then((m) => m.AuthPage),
-    data: { breadcrumb: 'Auth' }
-  },
-  {
-    path: '',
-    component: Layout,
     children: [
       {
-        path: 'casecreation',
+        path: 'login',
+        loadComponent: () => import('./pages/auth/auth.page').then((m) => m.AuthPage),
+        data: { breadcrumb: 'Auth' },
+      },
+    ],
+  },
+  // Menu wrapper for authorized pages
+  {
+    path: '',
+    component: MenuSidebar,
+    children: [
+      {
+        path: 'courtcase',
         children: [
           {
-            path: '',
-            loadComponent: () => import('./pages/case/case.page').then((m) => m.CasePage),
-            data: { breadcrumb: 'Case Creation' }
+            path: 'allcases',
+            loadComponent: () =>
+              import('./pages/all-cases/all-cases.page').then((m) => m.AllCasesPage),
+            data: { breadcrumb: 'All Cases' },
           },
           {
-            path: ':id',
+            path: 'casecreation',
             loadComponent: () => import('./pages/case/case.page').then((m) => m.CasePage),
-            data: { breadcrumb: 'Case Details' }
+            data: { breadcrumb: 'Case Creation' },
+          },
+          {
+            path: 'casecreation/:id',
+            loadComponent: () => import('./pages/case/case.page').then((m) => m.CasePage),
+            data: { breadcrumb: 'Case Details' },
           },
         ],
       },
       {
-        path: 'allcases',
-        loadComponent: () => import('./pages/all-cases/all-cases.page').then((m) => m.AllCasesPage),
-        data: { breadcrumb: 'All Cases' }
-      },
-      {
         path: 'texteditor',
-        loadComponent: () =>
-          import('./pages/text-editor/text-editor.page').then((m) => m.TextEditorPage),
-          data: { breadcrumb: 'Text Editor' }
-      }
+        children: [
+          {
+            path: 'editor',
+            loadComponent: () =>
+              import('./pages/text-editor/text-editor.page').then((m) => m.TextEditorPage),
+            data: { breadcrumb: 'Text Editor' },
+          },
+        ],
+      },
     ],
   },
 ];

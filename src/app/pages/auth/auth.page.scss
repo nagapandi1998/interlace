@@ -471,6 +471,20 @@
   }
 }
 
+// Animation classes
+.fade-in {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.slide-in-left {
+  animation: slideIn 0.8s ease forwards;
+}
+
+.fade-in-delay {
+  animation: fadeIn 0.5s ease 0.1s forwards; // optional delay
+}
+
+
 // Responsive Design
 @media (max-width: 768px) {
   .login-container {

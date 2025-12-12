@@ -325,15 +325,15 @@ export class AllCasesPage {
   }
 
   addCase() {
-    this.router.navigate(['/casecreation']);
+    this.router.navigate(['/courtcase/casecreation']);
   }
 
   editCase(caseId: number) {
-    this.router.navigate(['/casecreation', caseId]);
+    this.router.navigate(['/courtcase/casecreation', caseId]);
   }
 
   viewCase(caseId: number) {
-    this.router.navigate(['/casecreation', caseId], {
+    this.router.navigate(['/courtcase/casecreation', caseId], {
       queryParams: { view: true },
     });
   }

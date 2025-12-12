@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -28,10 +28,12 @@ import { Loader } from '../../shared/components/loader/loader';
   templateUrl: './auth.page.html',
   styleUrl: './auth.page.scss',
 })
-export class AuthPage {
+export class AuthPage implements OnInit{
   hide = true;
   loginForm: FormGroup;
   loading = false;
+  animateLeft = signal(false);
+  animateRight = signal(false);
 
   constructor(
     private fb: FormBuilder,
@@ -43,6 +45,11 @@ export class AuthPage {
       username: ['admin', [Validators.required]],
       password: ['admin123', [Validators.required]],
     });
+  }
+
+  ngOnInit() {
+    setTimeout(() => this.animateLeft.set(true), 100);
+    setTimeout(() => this.animateRight.set(true), 300);
   }
 
   onSubmit() {
@@ -60,16 +67,16 @@ export class AuthPage {
       this.loading = true;
 
       this.authService.verifyUser(loginreq).subscribe({
-        next: (response) => {
+        next: (loginresponse) => {
           this.loading = false;
-          console.log('Login success:', response);
+          console.log('Login success:', loginresponse);
 
-          // Save token or session if needed
-          // localStorage.setItem('accessToken', response.accessToken);
+          // Save token
+           sessionStorage.setItem('loginuser', JSON.stringify(loginresponse));
 
           this.showSuccess('Login successful!');
 
-          this.router.navigate(['/allcases']);
+          this.router.navigate(['/courtcase/allcases']);
         },
 
         error: (error) => {

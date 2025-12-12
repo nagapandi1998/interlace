@@ -1,8 +1,15 @@
 <mat-sidenav-container class="layout-container">
-  <mat-sidenav #sidenav class="sidenav" [ngClass]="{ slim: isSlim }" mode="side" opened="true">
+  <mat-sidenav
+    #sidenav
+    class="sidenav"
+    [ngClass]="{ slim: isSlim }"
+    [@sidebarWidth]="isSlim ? 'slim' : 'full'"
+    mode="side"
+    opened="true"
+  >
     <!-- LOGO -->
     <mat-toolbar class="sidenav-toolbar">
-      <a routerLink="/allcases">
+      <a routerLink="/courtcase/allcases">
         <img src="assets/images/logo.png" class="logo" />
       </a>
     </mat-toolbar>
@@ -24,12 +31,14 @@
             mat-list-item
             class="nav-item"
             [ngClass]="['level-' + level, isMenuActive(item) ? 'active' : '']"
-            [routerLink]="item.route"
+            [routerLink]="item.path"
             routerLinkActive="active"
             (click)="$event.stopPropagation()"
           >
-            <mat-icon class="left-icon">{{ item.icon }}</mat-icon>
-            <span class="label">{{ item.label }}</span>
+            <mat-icon fontSet="material-icons-outlined" class="left-icon">{{
+              item.icon || 'folder'
+            }}</mat-icon>
+            <span class="label">{{ item.title }}</span>
           </a>
 
           <!-- ITEM WITH CHILDREN -->
@@ -37,18 +46,20 @@
             <mat-list-item
               class="nav-item parent"
               [ngClass]="['level-' + level, isMenuActive(item) ? 'active' : '']"
-              (click)="toggleMenu(item.key)"
+              (click)="toggleMenu(item.id)"
             >
-              <mat-icon class="left-icon">{{ item.icon }}</mat-icon>
-              <span class="label">{{ item.label }}</span>
+              <mat-icon fontSet="material-icons-outlined" class="left-icon">{{
+                item.icon || 'folder'
+              }}</mat-icon>
+              <span class="label">{{ item.title }}</span>
 
-              <mat-icon class="right-icon" *ngIf="!isSlim">
-                {{ openMenus[item.key] ? 'expand_more' : 'chevron_right' }}
+              <mat-icon fontSet="material-icons-outlined" class="right-icon" *ngIf="!isSlim">
+                {{ openMenus[item.id] ? 'expand_more' : 'chevron_right' }}
               </mat-icon>
             </mat-list-item>
 
             <!-- SUB MENU -->
-            <div class="sub-menu" *ngIf="openMenus[item.key] && !isSlim">
+            <div class="sub-menu" *ngIf="openMenus[item.id] && !isSlim">
               <ng-container
                 *ngTemplateOutlet="
                   recursiveMenu;
@@ -77,3 +88,4 @@
     <app-footer></app-footer>
   </mat-sidenav-content>
 </mat-sidenav-container>
+<app-loader [loading]="loading"></app-loader>
