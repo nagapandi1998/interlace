@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { ToastService } from '../../shared/service/toaster/toast-service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/service/auth/auth.service';
 import { Loader } from '../../shared/components/loader/loader';
@@ -22,13 +22,12 @@ import { Loader } from '../../shared/components/loader/loader';
     MatButtonModule,
     MatIconModule,
     MatCardModule,
-    MatSnackBarModule,
     Loader,
   ],
   templateUrl: './auth.page.html',
   styleUrl: './auth.page.scss',
 })
-export class AuthPage implements OnInit{
+export class AuthPage implements OnInit {
   hide = true;
   loginForm: FormGroup;
   loading = false;
@@ -38,7 +37,7 @@ export class AuthPage implements OnInit{
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private snackBar: MatSnackBar,
+    private toastService: ToastService,
     private router: Router
   ) {
     this.loginForm = this.fb.group({
@@ -55,7 +54,7 @@ export class AuthPage implements OnInit{
   onSubmit() {
     if (!this.loginForm.valid) {
       this.loginForm.markAllAsTouched();
-      this.showError('Enter mandatory details');
+      this.toastService.showMsg('warning', 'Enter mandatory details');
 
       return;
     } else {
@@ -72,9 +71,9 @@ export class AuthPage implements OnInit{
           console.log('Login success:', loginresponse);
 
           // Save token
-           sessionStorage.setItem('loginuser', JSON.stringify(loginresponse));
+          sessionStorage.setItem('loginuser', JSON.stringify(loginresponse));
 
-          this.showSuccess('Login successful!');
+          this.toastService.showMsg('success', 'You have logged in successfully!');
 
           this.router.navigate(['/courtcase/allcases']);
         },
@@ -85,11 +84,11 @@ export class AuthPage implements OnInit{
           console.error('Login error:', error);
 
           if (error.status === 403) {
-            this.showError('Invalid username or password');
+            this.toastService.showMsg('error', 'Invalid username or password. Please try again.');
           } else if (error.status === 400) {
-            this.showError('Bad request. Please check your inputs.');
+            this.toastService.showMsg('error', 'Invalid request. Please check your inputs.');
           } else {
-            this.showError('Server error. Please try again later.');
+            this.toastService.showMsg('error', 'Something went wrong. Please try again later.');
           }
         },
       });
@@ -97,22 +96,6 @@ export class AuthPage implements OnInit{
   }
 
   forgotpassword() {
-    this.showSuccess('Temporary password has been sent to your email.');
-  }
-
-  private showSuccess(msg: string) {
-    this.snackBar.open(msg, '', {
-      duration: 3000,
-      verticalPosition: 'top',
-      panelClass: ['success-snackbar'],
-    });
-  }
-
-  private showError(msg: string) {
-    this.snackBar.open(msg, '', {
-      duration: 3000,
-      verticalPosition: 'top',
-      panelClass: ['error-snackbar'],
-    });
+    this.toastService.showMsg('success', 'A temporary password has been sent to your registered email.');
   }
 }

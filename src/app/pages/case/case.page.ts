@@ -5,7 +5,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {
   provideNativeDateAdapter,
@@ -23,6 +22,7 @@ import { PetitionerDialog } from '../../shared/components/dialog/petitioner-dial
 import { BoardStandingCounselDialog } from '../../shared/components/dialog/board-standing-counsel-dialog/board-standing-counsel-dialog';
 import { RespondentDialog } from '../../shared/components/dialog/respondent-dialog/respondent-dialog';
 import { DocumentDialog } from '../../shared/components/dialog/document-dialog/document-dialog';
+import { ToastService } from '../../shared/service/toaster/toast-service';
 import { DatePipe } from '@angular/common';
 
 export const MY_DATE_FORMATS = {
@@ -45,7 +45,6 @@ export const MY_DATE_FORMATS = {
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
-    MatSnackBarModule,
     MatDatepickerModule,
     Loader,
     MatTableModule,
@@ -121,7 +120,7 @@ export class CasePage {
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private snackBar: MatSnackBar,
+    private toastService: ToastService,
     private dialog: MatDialog,
     private datePipe: DatePipe
   ) {
@@ -445,20 +444,12 @@ export class CasePage {
       !this.documentData.length;
 
     if (isTableEmpty) {
-      this.snackBar.open('Please fill all required fields.', '', {
-        duration: 3000,
-        verticalPosition: 'top',
-        panelClass: ['error-snackbar'],
-      });
+      this.toastService.showMsg('warning', 'Please complete all required fields in the table.')
       return;
     }
 
     if (!this.casecreationForm.valid) {
-      this.snackBar.open('Please fill all required fields.', '', {
-        duration: 3000,
-        verticalPosition: 'top',
-        panelClass: ['error-snackbar'],
-      });
+      this.toastService.showMsg('warning' ,'Please fill all required fields.')
       return;
     }
 
@@ -492,23 +483,19 @@ export class CasePage {
         caseList[index] = { id, ...formattedCase };
       }
 
-      caseMsg = 'Case Updated successfully!';
+      caseMsg = 'Case has been updated successfully!';
     } else {
       // CREATE
       formattedCase.approvalStatus = 'Pending';
       caseList.push({ id: caseList.length + 1, ...formattedCase });
-      caseMsg = 'Case Created successfully!';
+      caseMsg = 'Case has been created successfully!';
     }
 
     sessionStorage.setItem('caseData', JSON.stringify(caseList));
 
     setTimeout(() => {
       this.loading = false;
-      this.snackBar.open(caseMsg, '', {
-        duration: 3000,
-        verticalPosition: 'top',
-        panelClass: ['success-snackbar'],
-      });
+      this.toastService.showMsg('success' ,caseMsg)
       this.router.navigate(['/courtcase/allcases']);
     }, 500);
   }

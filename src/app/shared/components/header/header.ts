@@ -23,6 +23,10 @@ export class Header {
     this.showDropdown = false;
   }
 
+  changePassword(){
+    this.router.navigate(['/auth/changepassword']);
+  }
+
   logout() {
     sessionStorage.removeItem('loginuser');
     this.router.navigate(['/auth/login']);

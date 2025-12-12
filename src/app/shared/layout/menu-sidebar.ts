@@ -15,7 +15,7 @@ import { Header } from '../components/header/header';
 import { Footer } from '../components/footer/footer';
 import { MenuService } from '../service/menu/menu.service';
 import { BreadcrumbComponent } from '../components/breadcrumb.component/breadcrumb.component';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { ToastService } from '../service/toaster/toast-service';
 import { Loader } from '../components/loader/loader';
 
 interface MenuItem {
@@ -44,7 +44,6 @@ interface MenuItem {
     Header,
     Footer,
     BreadcrumbComponent,
-    MatSnackBarModule,
     Loader,
   ],
   templateUrl: './menu-sidebar.html',
@@ -74,7 +73,7 @@ export class MenuSidebar implements OnInit {
   constructor(
     private router: Router,
     private menuServise: MenuService,
-    private snackBar: MatSnackBar
+    private toastService: ToastService
   ) {
     this.fetchMenuByUser();
   }
@@ -91,9 +90,13 @@ export class MenuSidebar implements OnInit {
         this.loading = false;
 
         if (error.status === 403) {
-          this.showError('Menu error');
+          this.toastService.showMsg('error', 'Fetch Menu error', 'bottom-center');
         } else {
-          this.showError('Server error. Please try again later.');
+          this.toastService.showMsg(
+            'error',
+            'Server error. Please try again later.',
+            'bottom-center'
+          );
         }
       },
     });
@@ -120,10 +123,19 @@ export class MenuSidebar implements OnInit {
     }
   }
 
-  toggleMenu(id: number) {
-    if (this.isSlim) return;
-    this.openMenus[id] = !this.openMenus[id];
-  }
+toggleMenu(id: number) {
+  if (this.isSlim) return;
+
+  // Close all other menus except the clicked one
+  Object.keys(this.openMenus).forEach((key) => {
+    if (Number(key) !== id) {
+      this.openMenus[Number(key)] = false;
+    }
+  });
+
+  // Toggle the clicked one
+  this.openMenus[id] = !this.openMenus[id];
+}
 
   hasChildren(item: MenuItem) {
     return item.children && item.children.length > 0;
@@ -144,21 +156,5 @@ export class MenuSidebar implements OnInit {
   onResize(e: Event) {
     this.isMobile = (e.target as Window).innerWidth <= 768;
     if (this.isMobile) this.isSlim = true;
-  }
-
-  private showSuccess(msg: string) {
-    this.snackBar.open(msg, '', {
-      duration: 3000,
-      verticalPosition: 'top',
-      panelClass: ['success-snackbar'],
-    });
-  }
-
-  private showError(msg: string) {
-    this.snackBar.open(msg, '', {
-      duration: 3000,
-      verticalPosition: 'top',
-      panelClass: ['error-snackbar'],
-    });
   }
 }

@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { SuperDoc } from '@harbour-enterprises/superdoc';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { ToastService } from '../../shared/service/toaster/toast-service';
 import { Loader } from '../../shared/components/loader/loader';
 
 @Component({
   selector: 'app-text-editor',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatCardModule, MatSnackBarModule, Loader],
+  imports: [CommonModule, MatIconModule, MatCardModule, Loader],
   templateUrl: './text-editor.page.html',
   styleUrl: './text-editor.page.scss',
 })
@@ -19,7 +19,7 @@ export class TextEditorPage implements AfterViewInit {
   editor: any = null;
   loading = false;
 
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(private toastService: ToastService) {}
 
   ngAfterViewInit() {
     this.initEditor();
@@ -57,7 +57,7 @@ export class TextEditorPage implements AfterViewInit {
         this.initEditor(file);
         this.loading = false;
 
-        this.showSuccess(`"${file.name}" imported successfully!`);
+        this.toastService.showMsg('success' ,`"${file.name}" was imported successfully.`);
 
         // Allow re-import of the same file
         this.fileInput.nativeElement.value = '';
@@ -73,7 +73,7 @@ export class TextEditorPage implements AfterViewInit {
       this.fileInput.nativeElement.value = '';
     }
 
-    this.showSuccess('Editor cleared!');
+    this.toastService.showMsg('success' ,'Editor has been cleared.');
   }
 
   // async exportDocx(): Promise<void> {
@@ -235,7 +235,7 @@ export class TextEditorPage implements AfterViewInit {
 
   async exportDocx(): Promise<void> {
     if (!this.editor) {
-      this.showError('Editor is not initialized.');
+      this.toastService.showMsg('error', 'Editor is not initialized.');
       return;
     }
 
@@ -245,7 +245,7 @@ export class TextEditorPage implements AfterViewInit {
       const text = this.getEditorText();
 
       if (!text) {
-        this.showError('No text found in the editor.');
+        this.toastService.showMsg('warning', 'No text was found in the editor.');
         return;
       }
 
@@ -255,28 +255,12 @@ export class TextEditorPage implements AfterViewInit {
         exportedName: 'DVAC Doc.docx',
       });
 
-      this.showSuccess('File exported successfully!');
+      this.toastService.showMsg('success', 'File has been exported successfully.');
     } catch (err: any) {
-      this.showError(err?.message);
+      this.toastService.showMsg('error', err?.message || 'An unexpected error occurred.');
       console.error('Export error:', err);
     } finally {
       setTimeout(() => (this.loading = false), 200);
     }
-  }
-
-  private showSuccess(msg: string) {
-    this.snackBar.open(msg, '', {
-      duration: 3000,
-      verticalPosition: 'top',
-      panelClass: ['success-snackbar'],
-    });
-  }
-
-  private showError(msg: string) {
-    this.snackBar.open(msg, '', {
-      duration: 3000,
-      verticalPosition: 'top',
-      panelClass: ['error-snackbar'],
-    });
   }
 }

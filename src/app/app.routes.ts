@@ -14,8 +14,13 @@ export const routes: Routes = [
       {
         path: 'login',
         loadComponent: () => import('./pages/auth/auth.page').then((m) => m.AuthPage),
-        data: { breadcrumb: 'Auth' },
+        data: { breadcrumb: 'Auth Login' },
       },
+      {
+        path: 'changepassword',
+        loadComponent: () => import('./pages/change-password/change-password').then((m) => m.ChangePassword),
+        data: { breadcrumb: 'Change Password' },
+      }
     ],
   },
   // Menu wrapper for authorized pages
