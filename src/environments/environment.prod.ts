@@ -1,6 +1,7 @@
+const apiBaseUrl = '/auth-api/';
+
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://api.example.com',
-  authUrl: 'https://auth.example.com',
-  dashboardUrl: 'https://dashboard.example.com'
+  authUrl: apiBaseUrl + 'auth/login',
+  menuUserUrl: apiBaseUrl + 'menu/user',
 };
