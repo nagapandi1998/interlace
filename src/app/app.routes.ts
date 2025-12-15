@@ -3,6 +3,7 @@ import { MenuSidebar } from './shared/layout/menu-sidebar';
 import { authRoutes } from './pages/auth/auth-routing';
 import { caseRoutes } from './pages/cases/case-routing';
 import { texteditorRoutes } from './pages/texteditor/texteditor-routing';
+import { menuRoutes } from './pages/master/master-routing';
 
 export const routes: Routes = [
   {
@@ -28,6 +29,10 @@ export const routes: Routes = [
         path: 'texteditor',
         children: [...texteditorRoutes],
       },
+      {
+        path: 'master',
+        children: [...menuRoutes],
+      }
     ],
   },
 ];

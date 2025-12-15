@@ -8,7 +8,7 @@ export const authRoutes: Routes = [
       },
       {
         path: 'changepassword',
-        loadComponent: () => import('../auth/change-password/change-password').then((m) => m.ChangePassword),
+        loadComponent: () => import('./change-password/change-password.page').then((m) => m.ChangePasswordPage),
         data: { breadcrumb: 'Change Password' },
       }
 ];

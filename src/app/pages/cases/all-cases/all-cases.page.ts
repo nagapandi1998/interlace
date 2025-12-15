@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -31,7 +31,7 @@ import { MatInputModule } from '@angular/material/input';
   templateUrl: './all-cases.page.html',
   styleUrl: './all-cases.page.scss',
 })
-export class AllCasesPage {
+export class AllCasesPage implements AfterViewInit {
   loading = false;
   displayedColumns: string[] = [
     'id',
@@ -377,5 +377,9 @@ export class AllCasesPage {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

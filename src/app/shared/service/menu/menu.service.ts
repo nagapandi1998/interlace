@@ -7,11 +7,20 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root',
 })
 export class MenuService {
-  menuUserURL = environment.menuUserUrl;
+  menuUserURL = environment.menuUrl;
 
   constructor(private http: HttpClient) {}
 
-  retriveMenuByUser(): Observable<any> {
+  retriveAllMenus(): Observable<any> {
     return this.http.get<any>(this.menuUserURL);
   }
+
+  retriveMenuByUser(): Observable<any> {
+    return this.http.get<any>(`${this.menuUserURL}/user`);
+  }
+
+  createMenu(menuData: any): Observable<any> {
+    return this.http.post<any>(this.menuUserURL, menuData);
+  }
+  
 }

@@ -1,4 +1,4 @@
-import { Component, signal, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,17 +22,14 @@ import { Loader } from '../../../shared/components/loader/loader';
     MatIconModule,
     Loader,
   ],
-  templateUrl: './change-password.html',
-  styleUrl: './change-password.scss',
+  templateUrl: './change-password.page.html',
+  styleUrl: './change-password.page.scss',
 })
-export class ChangePassword {
+export class ChangePasswordPage {
   hideOld = true;
   hideNew = true;
   hideConfirm = true;
   loading = false;
-  animateLeft = signal(false);
-  animateRight = signal(false);
-
   changeForm: FormGroup;
 
   constructor(
@@ -46,11 +43,6 @@ export class ChangePassword {
       newPassword: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]]
     }, { validators: this.passwordMatchValidator });
-  }
-
-  ngOnInit() {
-    setTimeout(() => this.animateLeft.set(true), 100);
-    setTimeout(() => this.animateRight.set(true), 300);
   }
 
   passwordMatchValidator(form: FormGroup) {

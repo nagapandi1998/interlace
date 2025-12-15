@@ -1,21 +1,21 @@
 @use '../../../../assets/scss/variable' as *;
 
-.form-container {
-  // max-width: 1200px;
-  margin: auto;
-  padding: 24px;
-  background: $white-color;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
+// .form-container {
+//   // max-width: 1200px;
+//   margin: auto;
+//   padding: 24px;
+//   background: $white-color;
+//   border-radius: 8px;
+//   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+// }
 
-.card-header {
-  h2 {
-    text-align: center;
-    color: $primary-color;
-    margin-bottom: 20px;
-  }
-}
+// .card-header {
+//   h2 {
+//     text-align: center;
+//     color: $primary-color;
+//     margin-bottom: 20px;
+//   }
+// }
 
 .subheader {
   font-size: 18px;
@@ -103,110 +103,107 @@ mat-form-field {
 }
 
 /* ---------- Table Styles ---------- */
-.table-responsive {
-  display: block;
-  width: 100%;
-  overflow-x: auto;   /* horizontal scroll if needed */
-  -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
-}
+// .table-responsive {
+//   display: block;
+//   width: 100%;
+//   overflow-x: auto;   /* horizontal scroll if needed */
+//   -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+// }
 
-:host ::ng-deep .table-responsive table.mat-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  overflow: hidden;
-}
+// :host ::ng-deep .table-responsive table.mat-table {
+//   width: 100%;
+//   border-collapse: separate;
+//   border-spacing: 0;
+//   border: 1px solid #ccc;
+//   border-radius: 8px;
+//   overflow: hidden;
+// }
 
 /* Header */
 // :host ::ng-deep .mat-header-row {
 //   background-color: #1976d2 !important;
 // }
 
-.mat-mdc-table {
-  white-space: nowrap !important;
-}
 
-:host ::ng-deep .mat-header-cell {
-  font-weight: bold;
-  color: $white-color !important;
-  text-transform: capitalize;
-  padding: 14px 16px;
-  // border-bottom: 2px solid #1565c0;
-}
+// :host ::ng-deep .mat-header-cell {
+//   font-weight: bold;
+//   color: $white-color !important;
+//   text-transform: capitalize;
+//   padding: 14px 16px;
+//   // border-bottom: 2px solid #1565c0;
+// }
 
 /* Body Rows */
-:host ::ng-deep .mat-row {
-  &:nth-of-type(odd) {
-    background-color: $white-color !important;
-  }
+// :host ::ng-deep .mat-row {
+//   &:nth-of-type(odd) {
+//     background-color: $white-color !important;
+//   }
 
-  &:nth-of-type(even) {
-    background-color: #f8f9fb !important;
-  }
+//   &:nth-of-type(even) {
+//     background-color: #f8f9fb !important;
+//   }
 
-  &:hover {
-    background-color: #e3f2fd !important;
-  }
-}
+//   &:hover {
+//     background-color: #e3f2fd !important;
+//   }
+// }
 
 /* Cells */
-::ng-deep .mat-cell {
-  padding: 12px 16px;
-  font-size: 14px;
-  color: #444;
-  border-bottom: 1px solid #e0e0e0;
-}
+// ::ng-deep .mat-cell {
+//   padding: 12px 16px;
+//   font-size: 14px;
+//   color: #444;
+//   border-bottom: 1px solid #e0e0e0;
+// }
 
-.add-button {
-  display: flex;
-  justify-content: right;
-  button {
-    padding: 12px;
-    font-weight: 500;
-    font-size: 16px;
-    border-radius: 5px;
+// .add-button {
+//   display: flex;
+//   justify-content: right;
+//   button {
+//     padding: 12px;
+//     font-weight: 500;
+//     font-size: 16px;
+//     border-radius: 5px;
 
-    color: $white-color;
-    background-color: $primary-color;
+//     color: $white-color;
+//     background-color: $primary-color;
 
-    &:hover {
-      background-color: $primary-light;
-    }
-  }
-}
+//     &:hover {
+//       background-color: $primary-light;
+//     }
+//   }
+// }
 
-.no-data-row {
-  text-align: center;
-  // background: #fafafa !important;
-}
+// .no-data-row {
+//   text-align: center;
+//   // background: #fafafa !important;
+// }
 
-.no-data-cell {
-  text-align: center;
-  padding: 15px;
-  color: #333333;
-  background-color: #fafafa;
-}
+// .no-data-cell {
+//   text-align: center;
+//   padding: 15px;
+//   color: #333333;
+//   background-color: #fafafa;
+// }
 
-.action-btn {
-  // display: contents;
+// .action-btn {
+//   // display: contents;
 
-  .edit-icon {
-    color: #009d54;
+//   .edit-icon {
+//     color: #009d54;
 
-    &:hover {
-      color: #45a049;
-    }
-  }
-  .delete-icon {
-    color: #ff1100;
+//     &:hover {
+//       color: #45a049;
+//     }
+//   }
+//   .delete-icon {
+//     color: #ff1100;
 
-    &:hover {
-      color: #da190b;
-    }
-  }
-}
+//     &:hover {
+//       color: #da190b;
+//     }
+//   }
+// }
 
 .error-text {
   color: #ff0000;
@@ -215,54 +212,54 @@ mat-form-field {
 }
 
 /*  Header (title + close icon) */
-.dialog-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 8px;
-  font-size: 20px !important;
-  font-weight: 600;
-  margin-bottom: 0px !important;
-  color: $primary-color !important;
-  background: #fafafa;
-  border-bottom: 1px solid #e0e0e0;
-}
+// .dialog-header {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   padding: 8px;
+//   font-size: 20px !important;
+//   font-weight: 600;
+//   margin-bottom: 0px !important;
+//   color: $primary-color !important;
+//   background: #fafafa;
+//   border-bottom: 1px solid #e0e0e0;
+// }
 
-/* Dialog content area */
-.dialog-content {
-  padding: 14px !important;
-  background: $white-color;
-}
+// /* Dialog content area */
+// .dialog-content {
+//   padding: 14px !important;
+//   background: $white-color;
+// }
 
-/*  Footer actions (Cancel / Save) */
-.dialog-actions {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 14px 24px;
+// /*  Footer actions (Cancel / Save) */
+// .dialog-actions {
+//   display: flex;
+//   justify-content: flex-end;
+//   align-items: center;
+//   padding: 14px 24px;
 
-  button {
-    flex: 0 0 120px;
-    padding: 12px;
-    font-weight: 500;
-    font-size: 16px;
-    border-radius: 5px;
-    color: $white-color;
-    background-color: $primary-color;
+//   button {
+//     flex: 0 0 120px;
+//     padding: 12px;
+//     font-weight: 500;
+//     font-size: 16px;
+//     border-radius: 5px;
+//     color: $white-color;
+//     background-color: $primary-color;
 
-    &:hover {
-      background-color: $primary-light;
-    }
-  }
+//     &:hover {
+//       background-color: $primary-light;
+//     }
+//   }
 
-  .back-btn {
-    background-color: $secondary-color;
+//   .back-btn {
+//     background-color: $secondary-color;
 
-    &:hover {
-      background-color: $secondary-light
-    }
-  }
-}
+//     &:hover {
+//       background-color: $secondary-light
+//     }
+//   }
+// }
 
 .disabled {
   opacity: 0.6;
