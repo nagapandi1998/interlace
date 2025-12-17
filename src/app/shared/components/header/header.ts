@@ -4,6 +4,7 @@ import { RouterModule, Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { AuthService } from '../../service/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +18,7 @@ export class Header {
   showDropdown: boolean = false;
 @Input() sidebarOpen: boolean = true;
 
-  constructor(private router: Router) {}
+  constructor(private authService: AuthService ,private router: Router) {}
 
   close() {
     this.showDropdown = false;
@@ -28,7 +29,6 @@ export class Header {
   }
 
   logout() {
-    sessionStorage.removeItem('loginuser');
-    this.router.navigate(['/auth/login']);
+   this.authService.logout();
   }
 }

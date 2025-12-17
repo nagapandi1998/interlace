@@ -41,8 +41,8 @@ export class AuthPage implements OnInit {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      username: ['admin', [Validators.required]],
-      password: ['admin123', [Validators.required]],
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]],
     });
   }
 
@@ -84,7 +84,7 @@ export class AuthPage implements OnInit {
           console.error('Login error:', error);
 
           if (error.status === 403) {
-            this.toastService.showMsg('error', 'Invalid username or password. Please try again.');
+            this.toastService.showMsg('error', 'Invalid username or password.');
           } else if (error.status === 400) {
             this.toastService.showMsg('error', 'Invalid request. Please check your inputs.');
           } else {

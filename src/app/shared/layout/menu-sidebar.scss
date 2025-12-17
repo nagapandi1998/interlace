@@ -33,9 +33,17 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   overflow: hidden;
   position: relative;
 
+  .sidenav-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #6e0d18;
+  }
+
   // SLIM MODE
   &.slim {
     width: $sidebar-slim-width;
+
     .logo {
       height: 50px !important;
       width: 50px !important;
@@ -56,12 +64,15 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   .nav-item.level-1 {
     padding-left: 10px;
   }
+
   .nav-item.level-2 {
     padding-left: 20px;
   }
+
   .nav-item.level-3 {
     padding-left: 30px;
   }
+
   .nav-item.level-4 {
     padding-left: 40px;
   }
@@ -256,6 +267,7 @@ app-footer {
     transform: translateY(-10px);
     max-height: 0;
   }
+
   to {
     opacity: 1;
     transform: translateY(0);

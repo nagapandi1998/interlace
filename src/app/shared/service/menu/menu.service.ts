@@ -22,5 +22,12 @@ export class MenuService {
   createMenu(menuData: any): Observable<any> {
     return this.http.post<any>(this.menuUserURL, menuData);
   }
-  
+
+  updateMenu( menuData: any): Observable<any> {
+    return this.http.put<any>(`${this.menuUserURL}/${menuData.id}`, menuData);
+  }
+
+  deleteMenu(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.menuUserURL}/${id}`);
+  }
 }

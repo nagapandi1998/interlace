@@ -8,12 +8,14 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Loader } from '../../../shared/components/loader/loader';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MenuService } from '../../../shared/service/menu/menu.service';
 import { ToastService } from '../../../shared/service/toaster/toast-service';
+import { DeleteDialog } from '../../../shared/components/dialog/delete-dialog/delete-dialog';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 interface Privilege {
@@ -42,7 +44,7 @@ export interface MenuTableRow {
 }
 
 @Component({
-  selector: 'app-menu.page',
+  selector: 'app-menu',
   standalone: true,
   imports: [
     CommonModule,
@@ -54,6 +56,7 @@ export interface MenuTableRow {
     MatButtonModule,
     MatCardModule,
     MatTooltipModule,
+    MatAutocompleteModule,
     Loader,
     MatFormFieldModule,
     MatInputModule,
@@ -75,13 +78,21 @@ export class MenuPage implements AfterViewInit {
     'group',
     'manage_accounts',
     'folder_open',
+    'folder_special',
     'edit',
     'list_alt',
+    'create_new_folder',
+    'description',
+    'verified_user',
+    'people_alt',
+
   ];
+  filteredIcons: string[] = [...this.icons];
   dataSource = new MatTableDataSource<MenuTableRow>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild('addMenuDialog') addMenuDialog!: TemplateRef<any>;
   dialogRef!: MatDialogRef<any>;
+  isUpdate = false;
 
   constructor(
     private menuServise: MenuService,
@@ -89,7 +100,7 @@ export class MenuPage implements AfterViewInit {
     public dialog: MatDialog,
     private toastService: ToastService
   ) {
-    this.createMenuForm();
+    this.initMenuForm();
     this.fetchAllMenus();
   }
 
@@ -97,8 +108,9 @@ export class MenuPage implements AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  createMenuForm() {
+  initMenuForm() {
     this.menuForm = this.fb.group({
+      id: [''],
       title: ['', Validators.required],
       path: ['', Validators.required],
       parentId: [null],
@@ -106,6 +118,12 @@ export class MenuPage implements AfterViewInit {
       icon: ['', Validators.required],
     });
   }
+
+  filterIcons(value: string) {
+    const filterValue = value.toLowerCase();
+    this.filteredIcons = this.icons.filter(icon => icon.toLowerCase().includes(filterValue));
+  }
+
   private mapToTableRows(menus: MenuItem[]): MenuTableRow[] {
     return menus.map((menu) => ({
       id: menu.id,
@@ -161,22 +179,72 @@ export class MenuPage implements AfterViewInit {
     this.dialogRef?.close();
   }
 
-  addMenu() {
-    this.menuForm.reset({
-      title: '',
-      path: '',
-      parentId: null,
-      sortOrder: 1,
-      icon: '',
-    });
+  openMenuDialog(content: TemplateRef<any>, update: boolean, row?: MenuTableRow) {
+    this.isUpdate = update;
 
-    this.dialogRef = this.dialog.open(this.addMenuDialog, {
+    if (!this.isUpdate) {
+      // Add mode — reset form
+      this.menuForm.reset({
+        id: '',
+        title: '',
+        path: '',
+        parentId: null,
+        sortOrder: 1,
+        icon: '',
+      });
+    } else if (row) {
+      // Edit mode — set form values
+      const parentId = this.allMenus.find((m) => m.title === row.parentTitle)?.id ?? null;
+
+      this.menuForm.setValue({
+        id: row.id,
+        title: row.title,
+        path: row.path,
+        parentId: parentId,
+        sortOrder: row.sortOrder,
+        icon: row.icon,
+      });
+    }
+
+    this.dialogRef = this.dialog.open(content, {
       width: '400px',
       disableClose: true,
     });
   }
 
-  saveMenu() {
+  deleteMenu(menu: MenuTableRow) {
+    const dialogRef = this.dialog.open(DeleteDialog, {
+      width: '400px',
+      disableClose: true,
+      data: {
+        message: `Are you sure you want to delete menu "${menu.title}"?`,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      console.log('Delete confirmed:', confirmed);
+
+      if (confirmed !== true) {
+        return;
+      }
+
+      this.loading = true;
+
+      this.menuServise.deleteMenu(menu.id).subscribe({
+        next: () => {
+          this.toastService.showMsg('success', 'Menu deleted successfully');
+          this.fetchAllMenus();
+          this.loading = false;
+        },
+        error: () => {
+          this.toastService.showMsg('error', 'Failed to delete menu', 'bottom-center');
+          this.loading = false;
+        },
+      });
+    });
+  }
+
+  submitMenu() {
     if (!this.menuForm.valid) {
       this.menuForm.markAllAsTouched();
       this.toastService.showMsg('warning', 'Enter mandatory details');
@@ -184,17 +252,23 @@ export class MenuPage implements AfterViewInit {
     }
 
     this.loading = true;
+    if (!this.isUpdate) {
+      this.insertMenuEntry();
+    } else {
+      this.updateMenuEntry();
+    }
+  }
 
-    const payload = {
-      title: this.menuForm.value.title,
-      Path: this.menuForm.value.path,
-      parentId: this.menuForm.value.parentId,
-      sortOrder: this.menuForm.value.sortOrder,
-      icon: this.menuForm.value.icon,
+  insertMenuEntry() {
+    let menuData = {
+      title: this.menuForm.controls['title'].value,
+      path: this.menuForm.controls['path'].value,
+      parentId: this.menuForm.controls['parentId'].value,
+      sortOrder: this.menuForm.controls['sortOrder'].value,
+      icon: this.menuForm.controls['icon'].value,
     };
 
-    console.log('Menu Payload: ', payload);
-    this.menuServise.createMenu(payload).subscribe({
+    this.menuServise.createMenu(menuData).subscribe({
       next: () => {
         this.toastService.showMsg('success', 'Menu created successfully');
         this.closeDialog();
@@ -218,6 +292,31 @@ export class MenuPage implements AfterViewInit {
             'bottom-center'
           );
         }
+        this.loading = false;
+      },
+    });
+  }
+
+  updateMenuEntry() {
+    let menuData = {
+      id: this.menuForm.controls['id'].value,
+      title: this.menuForm.controls['title'].value,
+      path: this.menuForm.controls['path'].value,
+      parentId: this.menuForm.controls['parentId'].value,
+      sortOrder: this.menuForm.controls['sortOrder'].value,
+      icon: this.menuForm.controls['icon'].value,
+    };
+
+    this.menuServise.updateMenu(menuData).subscribe({
+      next: () => {
+        this.toastService.showMsg('success', 'Menu updated successfully');
+        this.closeDialog();
+        this.fetchAllMenus();
+        this.loading = false;
+        this.isUpdate = false;
+      },
+      error: (error) => {
+        this.toastService.showMsg('error', 'Failed to update menu', 'bottom-center');
         this.loading = false;
       },
     });

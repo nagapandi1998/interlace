@@ -30,7 +30,7 @@ export class ChangePasswordPage {
   hideNew = true;
   hideConfirm = true;
   loading = false;
-  changeForm: FormGroup;
+  changeForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -38,43 +38,59 @@ export class ChangePasswordPage {
     private toastService: ToastService,
     private router: Router
   ) {
-    this.changeForm = this.fb.group({
-      oldPassword: ['', [Validators.required]],
-      newPassword: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required]]
-    }, { validators: this.passwordMatchValidator });
+    this.initChanePasswordForm();
   }
 
-  passwordMatchValidator(form: FormGroup) {
-    const newPass = form.get('newPassword')?.value;
-    const confirmPass = form.get('confirmPassword')?.value;
-    return newPass === confirmPass ? null : { mismatch: true };
+  initChanePasswordForm() {
+    this.changeForm = this.fb.group(
+      {
+        oldPassword: ['', [Validators.required]],
+        newPassword: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', [Validators.required]],
+      },
+      { validators: this.passwordMatchValidator }
+    );
   }
+
+passwordMatchValidator(form: FormGroup) {
+  const newPass = form.get('newPassword')?.value;
+  const confirmPass = form.get('confirmPassword')?.value;
+
+  if (!newPass || !confirmPass) {
+    return null;
+  }
+
+  return newPass === confirmPass ? null : { mismatch: true };
+}
 
   onSubmit() {
+    if (this.changeForm.hasError('mismatch')) {
+      this.toastService.showMsg('warning', 'New password and confirm password do not match');
+      return;
+    }
+
     if (!this.changeForm.valid) {
       this.changeForm.markAllAsTouched();
-      this.toastService.showMsg('warning','Enter mandatory details');
+      this.toastService.showMsg('warning', 'Enter mandatory details');
       return;
     }
 
     const payload = {
       oldPassword: this.changeForm.value.oldPassword,
-      newPassword: this.changeForm.value.newPassword
+      newPassword: this.changeForm.value.newPassword,
     };
 
     this.loading = true;
     this.authService.changePassword(payload).subscribe({
       next: () => {
         this.loading = false;
-        this.toastService.showMsg('success','Your password has been changed successfully.');
+        this.toastService.showMsg('success', 'Your password has been changed successfully.');
         this.router.navigate(['/auth/login']);
       },
       error: () => {
         this.loading = false;
-        this.toastService.showMsg('error','Failed to change password. Please try again.');
-      }
+        this.toastService.showMsg('error', 'Failed to change password. Please try again.');
+      },
     });
   }
-
 }

@@ -14,7 +14,12 @@
 
       <!-- Add Button -->
       <div class="add-button">
-        <button mat-raised-button color="primary" type="button" (click)="addMenu()">
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          (click)="openMenuDialog(addMenuDialog, false)"
+        >
           Add Menu
         </button>
       </div>
@@ -54,10 +59,14 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td class="action-btn" mat-cell *matCellDef="let row">
-              <button mat-icon-button matTooltip="Edit">
+              <button
+                mat-icon-button
+                matTooltip="Edit"
+                (click)="openMenuDialog(addMenuDialog, true, row)"
+              >
                 <mat-icon fontSet="material-icons-outlined" class="edit-icon">edit</mat-icon>
               </button>
-              <button mat-icon-button matTooltip="Delete">
+              <button mat-icon-button matTooltip="Delete" (click)="deleteMenu(row)">
                 <mat-icon fontSet="material-icons-outlined" class="delete-icon">delete</mat-icon>
               </button>
             </td>
@@ -87,8 +96,8 @@
 
 <!-- Add Menu Forms -->
 <ng-template #addMenuDialog let-data>
-  <h2  class="dialog-header">
-    <span>Add Menu</span>
+  <h2 class="dialog-header">
+    <span>{{ isUpdate ? 'Update Menu' : 'Add Menu' }}</span>
     <button mat-icon-button (click)="closeDialog()" class="close-btn">
       <mat-icon>close</mat-icon>
     </button>
@@ -101,12 +110,18 @@
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Title</mat-label>
         <input matInput formControlName="title" />
+        <mat-error *ngIf="menuForm.get('title')?.touched && menuForm.get('title')?.invalid">
+          Title is required
+        </mat-error>
       </mat-form-field>
 
       <!-- Path -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Path</mat-label>
         <input matInput formControlName="path" />
+        <mat-error *ngIf="menuForm.get('path')?.touched && menuForm.get('path')?.invalid">
+          Path is required
+        </mat-error>
       </mat-form-field>
 
       <!-- Parent -->
@@ -124,10 +139,13 @@
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Sort Order</mat-label>
         <input matInput type="number" formControlName="sortOrder" />
+        <mat-error *ngIf="menuForm.get('sortOrder')?.touched && menuForm.get('sortOrder')?.invalid">
+          Sort Order is required
+        </mat-error>
       </mat-form-field>
 
       <!-- Icon -->
-      <mat-form-field appearance="outline" class="full-width">
+      <!-- <mat-form-field appearance="outline" class="full-width">
         <mat-label>Icon</mat-label>
         <mat-select formControlName="icon">
           <mat-option *ngFor="let icon of icons" [value]="icon">
@@ -135,6 +153,30 @@
             {{ icon }}
           </mat-option>
         </mat-select>
+        <mat-error *ngIf="menuForm.get('icon')?.touched && menuForm.get('icon')?.invalid">
+          Icon is required
+        </mat-error>
+      </mat-form-field> -->
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Icon</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="icon"
+          [matAutocomplete]="auto"
+          (input)="filterIcons($event.target.value)"
+        />
+
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let icon of filteredIcons" [value]="icon">
+            <mat-icon fontSet="material-icons-outlined">{{ icon }}</mat-icon> {{ icon }}
+          </mat-option>
+        </mat-autocomplete>
+
+        <mat-error *ngIf="menuForm.get('icon')?.touched && menuForm.get('icon')?.invalid">
+          Icon is required
+        </mat-error>
       </mat-form-field>
     </div>
   </mat-dialog-content>
@@ -142,8 +184,8 @@
   <!-- ACTIONS -->
   <mat-dialog-actions align="end" class="dialog-actions">
     <button mat-stroked-button class="back-btn" (click)="closeDialog()">Close</button>
-    <button mat-raised-button color="primary" (click)="saveMenu()">
-      Save
+    <button mat-raised-button color="primary" (click)="submitMenu()">
+      {{ isUpdate ? 'Update' : 'Save' }}
     </button>
   </mat-dialog-actions>
 </ng-template>

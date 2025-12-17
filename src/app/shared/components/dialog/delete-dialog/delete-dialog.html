@@ -1,0 +1,6 @@
+<h2 class="dialog-header" mat-dialog-title>Delete</h2>
+<mat-dialog-content class="dialog-content">{{ data.message }}</mat-dialog-content>
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-stroked-button [mat-dialog-close]="false" type="button" class="back-btn">Cancel</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="true" type="button">Delete</button>
+</mat-dialog-actions>

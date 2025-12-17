@@ -4,6 +4,7 @@ import { authRoutes } from './pages/auth/auth-routing';
 import { caseRoutes } from './pages/cases/case-routing';
 import { texteditorRoutes } from './pages/texteditor/texteditor-routing';
 import { menuRoutes } from './pages/master/master-routing';
+import { authGuard } from './helpers/guards/auth-guard';
 
 export const routes: Routes = [
   {
@@ -20,6 +21,7 @@ export const routes: Routes = [
   {
     path: '',
     component: MenuSidebar,
+    canActivate: [authGuard],
     children: [
       {
         path: 'courtcase',
