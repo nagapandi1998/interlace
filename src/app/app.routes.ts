@@ -1,10 +1,11 @@
 import { Routes } from '@angular/router';
 import { MenuSidebar } from './shared/layout/menu-sidebar';
+import { authGuard } from './helpers/guards/auth-guard';
 import { authRoutes } from './pages/auth/auth-routing';
 import { caseRoutes } from './pages/cases/case-routing';
 import { texteditorRoutes } from './pages/texteditor/texteditor-routing';
 import { menuRoutes } from './pages/master/master-routing';
-import { authGuard } from './helpers/guards/auth-guard';
+import { adminRoutes } from './pages/admin/admin-routing';
 
 export const routes: Routes = [
   {
@@ -17,7 +18,7 @@ export const routes: Routes = [
     path: 'auth',
     children: [...authRoutes],
   },
-  // Menu wrapper for authorized pages
+  // Menu authorized pages
   {
     path: '',
     component: MenuSidebar,
@@ -34,7 +35,11 @@ export const routes: Routes = [
       {
         path: 'master',
         children: [...menuRoutes],
-      }
+      },
+      {
+        path: 'admin',
+        children: [...adminRoutes],
+      },
     ],
   },
 ];

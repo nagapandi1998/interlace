@@ -45,62 +45,66 @@
 //     border-radius: 4px;
 // }
 
-.grid-container {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+// .grid-container {
+//   display: grid;
+//   grid-template-columns: 1fr;
+//   gap: 16px;
 
-  @media (min-width: 600px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
+//   mat-form-field {
+//     width: 100%;
+//   }
 
-  @media (min-width: 960px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
+//   @media (min-width: 600px) {
+//     grid-template-columns: repeat(2, 1fr);
+//   }
 
-  @media (min-width: 1440px) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
+//   @media (min-width: 960px) {
+//     grid-template-columns: repeat(3, 1fr);
+//   }
 
-mat-form-field {
-  width: 100%;
-}
+//   @media (min-width: 1440px) {
+//     grid-template-columns: repeat(4, 1fr);
+//   }
+// }
+
+// mat-form-field {
+//   width: 100%;
+// }
 
 .tbl-container {
   padding-right: 0px !important;
   padding-left: 0px !important;
 }
 
-.button-row {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 20px;
+// .bottom-button {
+//   display: flex;
+//   justify-content: center;
+//   gap: 16px;
+//   margin-top: 20px;
 
-  button {
-    flex: 0 0 120px;
-    padding: 12px;
-    font-weight: 500;
-    font-size: 16px;
-    border-radius: 5px;
-    color: $white-color;
-    background-color: $primary-color;
+//   button {
+//     flex: 0 0 120px;
+//     padding: 12px;
+//     font-weight: 500;
+//     font-size: 16px;
+//     border-radius: 5px;
+//     color: $white-color;
+//     background-color: $primary-color;
 
-    &:hover {
-      background-color: $primary-light;
-    }
-  }
+//     &:hover {
+//       background-color: $primary-light;
+//     }
+//   }
 
-  .back-btn {
-    background-color: $secondary-color;
+//   .back-btn {
+//     background-color: $secondary-color;
 
-    &:hover {
-      background-color: $secondary-light;
+//     &:hover {
+//       background-color: $secondary-light;
 
-    }
-  }
-}
+//     }
+//   }
+// }
 
 /* ---------- Table Styles ---------- */
 // .table-responsive {

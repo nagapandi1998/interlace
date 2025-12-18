@@ -6,7 +6,7 @@
       <!-- Search Bar -->
       <mat-form-field class="search-field" appearance="outline">
         <mat-label>Search</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Search cases..." />
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search menus..." />
         <button class="search-btn" mat-icon-button matPrefix disabled>
           <mat-icon>search</mat-icon>
         </button>
@@ -78,7 +78,7 @@
           <!-- Empty Row (No Data Found Message) -->
           <tr class="mat-row no-data-row" *matNoDataRow>
             <td class="mat-cell" [attr.colspan]="displayedColumns.length" class="no-data-cell">
-              No Menu data Found.
+              No Menu Found.
             </td>
           </tr>
         </table>

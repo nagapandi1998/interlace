@@ -37,7 +37,7 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     position: sticky;
     top: 0;
     z-index: 10;
-    background: #6e0d18;
+    background: #5a0408;
   }
 
   // SLIM MODE
@@ -77,6 +77,12 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding-left: 40px;
   }
 
+.nav-item.parent.active-parent {
+  background: rgba(255, 255, 255, 0.08);
+  font-weight: 600;
+}
+
+
   // SIDEBAR TOOLBAR
 
   .sidenav-toolbar {
@@ -85,7 +91,7 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     align-items: center;
     padding: 1rem;
     min-height: 60px;
-    background: transparent;
+    background: #5a0408; //transparent;
     box-shadow: none;
 
     .logo {
@@ -251,8 +257,7 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 // HEADER & FOOTER
-app-header,
-app-footer {
+app-header {
   position: sticky;
   top: 0;
   z-index: 1000;

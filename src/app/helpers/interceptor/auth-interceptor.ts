@@ -22,18 +22,14 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     : req;
 
   return next(authReq).pipe(
-    catchError(err => {
-      if (
-        err.status === 401 &&
-        !req.url.includes('/refresh') &&
-        refreshToken
-      ) {
+    catchError((err) => {
+      if (err.status === 401 && !req.url.includes('/refresh') && refreshToken) {
         if (!isRefreshing) {
           isRefreshing = true;
           refreshTokenSubject.next(null);
 
           return authService.refreshToken({ refreshToken }).pipe(
-            switchMap(res => {
+            switchMap((res) => {
               isRefreshing = false;
 
               user.accessToken = res.accessToken;
@@ -47,7 +43,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
                 })
               );
             }),
-            catchError(error => {
+            catchError((error) => {
               isRefreshing = false;
               authService.logout();
               return throwError(() => error);
@@ -57,9 +53,9 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
         // ? WAIT for refresh to complete
         return refreshTokenSubject.pipe(
-          filter(token => token !== null),
+          filter((token) => token !== null),
           take(1),
-          switchMap(token =>
+          switchMap((token) =>
             next(
               authReq.clone({
                 setHeaders: { Authorization: `Bearer ${token}` },
@@ -73,7 +69,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     })
   );
 };
-
 
 // export const authInterceptor: HttpInterceptorFn = (req, next) => {
 //   const userSessionData = sessionStorage.getItem('loginuser');

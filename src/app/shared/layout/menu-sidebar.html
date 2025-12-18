@@ -15,13 +15,13 @@
           <img src="assets/images/logo.png" class="logo" />
         </a>
       </mat-toolbar>
+    </div>
 
-      <!-- USER INFO -->
-      <div class="user-info">
-        <img src="assets/images/avatar.jpg" class="user-avatar" />
-        <div class="user-name">Nagapandi G</div>
-        <div class="user-role">Admin</div>
-      </div>
+    <!-- USER INFO -->
+    <div class="user-info">
+      <img src="assets/images/avatar.jpg" class="user-avatar" />
+      <div class="user-name">Nagapandi G</div>
+      <div class="user-role">Admin</div>
     </div>
 
     <!-- NAVIGATION -->
@@ -35,7 +35,6 @@
             class="nav-item"
             [ngClass]="['level-' + level, isMenuActive(item) ? 'active' : '']"
             [routerLink]="item.path"
-            routerLinkActive="active"
             (click)="$event.stopPropagation()"
           >
             <mat-icon fontSet="material-icons-outlined" class="left-icon">{{
@@ -48,7 +47,7 @@
           <div *ngIf="hasChildren(item)">
             <mat-list-item
               class="nav-item parent"
-              [ngClass]="['level-' + level, isMenuActive(item) ? 'active' : '']"
+              [ngClass]="['level-' + level, isParentActive(item) ? 'active-parent' : '']"
               (click)="toggleMenu(item.id)"
             >
               <mat-icon fontSet="material-icons-outlined" class="left-icon">{{
@@ -87,8 +86,8 @@
     <div class="content-wrapper">
       <app-breadcrumb></app-breadcrumb>
       <router-outlet></router-outlet>
+      <app-footer></app-footer>
     </div>
-    <app-footer></app-footer>
   </mat-sidenav-content>
 </mat-sidenav-container>
 <app-loader [loading]="loading"></app-loader>

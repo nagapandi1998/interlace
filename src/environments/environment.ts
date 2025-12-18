@@ -1,8 +1,8 @@
-const apiBaseUrl = '/auth-api/';
+const authApiBaseUrl = '/auth-api/';
 
 export const environment = {
   production: false,
-  authUrl: apiBaseUrl + 'auth',
-  menuUrl: apiBaseUrl + 'menu',
-  // menuUserUrl: apiBaseUrl + 'menu/user',
+  authUrl: authApiBaseUrl + 'auth',
+  menuUrl: authApiBaseUrl + 'menu',
+  userUrl: authApiBaseUrl + 'users',
 };

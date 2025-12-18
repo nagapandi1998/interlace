@@ -7,27 +7,27 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root',
 })
 export class MenuService {
-  menuUserURL = environment.menuUrl;
+  menuURL = environment.menuUrl;
 
   constructor(private http: HttpClient) {}
 
   retriveAllMenus(): Observable<any> {
-    return this.http.get<any>(this.menuUserURL);
+    return this.http.get<any>(this.menuURL);
   }
 
   retriveMenuByUser(): Observable<any> {
-    return this.http.get<any>(`${this.menuUserURL}/user`);
+    return this.http.get<any>(`${this.menuURL}/user`);
   }
 
   createMenu(menuData: any): Observable<any> {
-    return this.http.post<any>(this.menuUserURL, menuData);
+    return this.http.post<any>(this.menuURL, menuData);
   }
 
   updateMenu( menuData: any): Observable<any> {
-    return this.http.put<any>(`${this.menuUserURL}/${menuData.id}`, menuData);
+    return this.http.put<any>(`${this.menuURL}/${menuData.id}`, menuData);
   }
 
   deleteMenu(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.menuUserURL}/${id}`);
+    return this.http.delete<any>(`${this.menuURL}/${id}`);
   }
 }

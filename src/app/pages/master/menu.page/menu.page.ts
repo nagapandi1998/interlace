@@ -273,6 +273,7 @@ export class MenuPage implements AfterViewInit {
         this.toastService.showMsg('success', 'Menu created successfully');
         this.closeDialog();
         this.fetchAllMenus();
+        this.menuServise.retriveMenuByUser() //update menu in the sidebar
         this.loading = false;
       },
       error: (error) => {
@@ -312,6 +313,7 @@ export class MenuPage implements AfterViewInit {
         this.toastService.showMsg('success', 'Menu updated successfully');
         this.closeDialog();
         this.fetchAllMenus();
+        this.menuServise.retriveMenuByUser() //update menu in the sidebar
         this.loading = false;
         this.isUpdate = false;
       },

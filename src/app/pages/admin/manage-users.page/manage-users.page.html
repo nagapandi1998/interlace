@@ -1,0 +1,78 @@
+<mat-card class="card-body" appearance="outlined">
+  <app-loader [loading]="loading"></app-loader>
+
+  <form [formGroup]="usercreationForm" (ngSubmit)="onSubmit()">
+    <div class="grid-container">
+      <mat-form-field appearance="outline">
+        <mat-label>Employee Code</mat-label>
+        <input matInput formControlName="employeeCode" placeholder="Enter employee code" />
+        <mat-error *ngIf="usercreationForm.get('employeeCode')?.hasError('required')"
+          >Employee Code is required</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName" placeholder="Enter first name" />
+        <mat-error *ngIf="usercreationForm.get('firstName')?.hasError('required')"
+          >First Name is required</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" placeholder="Enter last name" />
+        <mat-error *ngIf="usercreationForm.get('lastName')?.hasError('required')"
+          >Last Name is required</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" placeholder="Enter username" />
+        <mat-error *ngIf="usercreationForm.get('username')?.hasError('required')"
+          >Username is required</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Role</mat-label>
+        <mat-select formControlName="roleName">
+          <mat-option value="">Select</mat-option>
+          <mat-option value="Admin">Admin</mat-option>
+          <mat-option value="User">User</mat-option>
+        </mat-select>
+        <mat-error *ngIf="usercreationForm.get('roleName')?.hasError('required')"
+          >Role is required</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Department</mat-label>
+        <input matInput formControlName="department" placeholder="Enter department" />
+        <mat-error *ngIf="usercreationForm.get('department')?.hasError('required')"
+          >Department is required</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="active">
+          <mat-option value="">Select</mat-option>
+          <mat-option [value]="true">Active</mat-option>
+          <mat-option [value]="false">Inactive</mat-option>
+        </mat-select>
+        <mat-error *ngIf="usercreationForm.get('active')?.hasError('required')"
+          >Status is required</mat-error
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="bottom-button">
+      <button mat-stroked-button color="accent" type="button" class="back-btn" (click)="goBack()">
+        Back
+      </button>
+      <button mat-raised-button color="primary" type="submit">Create</button>
+    </div>
+  </form>
+</mat-card>

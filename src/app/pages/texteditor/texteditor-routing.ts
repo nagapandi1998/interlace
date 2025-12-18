@@ -4,7 +4,7 @@ export const texteditorRoutes: Routes = [
   {
     path: 'editor',
     loadComponent: () =>
-      import('../texteditor/editor/editor.page').then((m) => m.TextEditorPage),
+      import('./editor.page/editor.page').then((m) => m.TextEditorPage),
     data: { breadcrumb: 'Text Editor' },
   },
 ];

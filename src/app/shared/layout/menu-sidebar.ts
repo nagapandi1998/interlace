@@ -107,11 +107,12 @@ export class MenuSidebar implements OnInit {
       this.isSlim = true;
     }
 
-    this.router.events.pipe(filter((ev) => ev instanceof NavigationEnd)).subscribe(() => {
-      if (this.isMobile) {
-        this.isSlim = true;
-        this.openMenus = {};
-      }
+    this.router.events.pipe(filter((e) => e instanceof NavigationEnd)).subscribe(() => {
+      this.menus.forEach((menu) => {
+        if (menu.children && this.isParentActive(menu)) {
+          this.openMenus[menu.id] = true;
+        }
+      });
     });
   }
 
@@ -123,34 +124,54 @@ export class MenuSidebar implements OnInit {
     }
   }
 
-toggleMenu(id: number) {
-  if (this.isSlim) return;
+  toggleMenu(id: number) {
+    if (this.isSlim) return;
 
-  // Close all other menus except the clicked one
-  Object.keys(this.openMenus).forEach((key) => {
-    if (Number(key) !== id) {
-      this.openMenus[Number(key)] = false;
-    }
-  });
+    // Close all other menus except the clicked one
+    Object.keys(this.openMenus).forEach((key) => {
+      if (Number(key) !== id) {
+        this.openMenus[Number(key)] = false;
+      }
+    });
 
-  // Toggle the clicked one
-  this.openMenus[id] = !this.openMenus[id];
-}
+    // Toggle the clicked one
+    this.openMenus[id] = !this.openMenus[id];
+  }
 
   hasChildren(item: MenuItem) {
     return item.children && item.children.length > 0;
   }
 
-  isMenuActive(menu: MenuItem): boolean {
-    if (menu.path)
-      return this.router.isActive(menu.path, {
-        paths: 'exact',
-        queryParams: 'ignored',
-        fragment: 'ignored',
-        matrixParams: 'ignored',
-      });
-    return menu.children?.some((child) => this.isMenuActive(child)) || false;
-  }
+  // isMenuActive(menu: MenuItem): boolean {
+  //   if (menu.path)
+  //     return this.router.isActive(menu.path, {
+  //       paths: 'exact',
+  //       queryParams: 'ignored',
+  //       fragment: 'ignored',
+  //       matrixParams: 'ignored',
+  //     });
+  //   return menu.children?.some((child) => this.isMenuActive(child)) || false;
+  // }
+
+isMenuActive(menu: MenuItem): boolean {
+  if (!menu.path) return false;
+
+  return this.router.isActive(menu.path, {
+    paths: 'exact',
+    queryParams: 'ignored',
+    fragment: 'ignored',
+    matrixParams: 'ignored',
+  });
+}
+
+isParentActive(menu: MenuItem): boolean {
+  if (!menu.children) return false;
+
+  return menu.children.some(
+    (child) => child.path && this.router.url.startsWith(child.path)
+  );
+}
+
 
   @HostListener('window:resize', ['$event'])
   onResize(e: Event) {
