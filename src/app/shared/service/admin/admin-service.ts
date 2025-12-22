@@ -8,6 +8,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class AdminService {
   userURL = environment.userUrl;
+  adminURL = environment.adminUrl;
 
   constructor(private http: HttpClient) {}
 
@@ -15,7 +16,11 @@ export class AdminService {
     return this.http.get<any>(this.userURL);
   }
 
-    createUser(userData: any): Observable<any> {
+  createUser(userData: any): Observable<any> {
     return this.http.post<any>(this.userURL, userData);
+  }
+
+  retriveAllRoles(): Observable<any> {
+    return this.http.get<any>(`${this.adminURL}/roles`);
   }
 }

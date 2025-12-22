@@ -17,6 +17,7 @@ import { ToastService } from '../../../shared/service/toaster/toast-service';
 import { DeleteDialog } from '../../../shared/components/dialog/delete-dialog/delete-dialog';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 
 interface Privilege {
   id: number;
@@ -56,6 +57,7 @@ interface User {
     MatSelectModule,
     MatIconModule,
     MatTableModule,
+    MatSortModule,
     MatPaginatorModule,
     MatButtonModule,
     MatCardModule,
@@ -73,6 +75,7 @@ export class UsersPage implements AfterViewInit {
   allUsers: User[] = [];
   displayedColumns: string[] = ['username', 'roleName', 'active', 'actions'];
   dataSource = new MatTableDataSource<User>([]);
+  @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   dialogRef!: MatDialogRef<any>;
 
@@ -88,6 +91,7 @@ export class UsersPage implements AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   fetchAllUsers() {
@@ -102,6 +106,7 @@ export class UsersPage implements AfterViewInit {
 
         if (this.paginator) {
           this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
         }
       },
       error: (error) => {

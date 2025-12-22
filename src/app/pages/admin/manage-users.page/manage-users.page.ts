@@ -32,7 +32,7 @@ export interface AssignedEmployee {
   department: string;
 }
 
-export interface CreateUserPayload {
+export interface UserData {
   id?: number;
   username: string;
   active: boolean;
@@ -61,6 +61,7 @@ export interface CreateUserPayload {
 export class ManageUsersPage {
   loading = false;
   usercreationForm!: FormGroup;
+  allRoles: Role[] = [];
 
   constructor(
     private router: Router,
@@ -70,6 +71,7 @@ export class ManageUsersPage {
     private toastService: ToastService
   ) {
     this.createUserForm();
+    this.fetchAllRoles();
   }
 
   createUserForm() {
@@ -79,26 +81,46 @@ export class ManageUsersPage {
       lastName: ['', Validators.required],
       username: ['', Validators.required],
       active: ['', Validators.required],
-      roleName: ['', Validators.required],
+      role: ['', Validators.required],
       department: ['', Validators.required],
     });
   }
 
-  private buildCreateUserPayload(form: any): CreateUserPayload {
+  fetchAllRoles() {
+    this.adminService.retriveAllRoles().subscribe({
+      next: (rolesresponse: Role[]) => {
+        this.loading = false;
+        this.allRoles = rolesresponse;
+      },
+      error: (error) => {
+        this.loading = false;
+
+        if (error.status === 403) {
+          this.toastService.showMsg('error', 'Fetch All Roles error', 'bottom-center');
+        } else {
+          this.toastService.showMsg(
+            'error',
+            'Server error. Please try again later.',
+            'bottom-center'
+          );
+        }
+      },
+    });
+  }
+
+  private buildCreateUserPayload(form: any): UserData {
     return {
-      // id: 0,
       username: form.username,
       active: form.active,
-      passwordResetRequired: true,
       roles: [
         {
-          id: 1,
-          roleName: form.roleName,
-          privileges: [],
+          id: form.role.id,
+          roleName: form.role.roleName,
+          privileges: form.role.privileges,
         },
       ],
+      passwordResetRequired: true,
       assignedEmployee: {
-        // id: 0,
         employeeCode: form.employeeCode,
         firstName: form.firstName,
         lastName: form.lastName,
@@ -115,13 +137,13 @@ export class ManageUsersPage {
     }
 
     // console.log('Form Submitted', this.usercreationForm.value);
-    const userData: CreateUserPayload = this.buildCreateUserPayload(this.usercreationForm.value);
+    const userData: UserData = this.buildCreateUserPayload(this.usercreationForm.value);
     console.log('Create User Payload:', userData);
 
-    this.loading = true; 
+    this.loading = true;
     this.adminService.createUser(userData).subscribe({
       next: (userResponse) => {
-        this.loading = false; 
+        this.loading = false;
         console.log('User created successfully:', userResponse);
         this.toastService.showMsg('success', 'User created successfully');
         this.goBack();
@@ -130,13 +152,6 @@ export class ManageUsersPage {
       error: (error) => {
         this.loading = false;
         if (error.status === 400) {
-          this.toastService.showMsg(
-            'error',
-            'User already exists. Please use a different username.',
-            'bottom-center'
-          );
-        }
-        if (error.status === 403) {
           this.toastService.showMsg('error', 'Failed to create user', 'bottom-center');
         } else {
           this.toastService.showMsg(

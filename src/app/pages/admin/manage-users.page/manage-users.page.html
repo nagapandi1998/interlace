@@ -37,12 +37,13 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Role</mat-label>
-        <mat-select formControlName="roleName">
+        <mat-select formControlName="role">
           <mat-option value="">Select</mat-option>
-          <mat-option value="Admin">Admin</mat-option>
-          <mat-option value="User">User</mat-option>
+          <mat-option *ngFor="let role of allRoles" [value]="role">
+            {{ role.roleName }}
+          </mat-option>
         </mat-select>
-        <mat-error *ngIf="usercreationForm.get('roleName')?.hasError('required')"
+        <mat-error *ngIf="usercreationForm.get('role')?.hasError('required')"
           >Role is required</mat-error
         >
       </mat-form-field>

@@ -1,7 +1,7 @@
 // VARIABLES
 $sidebar-bg: linear-gradient(180deg, #500000 0%, #6e0d18 50%, #62000f 100%);
 $sidebar-width: 290px;
-$sidebar-slim-width: 70px;
+$sidebar-slim-width: 80px;
 $primary-color: #75151d;
 $accent-color: #b34d55;
 $text-primary: #ffffff;
@@ -42,7 +42,7 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
   // SLIM MODE
   &.slim {
-    width: $sidebar-slim-width;
+    width: $sidebar-slim-width !important;
 
     .logo {
       height: 50px !important;
@@ -58,6 +58,10 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
     .left-icon {
       margin: 0 auto;
+      position: relative !important;
+      bottom: 5px !important;
+      left: 10px !important;
+
     }
   }
 
@@ -77,10 +81,10 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding-left: 40px;
   }
 
-.nav-item.parent.active-parent {
-  background: rgba(255, 255, 255, 0.08);
-  font-weight: 600;
-}
+  .nav-item.parent.active-parent {
+    background: rgba(255, 255, 255, 0.08);
+    font-weight: 600;
+  }
 
 
   // SIDEBAR TOOLBAR
@@ -97,7 +101,7 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     .logo {
       height: 65px;
       width: 65px;
-      margin-top: 20px;
+      margin-top: 10px;
       transition: $transition;
     }
 
@@ -151,7 +155,7 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   .nav-list {
     flex: 1;
     overflow-y: auto;
-    padding: 0 10px;
+    padding: 10px 10px;
 
     &::-webkit-scrollbar {
       width: 4px;
@@ -203,10 +207,11 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
     &:hover {
       background: rgba(255, 255, 255, 0.1);
+      transform: scale(1) translateY(-10%);
 
-      .left-icon {
-        transform: scale(1.1);
-      }
+      // // .left-icon {
+        // transform: scale(1.1);
+      // }
     }
 
     &.active {

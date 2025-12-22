@@ -17,6 +17,7 @@ import { MenuService } from '../../../shared/service/menu/menu.service';
 import { ToastService } from '../../../shared/service/toaster/toast-service';
 import { DeleteDialog } from '../../../shared/components/dialog/delete-dialog/delete-dialog';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 
 interface Privilege {
   id: number;
@@ -52,6 +53,7 @@ export interface MenuTableRow {
     MatSelectModule,
     MatIconModule,
     MatTableModule,
+    MatSortModule,
     MatPaginatorModule,
     MatButtonModule,
     MatCardModule,
@@ -89,6 +91,7 @@ export class MenuPage implements AfterViewInit {
   ];
   filteredIcons: string[] = [...this.icons];
   dataSource = new MatTableDataSource<MenuTableRow>([]);
+  @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild('addMenuDialog') addMenuDialog!: TemplateRef<any>;
   dialogRef!: MatDialogRef<any>;
@@ -106,6 +109,7 @@ export class MenuPage implements AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   initMenuForm() {
@@ -148,6 +152,7 @@ export class MenuPage implements AfterViewInit {
 
         if (this.paginator) {
           this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
         }
       },
       error: (error) => {

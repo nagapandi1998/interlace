@@ -5,4 +5,5 @@ export const environment = {
   authUrl: authApiBaseUrl + 'auth',
   menuUrl: authApiBaseUrl + 'menu',
   userUrl: authApiBaseUrl + 'users',
+  adminUrl: authApiBaseUrl + 'admin',
 };

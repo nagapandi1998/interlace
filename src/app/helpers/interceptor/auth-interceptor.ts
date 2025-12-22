@@ -15,15 +15,26 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const accessToken = user?.accessToken;
   const refreshToken = user?.refreshToken;
 
+  // ? Attach access token if present
   const authReq = accessToken
     ? req.clone({
-        setHeaders: { Authorization: `Bearer ${accessToken}` },
+        setHeaders: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       })
     : req;
 
   return next(authReq).pipe(
     catchError((err) => {
-      if (err.status === 401 && !req.url.includes('/refresh') && refreshToken) {
+      // ? Ignore refresh API itself
+      if (req.url.includes('/refresh')) {
+        authService.logout();
+        return throwError(() => err);
+      }
+
+      // ? Handle 401 only
+      if (err.status === 401 && refreshToken) {
+        // ?? First request triggers refresh
         if (!isRefreshing) {
           isRefreshing = true;
           refreshTokenSubject.next(null);
@@ -32,14 +43,19 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
             switchMap((res) => {
               isRefreshing = false;
 
+              // ? Update BOTH tokens (important)
               user.accessToken = res.accessToken;
+              user.refreshToken = res.refreshToken;
               sessionStorage.setItem('loginuser', JSON.stringify(user));
 
               refreshTokenSubject.next(res.accessToken);
 
+              // ? Retry ORIGINAL request with NEW token
               return next(
-                authReq.clone({
-                  setHeaders: { Authorization: `Bearer ${res.accessToken}` },
+                req.clone({
+                  setHeaders: {
+                    Authorization: `Bearer ${res.accessToken}`,
+                  },
                 })
               );
             }),
@@ -51,14 +67,16 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
           );
         }
 
-        // ? WAIT for refresh to complete
+        // ? Other requests wait for refresh to finish
         return refreshTokenSubject.pipe(
           filter((token) => token !== null),
           take(1),
           switchMap((token) =>
             next(
-              authReq.clone({
-                setHeaders: { Authorization: `Bearer ${token}` },
+              req.clone({
+                setHeaders: {
+                  Authorization: `Bearer ${token}`,
+                },
               })
             )
           )
