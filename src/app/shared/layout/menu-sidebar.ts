@@ -48,18 +48,44 @@ interface MenuItem {
   ],
   templateUrl: './menu-sidebar.html',
   styleUrl: './menu-sidebar.scss',
-  animations: [
+  // animations: [
+  //   trigger('sidebarWidth', [
+  //     state('full', style({ width: '290px' })),
+  //     state('slim', style({ width: '70px' })),
+  //     transition('full <=> slim', animate('300ms cubic-bezier(0.25, 0.8, 0.25, 1)')),
+  //   ]),
+  //   trigger('fadeLabel', [
+  //     state('visible', style({ opacity: 1, display: 'inline' })),
+  //     state('hidden', style({ opacity: 0, display: 'none' })),
+  //     transition('visible <=> hidden', animate('200ms ease')),
+  //   ]),
+  // ],
+    animations: [
+
+    // SIDEBAR WIDTH ANIMATION
     trigger('sidebarWidth', [
       state('full', style({ width: '290px' })),
-      state('slim', style({ width: '70px' })),
-      transition('full <=> slim', animate('300ms cubic-bezier(0.25, 0.8, 0.25, 1)')),
+      state('slim', style({ width: '80px' })),
+      transition('full <=> slim',
+        animate('350ms cubic-bezier(0.25, 0.8, 0.25, 1)')
+      )
     ]),
-    trigger('fadeLabel', [
-      state('visible', style({ opacity: 1, display: 'inline' })),
-      state('hidden', style({ opacity: 0, display: 'none' })),
-      transition('visible <=> hidden', animate('200ms ease')),
-    ]),
-  ],
+
+    // SUB MENU EXPAND / COLLAPSE
+    trigger('expandCollapse', [
+      state('collapsed', style({
+        height: '0px',
+        opacity: 0,
+        overflow: 'hidden'
+      })),
+      state('expanded', style({
+        height: '*',
+        opacity: 1
+      })),
+      transition('expanded <=> collapsed', animate('300ms ease'))
+    ])
+  ]
+  
 })
 export class MenuSidebar implements OnInit {
   // isSidebarOpen = true;

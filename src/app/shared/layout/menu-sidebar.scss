@@ -10,14 +10,14 @@ $text-muted: #ffffff;
 $shadow-light: rgba(0, 0, 0, 0.1);
 $shadow-medium: rgba(0, 0, 0, 0.15);
 $shadow-dark: rgba(0, 0, 0, 0.2);
-$transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+// $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
 // LAYOUT CONTAINER
 .layout-container {
   height: 100vh;
   width: 100vw;
   display: flex;
-  font-family: 'Poppins', sans-serif;
+  // font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
   overflow: hidden;
 }
@@ -27,7 +27,7 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   width: $sidebar-width;
   flex-shrink: 0;
   background: $sidebar-bg;
-  transition: $transition;
+  // transition: $transition;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -42,7 +42,7 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
   // SLIM MODE
   &.slim {
-    width: $sidebar-slim-width !important;
+    width: $sidebar-slim-width;
 
     .logo {
       height: 50px !important;
@@ -102,14 +102,14 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       height: 65px;
       width: 65px;
       margin-top: 10px;
-      transition: $transition;
+      // transition: $transition;
     }
 
     .logo-text {
       color: $text-primary;
       font-weight: 600;
       margin-left: 10px;
-      transition: $transition;
+      // transition: $transition;
       display: inline-block;
     }
 
@@ -131,7 +131,7 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       border: 3px solid rgba(255, 255, 255, 0.2);
       box-shadow: 0 4px 15px $shadow-dark;
       margin-bottom: 10px;
-      transition: $transition;
+      // transition: $transition;
     }
 
     .user-name {
@@ -177,14 +177,14 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 10px;
     position: relative;
     color: $text-secondary;
-    transition: $transition;
+    // transition: $transition;
     cursor: pointer;
 
     .left-icon {
       font-size: 20px;
       color: $text-secondary;
       margin-right: 15px;
-      transition: $transition;
+      // transition: $transition;
       transform: translateY(40%);
     }
 
@@ -192,13 +192,13 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       flex-grow: 1;
       font-size: 14px;
       color: $text-primary;
-      transition: $transition;
+      // transition: $transition;
     }
 
     .right-icon {
       font-size: 18px;
       color: $text-muted;
-      transition: $transition;
+      // transition: $transition;
       position: absolute;
       right: 10px;
       font-size: 18px;
@@ -235,7 +235,6 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
   .sub-menu {
     padding-left: 10px;
-    animation: slideDown 0.3s ease-out;
 
     .sub-menu-item {
       padding-left: 15px;
@@ -250,7 +249,7 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: margin-left 0.3s ease;
+  // transition: margin-left 0.3s ease;
   background: #f8f9fa;
   margin-left: 0px !important;
 }
@@ -268,19 +267,4 @@ app-header {
   z-index: 1000;
   background: white;
   box-shadow: 0 2px 10px $shadow-light;
-}
-
-// ANIMATIONS
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-    max-height: 0;
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    max-height: 500px;
-  }
 }

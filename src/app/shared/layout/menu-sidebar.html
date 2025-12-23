@@ -61,7 +61,11 @@
             </mat-list-item>
 
             <!-- SUB MENU -->
-            <div class="sub-menu" *ngIf="openMenus[item.id] && !isSlim">
+            <!-- <div class="sub-menu" *ngIf="openMenus[item.id] && !isSlim"> -->
+            <div
+              class="sub-menu"
+              [@expandCollapse]="openMenus[item.id] && !isSlim ? 'expanded' : 'collapsed'"
+            >
               <ng-container
                 *ngTemplateOutlet="
                   recursiveMenu;

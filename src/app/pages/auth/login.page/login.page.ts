@@ -75,7 +75,7 @@ export class AuthPage implements OnInit {
 
           this.toastService.showMsg('success', 'You have logged in successfully!');
 
-          this.router.navigate(['/courtcase/allcases']);
+          this.router.navigate(['/admin/users']);
         },
 
         error: (error) => {
