@@ -41,8 +41,8 @@ export class AuthPage implements OnInit {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      username: ['admin', [Validators.required]],
+      password: ['admin@123', [Validators.required]],
     });
   }
 
@@ -51,49 +51,48 @@ export class AuthPage implements OnInit {
     setTimeout(() => this.animateRight.set(true), 300);
   }
 
-  onSubmit() {
-    if (!this.loginForm.valid) {
-      this.loginForm.markAllAsTouched();
-      this.toastService.showMsg('warning', 'Enter mandatory details');
+ onSubmit() {
+  if (!this.loginForm.valid) {
+    this.loginForm.markAllAsTouched();
+    this.toastService.showMsg('warning', 'Enter mandatory details');
+    return;
+  }
 
-      return;
-    } else {
-      let loginreq = {
-        username: this.loginForm.controls['username'].value,
-        password: this.loginForm.controls['password'].value,
+  const username = this.loginForm.controls['username'].value;
+  const password = this.loginForm.controls['password'].value;
+
+  this.loading = true;
+
+  // 🔐 Hardcoded credentials
+  const HARD_CODED_USER = {
+    username: 'admin',
+    password: 'admin@123'
+  };
+
+  setTimeout(() => {
+    this.loading = false;
+
+    if (
+      username === HARD_CODED_USER.username &&
+      password === HARD_CODED_USER.password
+    ) {
+      const loginresponse = {
+        username: username,
+        role: 'ADMIN',
+        token: 'dummy-token-123'
       };
 
-      this.loading = true;
+      // Save fake login data
+      sessionStorage.setItem('loginuser', JSON.stringify(loginresponse));
 
-      this.authService.verifyUser(loginreq).subscribe({
-        next: (loginresponse) => {
-          this.loading = false;
-          console.log('Login success:', loginresponse);
-
-          // Save token
-          sessionStorage.setItem('loginuser', JSON.stringify(loginresponse));
-
-          this.toastService.showMsg('success', 'You have logged in successfully!');
-
-          this.router.navigate(['/admin/users']);
-        },
-
-        error: (error) => {
-          this.loading = false;
-
-          console.error('Login error:', error);
-
-          if (error.status === 403) {
-            this.toastService.showMsg('error', 'Invalid username or password.');
-          } else if (error.status === 400) {
-            this.toastService.showMsg('error', 'Invalid request. Please check your inputs.');
-          } else {
-            this.toastService.showMsg('error', 'Something went wrong. Please try again later.');
-          }
-        },
-      });
+      this.toastService.showMsg('success', 'You have logged in successfully!');
+      this.router.navigate(['/admin/users']);
+    } else {
+      this.toastService.showMsg('error', 'Invalid username or password.');
     }
-  }
+  }, 500); // optional delay to simulate API
+}
+
 
   forgotpassword() {
     this.toastService.showMsg('success', 'A temporary password has been sent to your registered email.');

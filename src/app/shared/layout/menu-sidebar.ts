@@ -25,6 +25,7 @@ interface MenuItem {
   icon?: string | null;
   children?: MenuItem[];
   allowed?: boolean;
+  parentId?: number | null;
 }
 
 @Component({
@@ -60,32 +61,34 @@ interface MenuItem {
   //     transition('visible <=> hidden', animate('200ms ease')),
   //   ]),
   // ],
-    animations: [
-
+  animations: [
     // SIDEBAR WIDTH ANIMATION
     trigger('sidebarWidth', [
       state('full', style({ width: '290px' })),
       state('slim', style({ width: '80px' })),
-      transition('full <=> slim',
-        animate('350ms cubic-bezier(0.25, 0.8, 0.25, 1)')
-      )
+      transition('full <=> slim', animate('350ms cubic-bezier(0.25, 0.8, 0.25, 1)')),
     ]),
 
     // SUB MENU EXPAND / COLLAPSE
     trigger('expandCollapse', [
-      state('collapsed', style({
-        height: '0px',
-        opacity: 0,
-        overflow: 'hidden'
-      })),
-      state('expanded', style({
-        height: '*',
-        opacity: 1
-      })),
-      transition('expanded <=> collapsed', animate('300ms ease'))
-    ])
-  ]
-  
+      state(
+        'collapsed',
+        style({
+          height: '0px',
+          opacity: 0,
+          overflow: 'hidden',
+        })
+      ),
+      state(
+        'expanded',
+        style({
+          height: '*',
+          opacity: 1,
+        })
+      ),
+      transition('expanded <=> collapsed', animate('300ms ease')),
+    ]),
+  ],
 })
 export class MenuSidebar implements OnInit {
   // isSidebarOpen = true;
@@ -105,27 +108,102 @@ export class MenuSidebar implements OnInit {
   }
 
   fetchMenuByUser() {
-    this.menuServise.retriveMenuByUser().subscribe({
-      next: (menuresponse) => {
-        this.loading = false;
-        this.menus = menuresponse;
-
-        console.log('Menus loaded: ', this.menus);
+    this.menus = [
+      {
+        id: 1,
+        title: 'Admin',
+        path: '/admin',
+        icon: 'admin_panel_settings',
+        children: [
+          {
+            id: 2,
+            title: 'Users',
+            path: '/admin/users',
+            icon: 'group',
+            children: [],
+            allowed: true,
+            parentId: 1,
+          },
+          {
+            id: 3,
+            title: 'Manage Users',
+            path: '/admin/users/manage',
+            icon: 'manage_accounts',
+            children: [],
+            allowed: true,
+            parentId: 1,
+          },
+        ],
+        allowed: true,
+        parentId: null,
       },
-      error: (error) => {
-        this.loading = false;
-
-        if (error.status === 403) {
-          this.toastService.showMsg('error', 'Fetch Menu error', 'bottom-center');
-        } else {
-          this.toastService.showMsg(
-            'error',
-            'Server error. Please try again later.',
-            'bottom-center'
-          );
-        }
+      {
+        id: 4,
+        title: 'Court Case',
+        path: '/courtcase',
+        icon: 'folder_special',
+        children: [
+          {
+            id: 5,
+            title: 'All Cases',
+            path: '/courtcase/allcases',
+            icon: 'folder_open',
+            children: [],
+            allowed: true,
+            parentId: 4,
+          },
+          {
+            id: 6,
+            title: 'Case Creation',
+            path: '/courtcase/casecreation',
+            icon: 'create_new_folder',
+            children: [],
+            allowed: true,
+            parentId: 4,
+          },
+        ],
+        allowed: true,
+        parentId: null,
       },
-    });
+      {
+        id: 7,
+        title: 'Text Editor',
+        path: '/texteditor',
+        icon: 'edit',
+        children: [
+          {
+            id: 8,
+            title: 'Editor',
+            path: '/texteditor/editor',
+            icon: 'description',
+            children: [],
+            allowed: true,
+            parentId: 7,
+          },
+        ],
+        allowed: true,
+        parentId: null,
+      },
+      {
+        id: 9,
+        title: 'Master',
+        path: '/master',
+        icon: 'settings',
+        children: [
+          {
+            id: 10,
+            title: 'Menu',
+            path: '/master/menu',
+            icon: 'view_list',
+            children: [],
+            allowed: true,
+            parentId: 9,
+          },
+        ],
+        allowed: true,
+        parentId: null,
+      },
+    ];
   }
 
   ngOnInit() {
@@ -179,25 +257,22 @@ export class MenuSidebar implements OnInit {
   //   return menu.children?.some((child) => this.isMenuActive(child)) || false;
   // }
 
-isMenuActive(menu: MenuItem): boolean {
-  if (!menu.path) return false;
+  isMenuActive(menu: MenuItem): boolean {
+    if (!menu.path) return false;
 
-  return this.router.isActive(menu.path, {
-    paths: 'exact',
-    queryParams: 'ignored',
-    fragment: 'ignored',
-    matrixParams: 'ignored',
-  });
-}
+    return this.router.isActive(menu.path, {
+      paths: 'exact',
+      queryParams: 'ignored',
+      fragment: 'ignored',
+      matrixParams: 'ignored',
+    });
+  }
 
-isParentActive(menu: MenuItem): boolean {
-  if (!menu.children) return false;
+  isParentActive(menu: MenuItem): boolean {
+    if (!menu.children) return false;
 
-  return menu.children.some(
-    (child) => child.path && this.router.url.startsWith(child.path)
-  );
-}
-
+    return menu.children.some((child) => child.path && this.router.url.startsWith(child.path));
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(e: Event) {
