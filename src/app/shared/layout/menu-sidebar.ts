@@ -60,32 +60,34 @@ interface MenuItem {
   //     transition('visible <=> hidden', animate('200ms ease')),
   //   ]),
   // ],
-    animations: [
-
+  animations: [
     // SIDEBAR WIDTH ANIMATION
     trigger('sidebarWidth', [
       state('full', style({ width: '290px' })),
       state('slim', style({ width: '80px' })),
-      transition('full <=> slim',
-        animate('350ms cubic-bezier(0.25, 0.8, 0.25, 1)')
-      )
+      transition('full <=> slim', animate('350ms cubic-bezier(0.25, 0.8, 0.25, 1)')),
     ]),
 
     // SUB MENU EXPAND / COLLAPSE
     trigger('expandCollapse', [
-      state('collapsed', style({
-        height: '0px',
-        opacity: 0,
-        overflow: 'hidden'
-      })),
-      state('expanded', style({
-        height: '*',
-        opacity: 1
-      })),
-      transition('expanded <=> collapsed', animate('300ms ease'))
-    ])
-  ]
-  
+      state(
+        'collapsed',
+        style({
+          height: '0px',
+          opacity: 0,
+          overflow: 'hidden',
+        })
+      ),
+      state(
+        'expanded',
+        style({
+          height: '*',
+          opacity: 1,
+        })
+      ),
+      transition('expanded <=> collapsed', animate('300ms ease')),
+    ]),
+  ],
 })
 export class MenuSidebar implements OnInit {
   // isSidebarOpen = true;
@@ -120,7 +122,7 @@ export class MenuSidebar implements OnInit {
         } else {
           this.toastService.showMsg(
             'error',
-            'Server error. Please try again later.',
+            'Internal Server Error. Please try again later.',
             'bottom-center'
           );
         }
@@ -129,6 +131,10 @@ export class MenuSidebar implements OnInit {
   }
 
   ngOnInit() {
+    this.menuServise.refreshMenu$.subscribe(() => {
+      this.fetchMenuByUser();
+    });
+
     if (this.isMobile) {
       this.isSlim = true;
     }
@@ -179,25 +185,22 @@ export class MenuSidebar implements OnInit {
   //   return menu.children?.some((child) => this.isMenuActive(child)) || false;
   // }
 
-isMenuActive(menu: MenuItem): boolean {
-  if (!menu.path) return false;
+  isMenuActive(menu: MenuItem): boolean {
+    if (!menu.path) return false;
 
-  return this.router.isActive(menu.path, {
-    paths: 'exact',
-    queryParams: 'ignored',
-    fragment: 'ignored',
-    matrixParams: 'ignored',
-  });
-}
+    return this.router.isActive(menu.path, {
+      paths: 'exact',
+      queryParams: 'ignored',
+      fragment: 'ignored',
+      matrixParams: 'ignored',
+    });
+  }
 
-isParentActive(menu: MenuItem): boolean {
-  if (!menu.children) return false;
+  isParentActive(menu: MenuItem): boolean {
+    if (!menu.children) return false;
 
-  return menu.children.some(
-    (child) => child.path && this.router.url.startsWith(child.path)
-  );
-}
-
+    return menu.children.some((child) => child.path && this.router.url.startsWith(child.path));
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(e: Event) {

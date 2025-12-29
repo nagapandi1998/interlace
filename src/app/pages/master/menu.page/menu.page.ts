@@ -87,7 +87,6 @@ export class MenuPage implements AfterViewInit {
     'description',
     'verified_user',
     'people_alt',
-
   ];
   filteredIcons: string[] = [...this.icons];
   dataSource = new MatTableDataSource<MenuTableRow>([]);
@@ -117,7 +116,7 @@ export class MenuPage implements AfterViewInit {
       id: [''],
       title: ['', Validators.required],
       path: ['', Validators.required],
-      parentId: [null],
+      parentId: [0],
       sortOrder: [1, Validators.required],
       icon: ['', Validators.required],
     });
@@ -125,7 +124,7 @@ export class MenuPage implements AfterViewInit {
 
   filterIcons(value: string) {
     const filterValue = value.toLowerCase();
-    this.filteredIcons = this.icons.filter(icon => icon.toLowerCase().includes(filterValue));
+    this.filteredIcons = this.icons.filter((icon) => icon.toLowerCase().includes(filterValue));
   }
 
   private mapToTableRows(menus: MenuItem[]): MenuTableRow[] {
@@ -163,7 +162,7 @@ export class MenuPage implements AfterViewInit {
         } else {
           this.toastService.showMsg(
             'error',
-            'Server error. Please try again later.',
+            'Internal Server Error. Please try again later.',
             'bottom-center'
           );
         }
@@ -193,13 +192,13 @@ export class MenuPage implements AfterViewInit {
         id: '',
         title: '',
         path: '',
-        parentId: null,
+        parentId: 0,
         sortOrder: 1,
         icon: '',
       });
     } else if (row) {
       // Edit mode — set form values
-      const parentId = this.allMenus.find((m) => m.title === row.parentTitle)?.id ?? null;
+      const parentId = this.allMenus.find((m) => m.title === row.parentTitle)?.id ?? 0;
 
       this.menuForm.setValue({
         id: row.id,
@@ -210,6 +209,12 @@ export class MenuPage implements AfterViewInit {
         icon: row.icon,
       });
     }
+
+    // Check form value after setting
+    setTimeout(() => {
+      console.log('Form value after set:', this.menuForm.value);
+      console.log('Form parentId control:', this.menuForm.get('parentId')?.value);
+    });
 
     this.dialogRef = this.dialog.open(content, {
       width: '400px',
@@ -239,6 +244,7 @@ export class MenuPage implements AfterViewInit {
         next: () => {
           this.toastService.showMsg('success', 'Menu deleted successfully');
           this.fetchAllMenus();
+          this.menuServise.refreshSidebarMenu(); //update menu in the sidebar
           this.loading = false;
         },
         error: () => {
@@ -250,6 +256,7 @@ export class MenuPage implements AfterViewInit {
   }
 
   submitMenu() {
+    console.log('Menu Form Value:', this.menuForm.value);
     if (!this.menuForm.valid) {
       this.menuForm.markAllAsTouched();
       this.toastService.showMsg('warning', 'Enter mandatory details');
@@ -265,20 +272,25 @@ export class MenuPage implements AfterViewInit {
   }
 
   insertMenuEntry() {
+    const pid = this.menuForm.value.parentId;
+
     let menuData = {
-      title: this.menuForm.controls['title'].value,
-      path: this.menuForm.controls['path'].value,
-      parentId: this.menuForm.controls['parentId'].value,
-      sortOrder: this.menuForm.controls['sortOrder'].value,
-      icon: this.menuForm.controls['icon'].value,
+      title: this.menuForm.value.title,
+      path: this.menuForm.value.path,
+      parentId: pid === 0 ? null : pid,
+      sortOrder: this.menuForm.value.sortOrder,
+      icon: this.menuForm.value.icon,
     };
+
+    console.log('Menu Data to insert:', menuData);
 
     this.menuServise.createMenu(menuData).subscribe({
       next: () => {
         this.toastService.showMsg('success', 'Menu created successfully');
         this.closeDialog();
         this.fetchAllMenus();
-        this.menuServise.retriveMenuByUser() //update menu in the sidebar
+        this.menuServise.refreshSidebarMenu(); //update menu in the sidebar
+        
         this.loading = false;
       },
       error: (error) => {
@@ -294,7 +306,7 @@ export class MenuPage implements AfterViewInit {
         } else {
           this.toastService.showMsg(
             'error',
-            'Server error. Please try again later.',
+            'Internal Server Error. Please try again later.',
             'bottom-center'
           );
         }
@@ -304,13 +316,15 @@ export class MenuPage implements AfterViewInit {
   }
 
   updateMenuEntry() {
+    const pid = this.menuForm.value.parentId;
+
     let menuData = {
-      id: this.menuForm.controls['id'].value,
-      title: this.menuForm.controls['title'].value,
-      path: this.menuForm.controls['path'].value,
-      parentId: this.menuForm.controls['parentId'].value,
-      sortOrder: this.menuForm.controls['sortOrder'].value,
-      icon: this.menuForm.controls['icon'].value,
+      id: this.menuForm.value.id,
+      title: this.menuForm.value.title,
+      path: this.menuForm.value.path,
+      parentId: pid === 0 ? null : pid,
+      sortOrder: this.menuForm.value.sortOrder,
+      icon: this.menuForm.value.icon,
     };
 
     this.menuServise.updateMenu(menuData).subscribe({
@@ -318,7 +332,7 @@ export class MenuPage implements AfterViewInit {
         this.toastService.showMsg('success', 'Menu updated successfully');
         this.closeDialog();
         this.fetchAllMenus();
-        this.menuServise.retriveMenuByUser() //update menu in the sidebar
+        this.menuServise.refreshSidebarMenu(); //update menu in the sidebar
         this.loading = false;
         this.isUpdate = false;
       },

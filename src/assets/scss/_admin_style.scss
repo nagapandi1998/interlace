@@ -18,12 +18,24 @@
   margin: auto;
   padding: 24px;
 
+  opacity: 0;
+  animation: cardfadeIn 500ms ease-in-out forwards;
+
   @media (max-width: 768px) {
     padding: 12px;
   }
 
   @media (max-width: 480px) {
     padding: 8px;
+  }
+}
+
+@keyframes cardfadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 

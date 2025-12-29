@@ -100,7 +100,7 @@ export class ManageUsersPage {
         } else {
           this.toastService.showMsg(
             'error',
-            'Server error. Please try again later.',
+            'Internal Server Error. Please try again later.',
             'bottom-center'
           );
         }
@@ -156,7 +156,7 @@ export class ManageUsersPage {
         } else {
           this.toastService.showMsg(
             'error',
-            'Server error. Please try again later.',
+            'Internal Server Error. Please try again later.',
             'bottom-center'
           );
         }

@@ -117,7 +117,7 @@ export class UsersPage implements AfterViewInit {
         } else {
           this.toastService.showMsg(
             'error',
-            'Server error. Please try again later.',
+            'Internal Server Error. Please try again later.',
             'bottom-center'
           );
         }

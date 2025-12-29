@@ -73,7 +73,7 @@ export class AuthPage implements OnInit {
           // Save token
           sessionStorage.setItem('loginuser', JSON.stringify(loginresponse));
 
-          this.toastService.showMsg('success', 'You have logged in successfully!');
+          this.toastService.showMsg('success', 'Welcome back! Login successful.');
 
           this.router.navigate(['/admin/users']);
         },
@@ -88,7 +88,7 @@ export class AuthPage implements OnInit {
           } else if (error.status === 400) {
             this.toastService.showMsg('error', 'Invalid request. Please check your inputs.');
           } else {
-            this.toastService.showMsg('error', 'Something went wrong. Please try again later.');
+            this.toastService.showMsg('error', 'Internal Server Error. Please try again later.');
           }
         },
       });

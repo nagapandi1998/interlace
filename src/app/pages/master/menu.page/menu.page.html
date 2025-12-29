@@ -128,9 +128,9 @@
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Parent Menu</mat-label>
         <mat-select formControlName="parentId">
-          <mat-option [value]="null">None</mat-option>
-          <mat-option *ngFor="let m of parentMenus" [value]="m.id">
-            {{ m.title }}
+          <mat-option [value]="0">No Parent</mat-option>
+          <mat-option *ngFor="let pm of parentMenus" [value]="pm.id">
+            {{ pm.title }}
           </mat-option>
         </mat-select>
       </mat-form-field>
