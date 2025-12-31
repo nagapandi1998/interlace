@@ -15,7 +15,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const accessToken = user?.accessToken;
   const refreshToken = user?.refreshToken;
 
-  // ? Attach access token if present
+  // Attach access token if present
   const authReq = accessToken
     ? req.clone({
         setHeaders: {
@@ -26,15 +26,15 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(authReq).pipe(
     catchError((err) => {
-      // ? Ignore refresh API itself
+      // Ignore refresh API itself
       if (req.url.includes('/refresh')) {
         authService.logout();
         return throwError(() => err);
       }
 
-      // ? Handle 401 only
+      // Handle 401 only
       if (err.status === 401 && refreshToken) {
-        // ?? First request triggers refresh
+        // First request triggers refresh
         if (!isRefreshing) {
           isRefreshing = true;
           refreshTokenSubject.next(null);
@@ -43,14 +43,14 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
             switchMap((res) => {
               isRefreshing = false;
 
-              // ? Update BOTH tokens (important)
+              // Update BOTH tokens (important)
               user.accessToken = res.accessToken;
               user.refreshToken = res.refreshToken;
               sessionStorage.setItem('loginuser', JSON.stringify(user));
 
               refreshTokenSubject.next(res.accessToken);
 
-              // ? Retry ORIGINAL request with NEW token
+              // Retry ORIGINAL request with NEW token
               return next(
                 req.clone({
                   setHeaders: {
@@ -67,7 +67,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
           );
         }
 
-        // ? Other requests wait for refresh to finish
+        // Other requests wait for refresh to finish
         return refreshTokenSubject.pipe(
           filter((token) => token !== null),
           take(1),

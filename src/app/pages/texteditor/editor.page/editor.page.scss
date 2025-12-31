@@ -1,42 +1,42 @@
 @use '../../../../assets/scss/variable' as *;
 
-.card {
-  background: $white-color;
-  border-radius: 8px;
-  font-family: 'Poppins', sans-serif !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin: auto;
-  padding: 24px;
-}
+// .card {
+//   background: $white-color;
+//   border-radius: 8px;
+//   font-family: 'Poppins', sans-serif !important;
+//   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+//   margin: auto;
+//   padding: 24px;
+// }
 
-.app-primary-button {
-  background-color: $primary-color;
-  color: $white-color;
-  padding: 8px 18px;
-  font-weight: 600;
-  font-size: 15px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.18s ease, transform 0.12s ease, box-shadow 0.18s ease;
+// .app-primary-button {
+//   background-color: $primary-color;
+//   color: $white-color;
+//   padding: 12px;
+//   font-weight: 600;
+//   font-size: 15px;
+//   border: none;
+//   border-radius: 6px;
+//   cursor: pointer;
+//   transition: background-color 0.18s ease, transform 0.12s ease, box-shadow 0.18s ease;
 
-  &:hover {
-    background-color: $primary-light;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
-  }
+//   &:hover {
+//     background-color: $primary-light;
+//     transform: translateY(-2px);
+//     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+//   }
 
-  &:active {
-    transform: translateY(0);
-    box-shadow: none;
-  }
-}
+//   &:active {
+//     transform: translateY(0);
+//     box-shadow: none;
+//   }
+// }
 
 .add-button {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 12px;
-  gap: 10px;
+  // display: flex;
+  justify-content: space-between !important;
+  // margin-bottom: 12px;
+  // gap: 10px;
 }
 
 .file-upload-container {
@@ -91,7 +91,7 @@
     justify-content: center !important;
   }
 
-  .app-primary-button {
-    padding: 5px 10px !important;
-  }
+  // .app-primary-button {
+  //   padding: 5px 10px !important;
+  // }
 }
