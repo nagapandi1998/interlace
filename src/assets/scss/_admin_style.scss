@@ -922,6 +922,7 @@
     color: $white-color !important;
     background-color: $primary-color !important;
     border-color: transparent !important;
+    cursor: pointer;
 
     &:hover {
       background-color: $primary-light !important;

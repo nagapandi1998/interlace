@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SuperDoc } from '@harbour-enterprises/superdoc';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 import { ToastService } from '../../../shared/service/toaster/toast-service';
 import { Loader } from '../../../shared/components/loader/loader';
 
@@ -17,7 +18,7 @@ interface TemplateField {
 @Component({
   selector: 'app-text-editor',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatCardModule, Loader],
+  imports: [CommonModule, MatIconModule, MatCardModule,MatButtonModule, Loader],
   templateUrl: './editor.page.html',
   styleUrl: './editor.page.scss',
 })
@@ -33,13 +34,11 @@ export class TextEditorPage implements AfterViewInit {
     { key: 'suspect_name', label: 'Suspect Name:', mode: 'inline' },
     { key: 'suspect_age', label: 'Age:', mode: 'inline' },
     { key: 'suspect_position', label: 'Position:', mode: 'inline' },
-
     { key: 'allegation_summary', label: '1. Allegation Summary', mode: 'block' },
     { key: 'investigation_findings', label: '2. Investigation Findings', mode: 'block' },
     { key: 'evidence_collected', label: '3. Evidence Collected', mode: 'block' },
     { key: 'observations', label: '4. Observations', mode: 'block' },
     { key: 'recommendation', label: '5. Recommendation / Conclusion', mode: 'block' },
-
     { key: 'officer_name', label: 'Investigating Officer Name:', mode: 'inline' },
     { key: 'officer_designation', label: 'Designation:', mode: 'inline' },
   ];
@@ -47,11 +46,11 @@ export class TextEditorPage implements AfterViewInit {
   constructor(private toastService: ToastService) {}
 
   ngAfterViewInit() {
-    this.initEditor();
+    this.initializeEditor();
   }
 
   // Initialize SuperDoc editor
-  initEditor(file: File | null = null) {
+  initializeEditor(file: File | null = null) {
     if (this.editor?.destroy) {
       this.editor.destroy();
       this.editor = null;
@@ -72,7 +71,7 @@ export class TextEditorPage implements AfterViewInit {
     } as any);
   }
 
-  openFile() {
+  importDocument() {
     this.fileInput.nativeElement.click();
   }
 
@@ -82,7 +81,7 @@ export class TextEditorPage implements AfterViewInit {
       this.loading = true;
 
       setTimeout(() => {
-        this.initEditor(file);
+        this.initializeEditor(file);
         this.loading = false;
 
         this.toastService.showMsg('success', `"${file.name}" was imported successfully.`);
@@ -93,13 +92,13 @@ export class TextEditorPage implements AfterViewInit {
     }
   }
 
-  clearEditor() {
-    this.initEditor(null);
+  resetDocument() {
+    this.initializeEditor(null);
     this.fileInput.nativeElement.value = '';
     this.toastService.showMsg('success', 'Editor has been cleared.');
   }
 
-  async loadTemplateFromAssets() {
+  async loadCaseTemplate() {
     this.loading = true;
 
     try {
@@ -114,7 +113,7 @@ export class TextEditorPage implements AfterViewInit {
       });
 
       document.getElementById('superdoc')!.innerHTML = '';
-      this.initEditor(file);
+      this.initializeEditor(file);
 
       this.toastService.showMsg('success', `"Case_file.docx" loaded successfully.`);
     } catch (error) {
@@ -134,7 +133,7 @@ export class TextEditorPage implements AfterViewInit {
     return text;
   }
 
-  async exportDocx(): Promise<void> {
+  async exportDocument(): Promise<void> {
     if (!this.editor) {
       this.toastService.showMsg('error', 'Editor is not initialized.');
       return;
@@ -238,11 +237,22 @@ export class TextEditorPage implements AfterViewInit {
     return null;
   }
 
-  loadTemplateData() {
+  private hasValueAfterLabel(doc: any, label: string, nextLabel?: string): boolean {
+    const text = doc.textContent || '';
+
+    const pattern = nextLabel ? `${label}\\s*(.*?)\\s*(?=${nextLabel})` : `${label}\\s*(.*)$`;
+
+    const regex = new RegExp(pattern, 'is');
+    const match = text.match(regex);
+
+    return !!(match && match[1]?.trim());
+  }
+
+  populateCaseData() {
     const data = {
       case_number: 'DVAC/2025/001',
-      report_date: '10-09-2025',
-      suspect_name: 'Krishnan V.',
+      report_date: '02-01-2026',
+      suspect_name: 'Krishnan V',
       suspect_age: '42',
       suspect_position: 'Inspector',
       allegation_summary: 'Allegation of misuse of official authority for personal gain.',
@@ -258,12 +268,15 @@ export class TextEditorPage implements AfterViewInit {
       officer_designation: 'Deputy Superintendent',
     };
 
-    this.insertTemplateData(data);
+    this.applyCaseDataToDocument(data);
   }
 
-  insertTemplateData(data: Record<string, string>) {
+  applyCaseDataToDocument(data: Record<string, string>) {
     const editor = this.editor?.activeEditor;
-    if (!editor) return;
+    if (!editor){
+      this.toastService.showMsg( 'warning', 'Editor is not initialized.');
+      return;
+    } 
 
     const { state, dispatch } = editor.view;
     let tr = state.tr;
@@ -271,14 +284,26 @@ export class TextEditorPage implements AfterViewInit {
     const inserts: { pos: number; value: string; mode: 'inline' | 'block' }[] = [];
 
     // Prepare all insertions
-    for (const field of this.TEMPLATE_FIELDS) {
+    for (let i = 0; i < this.TEMPLATE_FIELDS.length; i++) {
+      const field = this.TEMPLATE_FIELDS[i];
+      const nextField = this.TEMPLATE_FIELDS[i + 1];
+
       const value = data[field.key];
       if (!value) continue;
 
       const pos = this.findLabelEnd(state.doc, field.label);
       if (pos === null) continue;
 
-      inserts.push({ pos, value, mode: field.mode });
+      // Prevent Double Insert
+      const alreadyFilled = this.hasValueAfterLabel(state.doc, field.label, nextField?.label);
+
+      if (alreadyFilled) continue;
+
+      inserts.push({
+        pos,
+        value,
+        mode: field.mode,
+      });
     }
 
     // Sort inserts in reverse order
@@ -299,7 +324,7 @@ export class TextEditorPage implements AfterViewInit {
 
     if (tr.docChanged) {
       dispatch(tr);
-      this.toastService.showMsg('success', 'Data inserted correctly.');
+      this.toastService.showMsg('success', 'Data inserted successfully.');
     }
   }
 }

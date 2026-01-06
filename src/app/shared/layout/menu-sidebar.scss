@@ -177,28 +177,26 @@ $shadow-dark: rgba(0, 0, 0, 0.2);
     padding: 10px;
     position: relative;
     color: $text-secondary;
-    // transition: $transition;
     cursor: pointer;
+    transition: all 0.25s ease;
 
     .left-icon {
       font-size: 20px;
       color: $text-secondary;
       margin-right: 15px;
-      // transition: $transition;
-      transform: translateY(40%);
+      transform: translateY(30%);
+      transition: color 0.25s ease;
     }
 
     .label {
       flex-grow: 1;
       font-size: 14px;
       color: $text-primary;
-      // transition: $transition;
     }
 
     .right-icon {
       font-size: 18px;
       color: $text-muted;
-      // transition: $transition;
       position: absolute;
       right: 10px;
       font-size: 18px;
@@ -207,13 +205,7 @@ $shadow-dark: rgba(0, 0, 0, 0.2);
 
     &:hover {
       background: rgba(255, 255, 255, 0.1);
-      transform: scale(1) translateY(-10%);
-      transition: transform 0.3s ease-out, background 0.3s ease-out;
-      // transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-
-      // // .left-icon {
-        // transform: scale(1.1);
-      // }
+      transform: scale(1) translateX(4px);
     }
 
     &.active {
