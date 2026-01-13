@@ -74,6 +74,10 @@ export class AuthPage implements OnInit {
           sessionStorage.setItem('loginuser', JSON.stringify(loginresponse));
 
           this.toastService.showMsg('success', 'Welcome back! Login successful.');
+          if (loginresponse.pwdReset === true) {
+            this.router.navigate(['/auth/changepassword']);
+            return;
+          }
 
           this.router.navigate(['/admin/users']);
         },
@@ -96,6 +100,9 @@ export class AuthPage implements OnInit {
   }
 
   forgotpassword() {
-    this.toastService.showMsg('success', 'A temporary password has been sent to your registered email.');
+    this.toastService.showMsg(
+      'success',
+      'A temporary password has been sent to your registered email.'
+    );
   }
 }

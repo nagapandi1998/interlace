@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgZone } from '@angular/core';
 import { SuperDoc } from '@harbour-enterprises/superdoc';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
@@ -18,7 +19,7 @@ interface TemplateField {
 @Component({
   selector: 'app-text-editor',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatCardModule,MatButtonModule, Loader],
+  imports: [CommonModule, MatIconModule, MatCardModule, MatButtonModule, Loader],
   templateUrl: './editor.page.html',
   styleUrl: './editor.page.scss',
 })
@@ -43,23 +44,16 @@ export class TextEditorPage implements AfterViewInit {
     { key: 'officer_designation', label: 'Designation:', mode: 'inline' },
   ];
 
-  constructor(private toastService: ToastService) {}
-
-  ngAfterViewInit() {
-    this.initializeEditor();
-  }
+  constructor(private zone: NgZone, private toastService: ToastService) {}
 
   // Initialize SuperDoc editor
-  initializeEditor(file: File | null = null) {
-    if (this.editor?.destroy) {
-      this.editor.destroy();
-      this.editor = null;
-    }
+  private createEditor(file?: File | string) {
+    this.editor?.destroy?.();
 
     this.editor = new SuperDoc({
       selector: '#superdoc',
       toolbar: '#superdoc-toolbar',
-      document: file,
+      document: file ?? '',
       documentMode: 'editing',
       pagination: true,
       rulers: true,
@@ -69,6 +63,12 @@ export class TextEditorPage implements AfterViewInit {
       onReady: () => console.log('Editor ready'),
       onEditorCreate: () => console.log('Editor created'),
     } as any);
+  }
+
+  ngAfterViewInit() {
+    this.zone.runOutsideAngular(() => {
+      this.createEditor();
+    });
   }
 
   importDocument() {
@@ -81,19 +81,23 @@ export class TextEditorPage implements AfterViewInit {
       this.loading = true;
 
       setTimeout(() => {
-        this.initializeEditor(file);
+        // this.initializeEditor(file);
+        this.createEditor(file);
+
         this.loading = false;
 
         this.toastService.showMsg('success', `"${file.name}" was imported successfully.`);
 
         // Allow re-import of the same file
         this.fileInput.nativeElement.value = '';
-      }, 200);
+      }, 0);
     }
+    this.loading = false;
   }
 
   resetDocument() {
-    this.initializeEditor(null);
+    // this.initializeEditor(null);
+    this.createEditor();
     this.fileInput.nativeElement.value = '';
     this.toastService.showMsg('success', 'Editor has been cleared.');
   }
@@ -112,8 +116,9 @@ export class TextEditorPage implements AfterViewInit {
         lastModified: Date.now(),
       });
 
-      document.getElementById('superdoc')!.innerHTML = '';
-      this.initializeEditor(file);
+      // document.getElementById('superdoc')!.innerHTML = '';
+      // this.initializeEditor(file);
+      this.createEditor(file);
 
       this.toastService.showMsg('success', `"Case_file.docx" loaded successfully.`);
     } catch (error) {
@@ -268,15 +273,18 @@ export class TextEditorPage implements AfterViewInit {
       officer_designation: 'Deputy Superintendent',
     };
 
-    this.applyCaseDataToDocument(data);
+    // this.applyCaseDataToDocument(data);
+    setTimeout(() => {
+      this.applyCaseDataToDocument(data);
+    }, 0);
   }
 
   applyCaseDataToDocument(data: Record<string, string>) {
     const editor = this.editor?.activeEditor;
-    if (!editor){
-      this.toastService.showMsg( 'warning', 'Editor is not initialized.');
+    if (!editor) {
+      this.toastService.showMsg('warning', 'Editor is not initialized.');
       return;
-    } 
+    }
 
     const { state, dispatch } = editor.view;
     let tr = state.tr;
@@ -324,7 +332,7 @@ export class TextEditorPage implements AfterViewInit {
 
     if (tr.docChanged) {
       dispatch(tr);
-      this.toastService.showMsg('success', 'Data inserted successfully.');
+      // this.toastService.showMsg('success', 'Data inserted successfully.');
     }
   }
 }
