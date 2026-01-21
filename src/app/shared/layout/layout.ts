@@ -163,7 +163,7 @@ export class Layout implements OnInit {
         // },
         {
           id: 1,
-          title: 'Superdoc Editor',
+          title: 'Editor',
           path: '/texteditor',
           icon: 'edit',
         },

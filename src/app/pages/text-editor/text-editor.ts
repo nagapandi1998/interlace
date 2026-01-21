@@ -4,14 +4,15 @@ import { NgZone } from '@angular/core';
 import { SuperDoc } from '@harbour-enterprises/superdoc';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { Loader } from '../../shared/components/loader/loader';
+import { MatButtonModule } from '@angular/material/button';
 import { ToastService } from '../../shared/service/toaster/toast-service';
+import { Loader } from '../../shared/components/loader/loader';
 import Typo from 'typo-js';
 
 @Component({
   selector: 'app-text-editor',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatCardModule, Loader],
+  imports: [CommonModule, MatIconModule, MatCardModule, MatButtonModule, Loader],
   templateUrl: './text-editor.html',
   styleUrl: './text-editor.scss',
 })
