@@ -1,4 +1,4 @@
-<div class="form-container">
+<div class="card-body">
   <app-loader [loading]="loading"></app-loader>
 
   <form [formGroup]="casecreationForm" (ngSubmit)="onSubmit()">
@@ -6,20 +6,24 @@
       <h2>Case Creation</h2>
     </div> -->
 
-
     <div class="subheader">Case Creation Details</div>
     <div class="grid-container">
-
       <!-- Court Category Type -->
       <mat-form-field appearance="outline">
         <mat-label>Court Category Type</mat-label>
         <mat-select formControlName="courtCategoryType">
           <mat-option value=""> Select </mat-option>
-          <mat-option *ngFor="let cct of courtCategoryTypes" value={{cct}}>{{cct}}</mat-option>
+          <mat-option *ngFor="let cct of courtCategoryTypes" value="{{ cct }}">{{
+            cct
+          }}</mat-option>
           <!-- Add more options as needed -->
         </mat-select>
         <mat-error
-          *ngIf="casecreationForm.get('courtCategoryType')?.touched && casecreationForm.get('courtCategoryType')?.invalid">
+          *ngIf="
+            casecreationForm.get('courtCategoryType')?.touched &&
+            casecreationForm.get('courtCategoryType')?.invalid
+          "
+        >
           Court Category Type is required
         </mat-error>
       </mat-form-field>
@@ -29,9 +33,14 @@
         <mat-label>Name Of Court</mat-label>
         <mat-select formControlName="nameOfCourt">
           <mat-option value=""> Select </mat-option>
-          <mat-option *ngFor="let nc of nameOfCourts" value={{nc}}>{{nc}}</mat-option>
+          <mat-option *ngFor="let nc of nameOfCourts" value="{{ nc }}">{{ nc }}</mat-option>
         </mat-select>
-        <mat-error *ngIf="casecreationForm.get('nameOfCourt')?.touched && casecreationForm.get('nameOfCourt')?.invalid">
+        <mat-error
+          *ngIf="
+            casecreationForm.get('nameOfCourt')?.touched &&
+            casecreationForm.get('nameOfCourt')?.invalid
+          "
+        >
           Name Of Court is required
         </mat-error>
       </mat-form-field>
@@ -41,9 +50,11 @@
         <mat-label>Type</mat-label>
         <mat-select formControlName="type">
           <mat-option value=""> Select </mat-option>
-          <mat-option *ngFor="let t of types" value={{t}}>{{t}}</mat-option>
+          <mat-option *ngFor="let t of types" value="{{ t }}">{{ t }}</mat-option>
         </mat-select>
-        <mat-error *ngIf="casecreationForm.get('type')?.touched && casecreationForm.get('type')?.invalid">
+        <mat-error
+          *ngIf="casecreationForm.get('type')?.touched && casecreationForm.get('type')?.invalid"
+        >
           Type is required
         </mat-error>
       </mat-form-field>
@@ -53,9 +64,13 @@
         <mat-label>Filed By</mat-label>
         <mat-select formControlName="filedBy">
           <mat-option value=""> Select </mat-option>
-          <mat-option *ngFor="let fb of filedBys" value={{fb}}>{{fb}}</mat-option>
+          <mat-option *ngFor="let fb of filedBys" value="{{ fb }}">{{ fb }}</mat-option>
         </mat-select>
-        <mat-error *ngIf="casecreationForm.get('filedBy')?.touched && casecreationForm.get('filedBy')?.invalid">
+        <mat-error
+          *ngIf="
+            casecreationForm.get('filedBy')?.touched && casecreationForm.get('filedBy')?.invalid
+          "
+        >
           Filed By is required
         </mat-error>
       </mat-form-field>
@@ -65,9 +80,13 @@
         <mat-label>Case Type</mat-label>
         <mat-select formControlName="caseType">
           <mat-option value=""> Select </mat-option>
-          <mat-option *ngFor="let ct of caseTypes" value={{ct}}>{{ct}}</mat-option>
+          <mat-option *ngFor="let ct of caseTypes" value="{{ ct }}">{{ ct }}</mat-option>
         </mat-select>
-        <mat-error *ngIf="casecreationForm.get('caseType')?.touched && casecreationForm.get('caseType')?.invalid">
+        <mat-error
+          *ngIf="
+            casecreationForm.get('caseType')?.touched && casecreationForm.get('caseType')?.invalid
+          "
+        >
           Case Type is required
         </mat-error>
       </mat-form-field>
@@ -77,10 +96,14 @@
         <mat-label>Category Type</mat-label>
         <mat-select formControlName="categoryType">
           <mat-option value=""> Select </mat-option>
-          <mat-option *ngFor="let cgyt of categoryTypes" value={{cgyt}}>{{cgyt}}</mat-option>
+          <mat-option *ngFor="let cgyt of categoryTypes" value="{{ cgyt }}">{{ cgyt }}</mat-option>
         </mat-select>
         <mat-error
-          *ngIf="casecreationForm.get('categoryType')?.touched && casecreationForm.get('categoryType')?.invalid">
+          *ngIf="
+            casecreationForm.get('categoryType')?.touched &&
+            casecreationForm.get('categoryType')?.invalid
+          "
+        >
           Category Type is required
         </mat-error>
       </mat-form-field>
@@ -90,10 +113,14 @@
         <mat-label>Sub Category Type</mat-label>
         <mat-select formControlName="subCategoryType">
           <mat-option value=""> Select </mat-option>
-          <mat-option *ngFor="let sct of subCategoryTypes" value={{sct}}>{{sct}}</mat-option>
+          <mat-option *ngFor="let sct of subCategoryTypes" value="{{ sct }}">{{ sct }}</mat-option>
         </mat-select>
         <mat-error
-          *ngIf="casecreationForm.get('subCategoryType')?.touched && casecreationForm.get('subCategoryType')?.invalid">
+          *ngIf="
+            casecreationForm.get('subCategoryType')?.touched &&
+            casecreationForm.get('subCategoryType')?.invalid
+          "
+        >
           Sub Category Type is required
         </mat-error>
       </mat-form-field>
@@ -101,11 +128,22 @@
       <!-- Date of Filing/Admission Date -->
       <mat-form-field appearance="outline">
         <mat-label>Date of Filing/Admission</mat-label>
-        <input matInput [matDatepicker]="filingDatePicker" formControlName="filingDate" placeholder="DD/MM/YYYY"
-          (click)="filingDatePicker.open()" style="cursor: pointer;" />
+        <input
+          matInput
+          [matDatepicker]="filingDatePicker"
+          formControlName="filingDate"
+          placeholder="DD/MM/YYYY"
+          (click)="filingDatePicker.open()"
+          style="cursor: pointer"
+        />
         <mat-datepicker-toggle matSuffix [for]="filingDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #filingDatePicker></mat-datepicker>
-        <mat-error *ngIf="casecreationForm.get('filingDate')?.touched && casecreationForm.get('filingDate')?.invalid">
+        <mat-error
+          *ngIf="
+            casecreationForm.get('filingDate')?.touched &&
+            casecreationForm.get('filingDate')?.invalid
+          "
+        >
           Date of Filing is required
         </mat-error>
       </mat-form-field>
@@ -113,12 +151,22 @@
       <!-- Received Date -->
       <mat-form-field appearance="outline">
         <mat-label>Received Date</mat-label>
-        <input matInput [matDatepicker]="receivedDatePicker" formControlName="receivedDate" placeholder="DD/MM/YYYY"
-          (click)="receivedDatePicker.open()" style="cursor: pointer;" />
+        <input
+          matInput
+          [matDatepicker]="receivedDatePicker"
+          formControlName="receivedDate"
+          placeholder="DD/MM/YYYY"
+          (click)="receivedDatePicker.open()"
+          style="cursor: pointer"
+        />
         <mat-datepicker-toggle matSuffix [for]="receivedDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #receivedDatePicker></mat-datepicker>
         <mat-error
-          *ngIf="casecreationForm.get('receivedDate')?.touched && casecreationForm.get('receivedDate')?.invalid">
+          *ngIf="
+            casecreationForm.get('receivedDate')?.touched &&
+            casecreationForm.get('receivedDate')?.invalid
+          "
+        >
           Received Date is required
         </mat-error>
       </mat-form-field>
@@ -127,7 +175,9 @@
       <mat-form-field appearance="outline">
         <mat-label>Case No</mat-label>
         <input matInput formControlName="caseNo" placeholder="Enter Case No" />
-        <mat-error *ngIf="casecreationForm.get('caseNo')?.touched && casecreationForm.get('caseNo')?.invalid">
+        <mat-error
+          *ngIf="casecreationForm.get('caseNo')?.touched && casecreationForm.get('caseNo')?.invalid"
+        >
           Case No is required
         </mat-error>
       </mat-form-field>
@@ -139,7 +189,9 @@
           <mat-option value="">Select Year</mat-option>
           <mat-option *ngFor="let y of years" [value]="y">{{ y }}</mat-option>
         </mat-select>
-        <mat-error *ngIf="casecreationForm.get('year')?.touched && casecreationForm.get('year')?.invalid">
+        <mat-error
+          *ngIf="casecreationForm.get('year')?.touched && casecreationForm.get('year')?.invalid"
+        >
           Year is required
         </mat-error>
       </mat-form-field>
@@ -153,421 +205,586 @@
       <!-- Concerned Office File No -->
       <mat-form-field appearance="outline">
         <mat-label>Concerned Office File No.</mat-label>
-        <input matInput formControlName="concernedOfficeFileNo" placeholder="Enter Concerned Office File No" />
+        <input
+          matInput
+          formControlName="concernedOfficeFileNo"
+          placeholder="Enter Concerned Office File No"
+        />
       </mat-form-field>
 
       <!-- Next Hearing Date -->
       <mat-form-field appearance="outline">
         <mat-label>Next Hearing Date</mat-label>
-        <input matInput [matDatepicker]="hearingDatePicker" formControlName="nextHearingDate" placeholder="DD/MM/YYYY"
-          (click)="hearingDatePicker.open()" style="cursor: pointer;" />
+        <input
+          matInput
+          [matDatepicker]="hearingDatePicker"
+          formControlName="nextHearingDate"
+          placeholder="DD/MM/YYYY"
+          (click)="hearingDatePicker.open()"
+          style="cursor: pointer"
+        />
         <mat-datepicker-toggle matSuffix [for]="hearingDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #hearingDatePicker></mat-datepicker>
       </mat-form-field>
-
     </div>
 
-    <br>
+    <br />
 
     <!-- <h2>Location Details</h2> -->
 
     <div class="subheader">Location Details</div>
     <div class="tbl-container">
-
       <!-- Add Button -->
       <div class="add-button">
-        <button mat-raised-button color="primary" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode"
-          (click)="openLocationDialog()">Add Location</button>
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          [class.disabled]="isViewMode"
+          [disabled]="isViewMode"
+          (click)="openLocationDialog()"
+        >
+          Add Location
+        </button>
       </div>
 
       <!-- Locations Table -->
-      <div class="table-responsive">
-        <table mat-table [dataSource]="locationData" class="mat-elevation-z8" style="width:100%; margin-top:20px;">
+      <div class="table-container">
+        <div class="table-responsive">
+          <table
+            mat-table
+            [dataSource]="locationData"
+            class="mat-elevation-z8"
+            style="width: 100%; margin-top: 20px"
+          >
+            <!-- Primary Column -->
+            <ng-container matColumnDef="primary">
+              <th mat-header-cell *matHeaderCellDef>Primary</th>
+              <td mat-cell *matCellDef="let element">
+                <mat-radio-button [value]="element.id"></mat-radio-button>
+              </td>
+            </ng-container>
 
-          <!-- Primary Column -->
-          <ng-container matColumnDef="primary">
-            <th mat-header-cell *matHeaderCellDef>Primary</th>
-            <td mat-cell *matCellDef="let element">
-              <mat-radio-button [value]="element.id"></mat-radio-button>
-            </td>
-          </ng-container>
+            <!-- Region Name Column -->
+            <ng-container matColumnDef="regionName">
+              <th mat-header-cell *matHeaderCellDef>Region Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.regionName }}</td>
+            </ng-container>
 
-          <!-- Region Name Column -->
-          <ng-container matColumnDef="regionName">
-            <th mat-header-cell *matHeaderCellDef>Region Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.regionName }}</td>
-          </ng-container>
+            <!-- Office Type Name Column -->
+            <ng-container matColumnDef="officeTypeName">
+              <th mat-header-cell *matHeaderCellDef>Office Type Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.officeTypeName }}</td>
+            </ng-container>
 
-          <!-- Office Type Name Column -->
-          <ng-container matColumnDef="officeTypeName">
-            <th mat-header-cell *matHeaderCellDef>Office Type Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.officeTypeName }}</td>
-          </ng-container>
+            <!-- Area/Dept Name Column -->
+            <ng-container matColumnDef="areaDeptName">
+              <th mat-header-cell *matHeaderCellDef>Area/Dept Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.areaDeptName }}</td>
+            </ng-container>
 
-          <!-- Area/Dept Name Column -->
-          <ng-container matColumnDef="areaDeptName">
-            <th mat-header-cell *matHeaderCellDef>Area/Dept Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.areaDeptName }}</td>
-          </ng-container>
+            <!-- Sub Office Name Column -->
+            <ng-container matColumnDef="subOfficeName">
+              <th mat-header-cell *matHeaderCellDef>Sub Office Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.subOfficeTypeName }}</td>
+            </ng-container>
 
-          <!-- Sub Office Name Column -->
-          <ng-container matColumnDef="subOfficeName">
-            <th mat-header-cell *matHeaderCellDef>Sub Office Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.subOfficeTypeName }}</td>
-          </ng-container>
+            <!-- Depot/Location Column -->
+            <ng-container matColumnDef="depotLocation">
+              <th mat-header-cell *matHeaderCellDef>Depot/Location</th>
+              <td mat-cell *matCellDef="let element">{{ element.depotLocation }}</td>
+            </ng-container>
 
-          <!-- Depot/Location Column -->
-          <ng-container matColumnDef="depotLocation">
-            <th mat-header-cell *matHeaderCellDef>Depot/Location</th>
-            <td mat-cell *matCellDef="let element">{{ element.depotLocation }}</td>
-          </ng-container>
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td class="action-btn" mat-cell *matCellDef="let element; let i = index">
+                <button
+                  mat-icon-button
+                  color="primary"
+                  type="button"
+                  [class.disabled]="isViewMode"
+                  [disabled]="isViewMode"
+                  (click)="editLocation(element, i)"
+                >
+                  <mat-icon class="edit-icon">edit</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="warn"
+                  type="button"
+                  [class.disabled]="isViewMode"
+                  [disabled]="isViewMode"
+                  (click)="deleteLocation(i)"
+                >
+                  <mat-icon class="delete-icon">delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
 
-          <!-- Actions Column -->
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td class="action-btn" mat-cell *matCellDef="let element; let i = index">
-              <button mat-icon-button color="primary" type="button" [class.disabled]="isViewMode"
-                [disabled]="isViewMode" (click)="editLocation(element, i)">
-                <mat-icon class="edit-icon">edit</mat-icon>
-              </button>
-              <button mat-icon-button color="warn" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode"
-                (click)="deleteLocation(i)">
-                <mat-icon class="delete-icon">delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
+            <tr mat-header-row *matHeaderRowDef="locationdisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: locationdisplayedColumns"></tr>
 
-
-          <tr mat-header-row *matHeaderRowDef="locationdisplayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: locationdisplayedColumns;"></tr>
-
-          <!-- Message when no data is present -->
-          <tr class="mat-row no-data-row" *matNoDataRow>
-            <td class="mat-cell" [attr.colspan]="locationdisplayedColumns.length" class="no-data-cell">
-              No Location Data Found.
-            </td>
-          </tr>
-        </table>
+            <!-- Message when no data is present -->
+            <tr class="mat-row no-data-row" *matNoDataRow>
+              <td
+                class="mat-cell"
+                [attr.colspan]="locationdisplayedColumns.length"
+                class="no-data-cell"
+              >
+                No Location Data Found.
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
       <div *ngIf="formSubmitted && locationData.length === 0" class="error-text">
         * Please add at least one Location Details
       </div>
     </div>
 
-
-    <br><br>
+    <br /><br />
     <!-- <h2>Petitioner Details</h2> -->
     <div class="subheader">Petitioner Details</div>
     <div class="tbl-container">
-
       <!-- Add Button -->
       <div class="add-button">
-        <button mat-raised-button color="primary" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode"
-          (click)="openPetitionerDialog()">Add Petitioner</button>
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          [class.disabled]="isViewMode"
+          [disabled]="isViewMode"
+          (click)="openPetitionerDialog()"
+        >
+          Add Petitioner
+        </button>
       </div>
 
       <!-- Petitioner Table -->
-      <div class="table-responsive">
-        <table mat-table [dataSource]="petitionerData" class="mat-elevation-z8" style="width:100%; margin-top:20px;">
+      <div class="table-container">
+        <div class="table-responsive">
+          <table
+            mat-table
+            [dataSource]="petitionerData"
+            class="mat-elevation-z8"
+            style="width: 100%; margin-top: 20px"
+          >
+            <!-- Sub Office Name Column -->
+            <ng-container matColumnDef="petitionerName">
+              <th mat-header-cell *matHeaderCellDef>Petitioner Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.petitionerName }}</td>
+            </ng-container>
 
-          <!-- Sub Office Name Column -->
-          <ng-container matColumnDef="petitionerName">
-            <th mat-header-cell *matHeaderCellDef>Petitioner Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.petitionerName }}</td>
-          </ng-container>
+            <!-- Depot/Location Column -->
+            <ng-container matColumnDef="petitioneraddress">
+              <th mat-header-cell *matHeaderCellDef>Petitioner Address</th>
+              <td mat-cell *matCellDef="let element">{{ element.petitioneraddress }}</td>
+            </ng-container>
 
-          <!-- Depot/Location Column -->
-          <ng-container matColumnDef="petitioneraddress">
-            <th mat-header-cell *matHeaderCellDef>Petitioner Address</th>
-            <td mat-cell *matCellDef="let element">{{ element.petitioneraddress }}</td>
-          </ng-container>
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td class="action-btn" mat-cell *matCellDef="let element; let i = index">
+                <button
+                  mat-icon-button
+                  color="primary"
+                  type="button"
+                  [class.disabled]="isViewMode"
+                  [disabled]="isViewMode"
+                  (click)="editPetitioner(element, i)"
+                >
+                  <mat-icon class="edit-icon">edit</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="warn"
+                  type="button"
+                  [class.disabled]="isViewMode"
+                  [disabled]="isViewMode"
+                  (click)="deletePetitioner(i)"
+                >
+                  <mat-icon class="delete-icon">delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
 
-          <!-- Actions Column -->
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td class="action-btn" mat-cell *matCellDef="let element; let i = index">
-              <button mat-icon-button color="primary" type="button" [class.disabled]="isViewMode"
-                [disabled]="isViewMode" (click)="editPetitioner(element, i)">
-                <mat-icon class="edit-icon">edit</mat-icon>
-              </button>
-              <button mat-icon-button color="warn" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode"
-                (click)="deletePetitioner(i)">
-                <mat-icon class="delete-icon">delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
+            <tr mat-header-row *matHeaderRowDef="petitionerdisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: petitionerdisplayedColumns"></tr>
 
-
-          <tr mat-header-row *matHeaderRowDef="petitionerdisplayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: petitionerdisplayedColumns;"></tr>
-
-          <!-- Message when no data is present -->
-          <tr class="mat-row no-data-row" *matNoDataRow>
-            <td class="mat-cell" [attr.colspan]="petitionerdisplayedColumns.length" class="no-data-cell">
-              No Petitioner Data Found.
-            </td>
-          </tr>
-        </table>
+            <!-- Message when no data is present -->
+            <tr class="mat-row no-data-row" *matNoDataRow>
+              <td
+                class="mat-cell"
+                [attr.colspan]="petitionerdisplayedColumns.length"
+                class="no-data-cell"
+              >
+                No Petitioner Data Found.
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
       <div *ngIf="formSubmitted && petitionerData.length === 0" class="error-text">
         * Please add at least one Petitioner Details
       </div>
-
     </div>
 
-    <br><br>
+    <br /><br />
     <!-- <h2>Case Details</h2> -->
     <div class="subheader">Case Details</div>
 
     <div class="grid-container">
       <mat-form-field appearance="outline">
         <mat-label>Case Details </mat-label>
-        <textarea matInput rows="1" formControlName="caseDetails" placeholder="Enter Case Details"></textarea>
-        <mat-error *ngIf="casecreationForm.get('caseDetails')?.touched && casecreationForm.get('caseDetails')?.invalid">
+        <textarea
+          matInput
+          rows="1"
+          formControlName="caseDetails"
+          placeholder="Enter Case Details"
+        ></textarea>
+        <mat-error
+          *ngIf="
+            casecreationForm.get('caseDetails')?.touched &&
+            casecreationForm.get('caseDetails')?.invalid
+          "
+        >
           Case Details is required
         </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Prayer/ subject </mat-label>
-        <textarea matInput rows="1" formControlName="prayerSubject" placeholder="Enter Prayer/ subject"></textarea>
+        <textarea
+          matInput
+          rows="1"
+          formControlName="prayerSubject"
+          placeholder="Enter Prayer/ subject"
+        ></textarea>
         <mat-error
-          *ngIf="casecreationForm.get('prayerSubject')?.touched && casecreationForm.get('prayerSubject')?.invalid">
+          *ngIf="
+            casecreationForm.get('prayerSubject')?.touched &&
+            casecreationForm.get('prayerSubject')?.invalid
+          "
+        >
           Prayer/ subject is required
         </mat-error>
       </mat-form-field>
     </div>
 
-    <br><br>
+    <br /><br />
     <!-- <h2>Board Standing Counsel Details</h2> -->
     <div class="subheader">Board Standing Counsel Details</div>
 
     <div class="tbl-container">
-
       <!-- Add Button -->
       <div class="add-button">
-        <button mat-raised-button color="primary" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode"
-          (click)="openBoardStandingCounselDialog()">Add Board
-          Standing Counsel </button>
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          [class.disabled]="isViewMode"
+          [disabled]="isViewMode"
+          (click)="openBoardStandingCounselDialog()"
+        >
+          Add Board Standing Counsel
+        </button>
       </div>
 
       <!-- Petitioner Table -->
-      <div class="table-responsive">
-        <table mat-table [dataSource]="boardStandingCounselData" class="mat-elevation-z8"
-          style="width:100%; margin-top:20px;">
+      <div class="table-container">
+        <div class="table-responsive">
+          <table
+            mat-table
+            [dataSource]="boardStandingCounselData"
+            class="mat-elevation-z8"
+            style="width: 100%; margin-top: 20px"
+          >
+            <!-- Board Standing Counsel Type Column -->
+            <ng-container matColumnDef="boardstandingcounseltype">
+              <th mat-header-cell *matHeaderCellDef>Board Standing Counsel Type</th>
+              <td mat-cell *matCellDef="let element">{{ element.boardstandingcounseltype }}</td>
+            </ng-container>
 
-          <!-- Board Standing Counsel Type Column -->
-          <ng-container matColumnDef="boardstandingcounseltype">
-            <th mat-header-cell *matHeaderCellDef>Board Standing Counsel Type</th>
-            <td mat-cell *matCellDef="let element">{{ element.boardstandingcounseltype }}</td>
-          </ng-container>
+            <!-- Board Standing Counsel Name Column -->
+            <ng-container matColumnDef="boardstandingcounselname">
+              <th mat-header-cell *matHeaderCellDef>Board Standing Counsel Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.boardstandingcounselname }}</td>
+            </ng-container>
 
-          <!-- Board Standing Counsel Name Column -->
-          <ng-container matColumnDef="boardstandingcounselname">
-            <th mat-header-cell *matHeaderCellDef>Board Standing Counsel Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.boardstandingcounselname }}</td>
-          </ng-container>
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td class="action-btn" mat-cell *matCellDef="let element; let i = index">
+                <button
+                  mat-icon-button
+                  color="primary"
+                  type="button"
+                  [class.disabled]="isViewMode"
+                  [disabled]="isViewMode"
+                  (click)="editBoardStandingCounsel(element, i)"
+                >
+                  <mat-icon class="edit-icon">edit</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="warn"
+                  type="button"
+                  [class.disabled]="isViewMode"
+                  [disabled]="isViewMode"
+                  (click)="deleteBoardStandingCounsel(i)"
+                >
+                  <mat-icon class="delete-icon">delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
 
-          <!-- Actions Column -->
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td class="action-btn" mat-cell *matCellDef="let element; let i = index">
-              <button mat-icon-button color="primary" type="button" [class.disabled]="isViewMode"
-                [disabled]="isViewMode" (click)="editBoardStandingCounsel(element, i)">
-                <mat-icon class="edit-icon">edit</mat-icon>
-              </button>
-              <button mat-icon-button color="warn" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode"
-                (click)="deleteBoardStandingCounsel(i)">
-                <mat-icon class="delete-icon">delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
+            <tr mat-header-row *matHeaderRowDef="boardStandingCounseldisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: boardStandingCounseldisplayedColumns"></tr>
 
-
-          <tr mat-header-row *matHeaderRowDef="boardStandingCounseldisplayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: boardStandingCounseldisplayedColumns;"></tr>
-
-          <!-- Message when no data is present -->
-          <tr class="mat-row no-data-row" *matNoDataRow>
-            <td class="mat-cell" [attr.colspan]="boardStandingCounseldisplayedColumns.length" class="no-data-cell">
-              No Board Standing Counsel Data Found.
-            </td>
-          </tr>
-        </table>
+            <!-- Message when no data is present -->
+            <tr class="mat-row no-data-row" *matNoDataRow>
+              <td
+                class="mat-cell"
+                [attr.colspan]="boardStandingCounseldisplayedColumns.length"
+                class="no-data-cell"
+              >
+                No Board Standing Counsel Data Found.
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
       <div *ngIf="formSubmitted && boardStandingCounselData.length === 0" class="error-text">
         * Please add at least one Board Standing Counsel Details
       </div>
-
     </div>
 
-    <br><br>
+    <br /><br />
     <!-- <h2>Respondent Details</h2> -->
     <div class="subheader">Respondent Details</div>
 
     <div class="tbl-container">
-
       <!-- Add Button -->
       <div class="add-button">
-        <button mat-raised-button color="primary" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode"
-          (click)="openRespondentDialog()">Add Respondent</button>
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          [class.disabled]="isViewMode"
+          [disabled]="isViewMode"
+          (click)="openRespondentDialog()"
+        >
+          Add Respondent
+        </button>
       </div>
 
       <!-- Petitioner Table -->
-      <div class="table-responsive">
-        <table mat-table [dataSource]="respondentData" class="mat-elevation-z8" style="width:100%; margin-top:20px;">
+      <div class="table-container">
+        <div class="table-responsive">
+          <table
+            mat-table
+            [dataSource]="respondentData"
+            class="mat-elevation-z8"
+            style="width: 100%; margin-top: 20px"
+          >
+            <!-- Board Standing Counsel Type Column -->
+            <ng-container matColumnDef="respondenttype">
+              <th mat-header-cell *matHeaderCellDef>Respondent Type</th>
+              <td mat-cell *matCellDef="let element">{{ element.respondenttype }}</td>
+            </ng-container>
 
-          <!-- Board Standing Counsel Type Column -->
-          <ng-container matColumnDef="respondenttype">
-            <th mat-header-cell *matHeaderCellDef>Respondent Type</th>
-            <td mat-cell *matCellDef="let element">{{ element.respondenttype }}</td>
-          </ng-container>
+            <!-- Board Standing Counsel Name Column -->
+            <ng-container matColumnDef="regionname">
+              <th mat-header-cell *matHeaderCellDef>Region Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.regionname }}</td>
+            </ng-container>
 
-          <!-- Board Standing Counsel Name Column -->
-          <ng-container matColumnDef="regionname">
-            <th mat-header-cell *matHeaderCellDef>Region Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.regionname }}</td>
-          </ng-container>
+            <!-- Board Standing Counsel Type Column -->
+            <ng-container matColumnDef="officetypename">
+              <th mat-header-cell *matHeaderCellDef>Office Type Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.officetypename }}</td>
+            </ng-container>
 
-          <!-- Board Standing Counsel Type Column -->
-          <ng-container matColumnDef="officetypename">
-            <th mat-header-cell *matHeaderCellDef>Office Type Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.officetypename }}</td>
-          </ng-container>
+            <!-- Board Standing Counsel Name Column -->
+            <ng-container matColumnDef="areadeptname">
+              <th mat-header-cell *matHeaderCellDef>Area/Dept Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.areadeptname }}</td>
+            </ng-container>
 
-          <!-- Board Standing Counsel Name Column -->
-          <ng-container matColumnDef="areadeptname">
-            <th mat-header-cell *matHeaderCellDef>Area/Dept Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.areadeptname }}</td>
-          </ng-container>
+            <!-- Board Standing Counsel Type Column -->
+            <ng-container matColumnDef="designation">
+              <th mat-header-cell *matHeaderCellDef>Designation</th>
+              <td mat-cell *matCellDef="let element">{{ element.designation }}</td>
+            </ng-container>
 
-          <!-- Board Standing Counsel Type Column -->
-          <ng-container matColumnDef="designation">
-            <th mat-header-cell *matHeaderCellDef>Designation</th>
-            <td mat-cell *matCellDef="let element">{{ element.designation }}</td>
-          </ng-container>
+            <!-- Board Standing Counsel Name Column -->
+            <ng-container matColumnDef="role">
+              <th mat-header-cell *matHeaderCellDef>Role</th>
+              <td mat-cell *matCellDef="let element">{{ element.role }}</td>
+            </ng-container>
 
-          <!-- Board Standing Counsel Name Column -->
-          <ng-container matColumnDef="role">
-            <th mat-header-cell *matHeaderCellDef>Role</th>
-            <td mat-cell *matCellDef="let element">{{ element.role }}</td>
-          </ng-container>
+            <!-- Board Standing Counsel Type Column -->
+            <ng-container matColumnDef="respondentname">
+              <th mat-header-cell *matHeaderCellDef>Respondent Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.respondentname }}</td>
+            </ng-container>
 
-          <!-- Board Standing Counsel Type Column -->
-          <ng-container matColumnDef="respondentname">
-            <th mat-header-cell *matHeaderCellDef>Respondent Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.respondentname }}</td>
-          </ng-container>
+            <!-- Board Standing Counsel Name Column -->
+            <ng-container matColumnDef="details">
+              <th mat-header-cell *matHeaderCellDef>Details</th>
+              <td mat-cell *matCellDef="let element">{{ element.details }}</td>
+            </ng-container>
 
-          <!-- Board Standing Counsel Name Column -->
-          <ng-container matColumnDef="details">
-            <th mat-header-cell *matHeaderCellDef>Details</th>
-            <td mat-cell *matCellDef="let element">{{ element.details }}</td>
-          </ng-container>
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td class="action-btn" mat-cell *matCellDef="let element; let i = index">
+                <button
+                  mat-icon-button
+                  color="primary"
+                  type="button"
+                  [class.disabled]="isViewMode"
+                  [disabled]="isViewMode"
+                  (click)="editRespondent(element, i)"
+                >
+                  <mat-icon class="edit-icon">edit</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="warn"
+                  type="button"
+                  [class.disabled]="isViewMode"
+                  [disabled]="isViewMode"
+                  (click)="deleteRespondent(i)"
+                >
+                  <mat-icon class="delete-icon">delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
 
-          <!-- Actions Column -->
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td class="action-btn" mat-cell *matCellDef="let element; let i = index">
-              <button mat-icon-button color="primary" type="button" [class.disabled]="isViewMode"
-                [disabled]="isViewMode" (click)="editRespondent(element, i)">
-                <mat-icon class="edit-icon">edit</mat-icon>
-              </button>
-              <button mat-icon-button color="warn" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode"
-                (click)="deleteRespondent(i)">
-                <mat-icon class="delete-icon">delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
+            <tr mat-header-row *matHeaderRowDef="respondentdisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: respondentdisplayedColumns"></tr>
 
-
-          <tr mat-header-row *matHeaderRowDef="respondentdisplayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: respondentdisplayedColumns;"></tr>
-
-          <!-- Message when no data is present -->
-          <tr class="mat-row no-data-row" *matNoDataRow>
-            <td class="mat-cell" [attr.colspan]="respondentdisplayedColumns.length" class="no-data-cell">
-              No Respondent Data Found.
-            </td>
-          </tr>
-        </table>
+            <!-- Message when no data is present -->
+            <tr class="mat-row no-data-row" *matNoDataRow>
+              <td
+                class="mat-cell"
+                [attr.colspan]="respondentdisplayedColumns.length"
+                class="no-data-cell"
+              >
+                No Respondent Data Found.
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
       <div *ngIf="formSubmitted && respondentData.length === 0" class="error-text">
         * Please add at least one Respondent Details
       </div>
     </div>
 
-    <br><br>
+    <br /><br />
     <!-- <h2>Document Details</h2> -->
     <div class="subheader">Document Details</div>
 
     <div class="tbl-container">
-
       <!-- Add Button -->
       <div class="add-button">
-        <button mat-raised-button color="primary" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode"
-          (click)="openDocumentDialog()">Add Document</button>
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          [class.disabled]="isViewMode"
+          [disabled]="isViewMode"
+          (click)="openDocumentDialog()"
+        >
+          Add Document
+        </button>
       </div>
 
       <!-- Document Details Table -->
-      <div class="table-responsive">
-        <table mat-table [dataSource]="documentData" class="mat-elevation-z8" style="width:100%; margin-top:20px;">
+      <div class="table-container">
+        <div class="table-responsive">
+          <table
+            mat-table
+            [dataSource]="documentData"
+            class="mat-elevation-z8"
+            style="width: 100%; margin-top: 20px"
+          >
+            <!-- Document Type Column -->
+            <ng-container matColumnDef="documenttype">
+              <th mat-header-cell *matHeaderCellDef>Document Type</th>
+              <td mat-cell *matCellDef="let element">{{ element.documenttype }}</td>
+            </ng-container>
 
-          <!-- Document Type Column -->
-          <ng-container matColumnDef="documenttype">
-            <th mat-header-cell *matHeaderCellDef>Document Type</th>
-            <td mat-cell *matCellDef="let element">{{ element.documenttype }}</td>
-          </ng-container>
+            <!-- Attachments Column -->
+            <ng-container matColumnDef="attachments">
+              <th mat-header-cell *matHeaderCellDef>Attachments (.pdf, .doc)</th>
+              <td mat-cell *matCellDef="let element; let i = index">
+                <input type="file" (change)="onFileSelected($event, i)" accept=".pdf,.doc,.docx" />
+                <span *ngIf="element.fileName">{{ element.fileName }}</span>
+              </td>
+            </ng-container>
 
-          <!-- Attachments Column -->
-          <ng-container matColumnDef="attachments">
-            <th mat-header-cell *matHeaderCellDef>Attachments (.pdf, .doc)</th>
-            <td mat-cell *matCellDef="let element; let i = index">
-              <input type="file" (change)="onFileSelected($event, i)" accept=".pdf,.doc,.docx" />
-              <span *ngIf="element.fileName">{{ element.fileName }}</span>
-            </td>
-          </ng-container>
+            <!-- Document Date Column -->
+            <ng-container matColumnDef="documentdate">
+              <th mat-header-cell *matHeaderCellDef>Document Date</th>
+              <td mat-cell *matCellDef="let element">{{ element.documentdate }}</td>
+            </ng-container>
 
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td class="action-btn" mat-cell *matCellDef="let element; let i = index">
+                <button
+                  mat-icon-button
+                  color="warn"
+                  type="button"
+                  [class.disabled]="isViewMode"
+                  [disabled]="isViewMode"
+                  (click)="deleteDocument(i)"
+                >
+                  <mat-icon class="delete-icon">delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
 
-          <!-- Document Date Column -->
-          <ng-container matColumnDef="documentdate">
-            <th mat-header-cell *matHeaderCellDef>Document Date</th>
-            <td mat-cell *matCellDef="let element">{{ element.documentdate }}</td>
-          </ng-container>
+            <tr mat-header-row *matHeaderRowDef="documentdisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: documentdisplayedColumns"></tr>
 
-          <!-- Actions Column -->
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td class="action-btn" mat-cell *matCellDef="let element; let i = index">
-              <button mat-icon-button color="warn" type="button" [class.disabled]="isViewMode" [disabled]="isViewMode"
-                (click)="deleteDocument(i)">
-                <mat-icon class="delete-icon">delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-
-
-          <tr mat-header-row *matHeaderRowDef="documentdisplayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: documentdisplayedColumns;"></tr>
-
-          <!-- Message when no data is present -->
-          <tr class="mat-row no-data-row" *matNoDataRow>
-            <td class="mat-cell" [attr.colspan]="documentdisplayedColumns.length" class="no-data-cell">
-              No Document Data Found.
-            </td>
-          </tr>
-        </table>
+            <!-- Message when no data is present -->
+            <tr class="mat-row no-data-row" *matNoDataRow>
+              <td
+                class="mat-cell"
+                [attr.colspan]="documentdisplayedColumns.length"
+                class="no-data-cell"
+              >
+                No Document Data Found.
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
       <div *ngIf="formSubmitted && documentData.length === 0" class="error-text">
         * Please add at least one Document Details
       </div>
     </div>
 
-    <br>
-    <div class="button-row">
-      <button mat-stroked-button color="accent" type="button" class="back-btn" (click)="goBack()">Back</button>
-      <button mat-raised-button color="primary" [class.disabled]="isViewMode" [disabled]="isViewMode" type="submit">{{
-        isEditMode ? 'Update' : 'Create' }}</button>
+    <br />
+    <div class="bottom-button">
+      <button mat-stroked-button color="accent" type="button" class="back-btn" (click)="goBack()">
+        Back
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        [class.disabled]="isViewMode"
+        [disabled]="isViewMode"
+        type="submit"
+      >
+        {{ isEditMode ? 'Update' : 'Create' }}
+      </button>
     </div>
   </form>
 </div>
@@ -576,7 +793,9 @@
   <h2 class="dialog-header" mat-dialog-title>Delete</h2>
   <mat-dialog-content class="dialog-content">{{ data.message }}</mat-dialog-content>
   <mat-dialog-actions align="end" class="dialog-actions">
-    <button mat-stroked-button mat-dialog-close="false" type="button" class="back-btn">Cancel</button>
+    <button mat-stroked-button mat-dialog-close="false" type="button" class="back-btn">
+      Cancel
+    </button>
     <button mat-raised-button color="warn" [mat-dialog-close]="true" type="button">Delete</button>
   </mat-dialog-actions>
 </ng-template>

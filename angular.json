@@ -24,7 +24,8 @@
              "allowedCommonJsDependencies": [
                     "mammoth",
                     "file-saver",
-                    "buffer"
+                    "buffer",
+                    "typo-js"
              ],
             "assets": [
               {

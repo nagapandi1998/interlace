@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { RouterOutlet, RouterLink, NavigationEnd, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -13,13 +14,15 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { Header } from '../components/header/header';
 import { Footer } from '../components/footer/footer';
 import { BreadcrumbComponent } from '../components/breadcrumb.component/breadcrumb.component';
+import { Loader } from '../components/loader/loader';
 
 interface MenuItem {
-  key: string;
-  label: string;
-  icon: string;
-  route?: string;
+  id: number;
+  title: string;
+  path?: string;
+  icon?: string | null;
   children?: MenuItem[];
+  allowed?: boolean;
 }
 
 @Component({
@@ -39,15 +42,45 @@ interface MenuItem {
     Header,
     Footer,
     BreadcrumbComponent,
+    Loader,
   ],
   templateUrl: './layout.html',
   styleUrl: './layout.scss',
+  animations: [
+    // SIDEBAR WIDTH ANIMATION
+    trigger('sidebarWidth', [
+      state('full', style({ width: '290px' })),
+      state('slim', style({ width: '80px' })),
+      transition('full <=> slim', animate('350ms cubic-bezier(0.25, 0.8, 0.25, 1)')),
+    ]),
+
+    // SUB MENU EXPAND / COLLAPSE
+    trigger('expandCollapse', [
+      state(
+        'collapsed',
+        style({
+          height: '0px',
+          opacity: 0,
+          overflow: 'hidden',
+        }),
+      ),
+      state(
+        'expanded',
+        style({
+          height: '*',
+          opacity: 1,
+        }),
+      ),
+      transition('expanded <=> collapsed', animate('300ms ease')),
+    ]),
+  ],
 })
 export class Layout implements OnInit {
   // isSidebarOpen = true;
   isSlim = false;
   isMobile = window.innerWidth <= 768;
-  openMenus: { [key: string]: boolean } = {};
+  openMenus: { [id: number]: boolean } = {};
+  loading = false;
 
   // menu structure
   menus: MenuItem[] = [
@@ -58,20 +91,21 @@ export class Layout implements OnInit {
     //   route: '/home',
     // },
     {
-      key: 'case',
-      label: 'Court Case',
+      id: 1,
+      title: 'Court Case',
+      path: '/courtcase',
       icon: 'folder_special',
       children: [
         {
-          key: 'allCases',
-          label: 'All Cases',
-          route: '/allcases',
+          id: 1,
+          title: 'All Cases',
+          path: '/allcases',
           icon: 'folder_open',
         },
         {
-          key: 'caseCreation',
-          label: 'Case Creation',
-          route: '/casecreation',
+          id: 2,
+          title: 'Case Creation',
+          path: '/casecreation',
           icon: 'create_new_folder',
         },
       ],
@@ -116,8 +150,9 @@ export class Layout implements OnInit {
     //   ],
     // },
     {
-      key: 'textEditor',
-      label: 'Text Editor',
+      id: 2,
+      title: 'Text Editor',
+      path: '/texteditor',
       icon: 'description',
       children: [
         // {
@@ -127,9 +162,9 @@ export class Layout implements OnInit {
         //   icon: 'editor',
         // },
         {
-          key: 'textEditor',
-          label: 'Superdoc Editor',
-          route: '/texteditor',
+          id: 1,
+          title: 'Superdoc Editor',
+          path: '/texteditor',
           icon: 'edit',
         },
       ],
@@ -143,11 +178,12 @@ export class Layout implements OnInit {
       this.isSlim = true;
     }
 
-    this.router.events.pipe(filter((ev) => ev instanceof NavigationEnd)).subscribe(() => {
-      if (this.isMobile) {
-        this.isSlim = true;
-        this.openMenus = {};
-      }
+    this.router.events.pipe(filter((e) => e instanceof NavigationEnd)).subscribe(() => {
+      this.menus.forEach((menu) => {
+        if (menu.children && this.isParentActive(menu)) {
+          this.openMenus[menu.id] = true;
+        }
+      });
     });
   }
 
@@ -159,9 +195,18 @@ export class Layout implements OnInit {
     }
   }
 
-  toggleMenu(key: string) {
+  toggleMenu(id: number) {
     if (this.isSlim) return;
-    this.openMenus[key] = !this.openMenus[key];
+
+    // Close all other menus except the clicked one
+    Object.keys(this.openMenus).forEach((key) => {
+      if (Number(key) !== id) {
+        this.openMenus[Number(key)] = false;
+      }
+    });
+
+    // Toggle the clicked one
+    this.openMenus[id] = !this.openMenus[id];
   }
 
   hasChildren(item: MenuItem) {
@@ -169,14 +214,20 @@ export class Layout implements OnInit {
   }
 
   isMenuActive(menu: MenuItem): boolean {
-    if (menu.route)
-      return this.router.isActive(menu.route, {
-        paths: 'exact',
-        queryParams: 'ignored',
-        fragment: 'ignored',
-        matrixParams: 'ignored',
-      });
-    return menu.children?.some((child) => this.isMenuActive(child)) || false;
+    if (!menu.path) return false;
+
+    return this.router.isActive(menu.path, {
+      paths: 'exact',
+      queryParams: 'ignored',
+      fragment: 'ignored',
+      matrixParams: 'ignored',
+    });
+  }
+
+  isParentActive(menu: MenuItem): boolean {
+    if (!menu.children) return false;
+
+    return menu.children.some((child) => child.path && this.router.url.startsWith(child.path));
   }
 
   @HostListener('window:resize', ['$event'])
@@ -184,5 +235,4 @@ export class Layout implements OnInit {
     this.isMobile = (e.target as Window).innerWidth <= 768;
     if (this.isMobile) this.isSlim = true;
   }
-  
 }

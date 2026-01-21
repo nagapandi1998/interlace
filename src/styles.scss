@@ -46,16 +46,6 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
-.success-snackbar .mdc-snackbar__surface {
-  background-color: #4caf50 !important;
-  color: white !important;
-}
-
-.error-snackbar .mdc-snackbar__surface {
-  background-color: #e5002e !important;
-  color: white !important;
-}
-
 /* Table border and general style */
 .mat-mdc-table {
   width: 100%;
@@ -107,3 +97,6 @@ body {
   padding: 0 14px !important;
 }
 
+.mat-mdc-table {
+  white-space: nowrap !important;
+}

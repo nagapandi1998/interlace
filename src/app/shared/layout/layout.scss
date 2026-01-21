@@ -1,7 +1,7 @@
 // VARIABLES
 $sidebar-bg: linear-gradient(180deg, #500000 0%, #6e0d18 50%, #62000f 100%);
 $sidebar-width: 290px;
-$sidebar-slim-width: 70px;
+$sidebar-slim-width: 80px;
 $primary-color: #75151d;
 $accent-color: #b34d55;
 $text-primary: #ffffff;
@@ -10,14 +10,14 @@ $text-muted: #ffffff;
 $shadow-light: rgba(0, 0, 0, 0.1);
 $shadow-medium: rgba(0, 0, 0, 0.15);
 $shadow-dark: rgba(0, 0, 0, 0.2);
-$transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+// $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
 // LAYOUT CONTAINER
 .layout-container {
   height: 100vh;
   width: 100vw;
   display: flex;
-  font-family: 'Poppins', sans-serif;
+  // font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
   overflow: hidden;
 }
@@ -27,17 +27,27 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   width: $sidebar-width;
   flex-shrink: 0;
   background: $sidebar-bg;
-  transition: $transition;
+  // transition: $transition;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   position: relative;
 
+  .sidenav-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #5a0408;
+  }
+
   // SLIM MODE
   &.slim {
     width: $sidebar-slim-width;
+
     .logo {
       height: 50px !important;
+      width: 50px !important;
+      margin-top: 10px !important;
     }
 
     .user-info,
@@ -48,21 +58,34 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
     .left-icon {
       margin: 0 auto;
+      position: relative !important;
+      bottom: 5px !important;
+      left: 10px !important;
+
     }
   }
 
   .nav-item.level-1 {
     padding-left: 10px;
   }
+
   .nav-item.level-2 {
     padding-left: 20px;
   }
+
   .nav-item.level-3 {
     padding-left: 30px;
   }
+
   .nav-item.level-4 {
     padding-left: 40px;
   }
+
+  .nav-item.parent.active-parent {
+    background: rgba(255, 255, 255, 0.08);
+    font-weight: 600;
+  }
+
 
   // SIDEBAR TOOLBAR
 
@@ -72,19 +95,21 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     align-items: center;
     padding: 1rem;
     min-height: 60px;
-    background: transparent;
+    background: #5a0408; //transparent;
     box-shadow: none;
 
     .logo {
       height: 65px;
-      transition: $transition;
+      width: 65px;
+      margin-top: 10px;
+      // transition: $transition;
     }
 
     .logo-text {
       color: $text-primary;
       font-weight: 600;
       margin-left: 10px;
-      transition: $transition;
+      // transition: $transition;
       display: inline-block;
     }
 
@@ -106,7 +131,7 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       border: 3px solid rgba(255, 255, 255, 0.2);
       box-shadow: 0 4px 15px $shadow-dark;
       margin-bottom: 10px;
-      transition: $transition;
+      // transition: $transition;
     }
 
     .user-name {
@@ -130,7 +155,7 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   .nav-list {
     flex: 1;
     overflow-y: auto;
-    padding: 0 10px;
+    padding: 10px 10px;
 
     &::-webkit-scrollbar {
       width: 4px;
@@ -152,28 +177,26 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 10px;
     position: relative;
     color: $text-secondary;
-    transition: $transition;
     cursor: pointer;
+    transition: all 0.25s ease;
 
     .left-icon {
       font-size: 20px;
       color: $text-secondary;
       margin-right: 15px;
-      transition: $transition;
-      transform: translateY(40%);
+      transform: translateY(30%);
+      transition: color 0.25s ease;
     }
 
     .label {
       flex-grow: 1;
       font-size: 14px;
       color: $text-primary;
-      transition: $transition;
     }
 
     .right-icon {
       font-size: 18px;
       color: $text-muted;
-      transition: $transition;
       position: absolute;
       right: 10px;
       font-size: 18px;
@@ -182,10 +205,7 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
     &:hover {
       background: rgba(255, 255, 255, 0.1);
-
-      .left-icon {
-        transform: scale(1.1);
-      }
+      transform: scale(1) translateX(4px);
     }
 
     &.active {
@@ -209,7 +229,6 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
   .sub-menu {
     padding-left: 10px;
-    animation: slideDown 0.3s ease-out;
 
     .sub-menu-item {
       padding-left: 15px;
@@ -224,7 +243,7 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: margin-left 0.3s ease;
+  // transition: margin-left 0.3s ease;
   background: #f8f9fa;
   margin-left: 0px !important;
 }
@@ -236,25 +255,10 @@ $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 // HEADER & FOOTER
-app-header,
-app-footer {
+app-header {
   position: sticky;
   top: 0;
   z-index: 1000;
   background: white;
   box-shadow: 0 2px 10px $shadow-light;
-}
-
-// ANIMATIONS
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-    max-height: 0;
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    max-height: 500px;
-  }
 }

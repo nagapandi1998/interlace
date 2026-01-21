@@ -7,10 +7,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { Loader } from '../../shared/components/loader/loader';
+import { ToastService } from '../../shared/service/toaster/toast-service';
 
 @Component({
   selector: 'app-auth',
@@ -23,7 +23,6 @@ import { Loader } from '../../shared/components/loader/loader';
     MatButtonModule,
     MatIconModule,
     MatCardModule,
-    MatSnackBarModule,
     NgbCarouselModule,
     MatCheckboxModule,
     Loader,
@@ -36,7 +35,11 @@ export class Auth {
   loginForm: FormGroup;
   loading = false;
 
-  constructor(private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private toastService: ToastService,
+    private router: Router,
+  ) {
     this.loginForm = this.fb.group({
       email: ['admin@gmail.com', [Validators.required, Validators.email]],
       password: ['admin@123', [Validators.required]],
@@ -57,20 +60,12 @@ export class Auth {
       } else if (email !== 'admin@gmail.com') {
         setTimeout(() => {
           this.loading = false;
-          this.snackBar.open('Username is invalid', '', {
-            duration: 3000,
-            verticalPosition: 'top',
-            panelClass: ['error-snackbar'],
-          });
+          this.toastService.showMsg('error', 'Invalid username.');
         }, 700);
       } else if (password !== 'admin@123') {
         setTimeout(() => {
           this.loading = false;
-          this.snackBar.open('password is invalid', '', {
-            duration: 3000,
-            verticalPosition: 'top',
-            panelClass: ['error-snackbar'],
-          });
+          this.toastService.showMsg('error', 'Invalid password.');
         }, 700);
       }
     } else {
@@ -80,20 +75,12 @@ export class Auth {
       setTimeout(() => {
         this.loading = false;
 
-        this.snackBar.open('Enter mandatory details', '', {
-          duration: 3000,
-          verticalPosition: 'top',
-          panelClass: ['error-snackbar'],
-        });
+        this.toastService.showMsg('warning', 'Enter mandatory details');
       }, 700);
     }
   }
 
   forgotpassword() {
-    this.snackBar.open('Temporary password has been sent to your email.', '', {
-      duration: 3000,
-      verticalPosition: 'top',
-      panelClass: ['success-snackbar'],
-    });
+    this.toastService.showMsg('success', 'Temporary password has been sent to your email.');
   }
 }

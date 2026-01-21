@@ -1,15 +1,17 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgZone } from '@angular/core';
 import { SuperDoc } from '@harbour-enterprises/superdoc';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Loader } from '../../shared/components/loader/loader';
+import { ToastService } from '../../shared/service/toaster/toast-service';
+import Typo from 'typo-js';
 
 @Component({
   selector: 'app-text-editor',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatCardModule, MatSnackBarModule, Loader],
+  imports: [CommonModule, MatIconModule, MatCardModule, Loader],
   templateUrl: './text-editor.html',
   styleUrl: './text-editor.scss',
 })
@@ -18,30 +20,74 @@ export class TextEditor implements AfterViewInit {
 
   editor: any = null;
   loading = false;
+  typo: any;
+  spellPopup = {
+    visible: false,
+    x: 0,
+    y: 0,
+    from: 0,
+    to: 0,
+    suggestions: [] as string[],
+  };
 
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(
+    private zone: NgZone,
+    private toastService: ToastService,
+  ) {}
 
-  ngAfterViewInit() {
-    this.initEditor();
-  }
-
-  // Initialize SuperDoc editor
-  initEditor(file: File | null = null) {
-    if (this.editor) {
-      this.editor = null;
-    }
+  private createEditor(file?: File | string) {
+    this.editor?.destroy?.();
 
     this.editor = new SuperDoc({
       selector: '#superdoc',
       toolbar: '#superdoc-toolbar',
-      document: file,
+      document: file ?? '',
       documentMode: 'editing',
       pagination: true,
       rulers: true,
       shouldNotGroupWhenFull: true,
-      onReady: () => console.log('Editor ready'),
+      // defaultFontFamily: 'sans-serif',
+      defaultFontSize: 12,
+
+      modules: {
+        toolbar: {
+          fonts: [
+            { label: 'Arial', key: 'Arial, sans-serif' },
+            { label: 'Times New Roman', key: 'Times New Roman, serif' },
+            // { label: 'Georgia', key: 'Georgia, serif' },
+            // { label: 'Verdana', key: 'Verdana, sans-serif' },
+            // { label: 'Courier New', key: 'Courier New, monospace' },
+            { label: 'Roboto', key: 'Roboto, sans-serif' },
+            { label: 'Sans Serif', key: 'sans-serif' },
+            { label: 'Noto Sans Tamil', key: 'Noto Sans Tamil' },
+          ],
+        },
+      },
+
+      onReady: () => {
+        console.log('Editor ready');
+        this.setupSpellChecker();
+      },
       onEditorCreate: () => console.log('Editor created'),
     } as any);
+  }
+
+  ngAfterViewInit() {
+    // Load dictionary files (you might want to fetch them or bundle)
+    fetch('/assets/dictionaries/en_US.aff')
+      .then((r) => r.text())
+      .then((affData) => {
+        fetch('/assets/dictionaries/en_US.dic')
+          .then((r) => r.text())
+          .then((dicData) => {
+            this.typo = new Typo('en_US', affData, dicData, {});
+            console.log('Typo.js initialized');
+          });
+      });
+
+    this.zone.runOutsideAngular(() => {
+      this.createEditor();
+    });
   }
 
   openFile() {
@@ -54,10 +100,10 @@ export class TextEditor implements AfterViewInit {
       this.loading = true;
 
       setTimeout(() => {
-        this.initEditor(file);
+        this.createEditor(file);
         this.loading = false;
 
-        this.showSuccess(`"${file.name}" imported successfully!`);
+        this.toastService.showMsg('success', `"${file.name}" imported successfully!`);
 
         // Allow re-import of the same file
         this.fileInput.nativeElement.value = '';
@@ -66,14 +112,128 @@ export class TextEditor implements AfterViewInit {
   }
 
   clearEditor() {
-    this.initEditor(null);
+    this.createEditor();
+    this.fileInput.nativeElement.value = '';
+    this.toastService.showMsg('success', 'Editor has been cleared.');
+  }
 
-    // Reset file
-    if (this.fileInput && this.fileInput.nativeElement) {
-      this.fileInput.nativeElement.value = '';
+  private getEditorText(): string {
+    if (!this.editor || !this.editor.activeEditor) return '';
+    // ProseMirror doc
+    const doc = this.editor.activeEditor.view.state.doc;
+    // Convert to plain text
+    const text = doc.textContent?.trim() || '';
+    return text;
+  }
+
+  async exportDocx(): Promise<void> {
+    if (!this.editor) {
+      this.toastService.showMsg('error', 'Editor is not initialized.');
+      return;
     }
 
-    this.showSuccess('Editor cleared!');
+    this.loading = true;
+
+    try {
+      const text = this.getEditorText();
+
+      if (!text) {
+        this.toastService.showMsg('error', 'No text found in the editor.');
+        return;
+      }
+
+      // rename & method
+      await this.editor.export({
+        exportType: ['docx'],
+        exportedName: 'DVAC Doc.docx',
+      });
+
+      this.toastService.showMsg('success', 'File exported successfully!');
+    } catch (err: any) {
+      this.toastService.showMsg('error', err?.message);
+      console.error('Export error:', err);
+    } finally {
+      setTimeout(() => (this.loading = false), 200);
+    }
+  }
+
+  checkWord(word: string) {
+    if (!this.typo) return false;
+    return this.typo.check(word);
+  }
+
+  getSuggestions(word: string): string[] {
+    if (!this.typo) return [];
+    return this.typo.suggest(word, 5); // top 5 suggestions
+  }
+
+  private setupSpellChecker() {
+    const view = this.editor.activeEditor.view;
+
+    view.dom.addEventListener('contextmenu', (event: MouseEvent) => {
+      event.preventDefault();
+
+      const pos = view.posAtCoords({
+        left: event.clientX,
+        top: event.clientY,
+      });
+      if (!pos) return;
+
+      const { state } = view;
+      const $pos = state.doc.resolve(pos.pos);
+      const text = $pos.parent.textContent || '';
+      const offset = $pos.parentOffset;
+
+      const word = this.getWordAt(text, offset);
+      if (!word || this.checkWord(word)) {
+        this.zone.run(() => (this.spellPopup.visible = false));
+        return;
+      }
+
+      const suggestions = this.getSuggestions(word);
+      if (!suggestions.length) return;
+
+      const start = text.lastIndexOf(word, offset);
+      const from = pos.pos - (offset - start);
+      const to = from + word.length;
+
+      this.zone.run(() => {
+        this.spellPopup = {
+          visible: true,
+          x: event.clientX,
+          y: event.clientY,
+          from,
+          to,
+          suggestions,
+        };
+      });
+    });
+
+    document.addEventListener('click', () => {
+      this.zone.run(() => {
+        this.spellPopup.visible = false;
+      });
+    });
+  }
+
+  replaceMisspelledWord(word: string) {
+    const view = this.editor.activeEditor.view;
+    const { state, dispatch } = view;
+
+    dispatch(state.tr.insertText(word, this.spellPopup.from, this.spellPopup.to));
+    this.spellPopup.visible = false;
+  }
+
+  private getWordAt(text: string, offset: number): string {
+    const left = text.slice(0, offset).search(/\S+$/);
+    const right = text.slice(offset).search(/\s/);
+
+    if (left === -1) return '';
+
+    const start = left;
+    const end = right === -1 ? text.length : offset + right;
+
+    return text.slice(start, end);
   }
 
   // async exportDocx(): Promise<void> {
@@ -178,17 +338,6 @@ export class TextEditor implements AfterViewInit {
   //   }
   // }
 
-  private getEditorText(): string {
-    if (!this.editor || !this.editor.activeEditor) return '';
-
-    // ProseMirror doc
-    const doc = this.editor.activeEditor.view.state.doc;
-
-    // Convert to plain text
-    const text = doc.textContent?.trim() || '';
-    return text;
-  }
-
   // async exportDocx(): Promise<Blob | null> {
   //   if (!this.editor) {
   //     this.showError('Editor is not initialized.');
@@ -232,51 +381,4 @@ export class TextEditor implements AfterViewInit {
   //     }, 200);
   //   }
   // }
-
-  async exportDocx(): Promise<void> {
-    if (!this.editor) {
-      this.showError('Editor is not initialized.');
-      return;
-    }
-
-    this.loading = true;
-
-    try {
-      const text = this.getEditorText();
-
-      if (!text) {
-        this.showError('No text found in the editor.');
-        return;
-      }
-
-      // rename & method
-      await this.editor.export({
-        exportType: ['docx'],
-        exportedName: 'DVAC Doc.docx',
-      });
-
-      this.showSuccess('File exported successfully!');
-    } catch (err: any) {
-      this.showError(err?.message);
-      console.error('Export error:', err);
-    } finally {
-      setTimeout(() => (this.loading = false), 200);
-    }
-  }
-
-  private showSuccess(msg: string) {
-    this.snackBar.open(msg, '', {
-      duration: 3000,
-      verticalPosition: 'top',
-      panelClass: ['success-snackbar'],
-    });
-  }
-
-  private showError(msg: string) {
-    this.snackBar.open(msg, '', {
-      duration: 3000,
-      verticalPosition: 'top',
-      panelClass: ['error-snackbar'],
-    });
-  }
 }

@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -31,7 +31,7 @@ import { MatInputModule } from '@angular/material/input';
   templateUrl: './all-cases.html',
   styleUrl: './all-cases.scss',
 })
-export class AllCases {
+export class AllCases implements AfterViewInit {
   loading = false;
   displayedColumns: string[] = [
     'id',
@@ -325,15 +325,15 @@ export class AllCases {
   }
 
   addCase() {
-    this.router.navigate(['/casecreation']);
+    this.router.navigate(['/courtcase/casecreation']);
   }
 
   editCase(caseId: number) {
-    this.router.navigate(['/casecreation', caseId]);
+    this.router.navigate(['/courtcase/casecreation', caseId]);
   }
 
   viewCase(caseId: number) {
-    this.router.navigate(['/casecreation', caseId], {
+    this.router.navigate(['/courtcase/casecreation', caseId], {
       queryParams: { view: true },
     });
   }
@@ -377,5 +377,9 @@ export class AllCases {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

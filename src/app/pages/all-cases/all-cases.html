@@ -1,139 +1,160 @@
 <!-- Employee Table Section -->
-<mat-card class="employee-table-card" appearance="outlined">
-    <app-loader [loading]="loading"></app-loader>
-    <!-- <div class="card-header">
-        <h2>All Cases</h2>
-    </div> -->
+<mat-card class="card-body" appearance="outlined">
+  <app-loader [loading]="loading"></app-loader>
 
+  <div>
+    <div class="top-bar">
+      <!-- Search Bar -->
+      <mat-form-field class="search-field" appearance="outline">
+        <mat-label>Search</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search cases..." />
+        <button class="search-btn" mat-icon-button matPrefix disabled>
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <!-- Add Button -->
+      <div class="add-button">
+        <button mat-raised-button color="primary" type="button" (click)="addCase()">
+          Add Case
+        </button>
+      </div>
+    </div>
 
     <div class="table-container">
-        <div class="top-bar">
+      <div class="table-responsive">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
+          <!-- S No -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>S.No</th>
+            <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+          </ng-container>
 
-            <!-- Search Bar -->
-            <mat-form-field class="search-field" appearance="outline">
-                <mat-label>Search</mat-label>
-                <input matInput (keyup)="applyFilter($event)" placeholder="Search cases..." />
-                <button class="search-btn" mat-icon-button matPrefix disabled>
-                    <mat-icon>search</mat-icon>
-                </button>
-            </mat-form-field>
+          <!-- Case No -->
+          <ng-container matColumnDef="caseNo">
+            <th mat-header-cell *matHeaderCellDef>Case No</th>
+            <td mat-cell *matCellDef="let row">{{ row.caseNo }}</td>
+          </ng-container>
 
-            <!-- Add Button -->
-            <div class="add-button">
-                <button mat-raised-button color="primary" type="button" (click)="addCase()">Add Case</button>
-            </div>
-        </div>
+          <!-- Date of Filing/Admission Date -->
+          <ng-container matColumnDef="filingDate">
+            <th mat-header-cell *matHeaderCellDef>Date of Filing/ Admission</th>
+            <td mat-cell *matCellDef="let row">{{ row.filingDate }}</td>
+          </ng-container>
 
+          <!-- Received Date -->
+          <ng-container matColumnDef="receivedDate">
+            <th mat-header-cell *matHeaderCellDef>Received Date</th>
+            <td mat-cell *matCellDef="let row">{{ row.receivedDate }}</td>
+          </ng-container>
 
-        <div class="table-responsive">
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
+          <!-- Year -->
+          <ng-container matColumnDef="year">
+            <th mat-header-cell *matHeaderCellDef>Year</th>
+            <td mat-cell *matCellDef="let row">{{ row.year }}</td>
+          </ng-container>
 
-                <!-- S No -->
-                <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef>S.No</th>
-                    <td mat-cell *matCellDef="let row">{{ row.id }}</td>
-                </ng-container>
+          <!-- Court Category Type -->
+          <ng-container matColumnDef="courtCategory">
+            <th mat-header-cell *matHeaderCellDef>Court Category Type</th>
+            <td mat-cell *matCellDef="let row">{{ row.courtCategory }}</td>
+          </ng-container>
 
-                <!-- Case No -->
-                <ng-container matColumnDef="caseNo">
-                    <th mat-header-cell *matHeaderCellDef>Case No</th>
-                    <td mat-cell *matCellDef="let row">{{ row.caseNo }}</td>
-                </ng-container>
+          <!-- Name Of Court -->
+          <ng-container matColumnDef="courtName">
+            <th mat-header-cell *matHeaderCellDef>Name Of Court</th>
+            <td mat-cell *matCellDef="let row">{{ row.courtName }}</td>
+          </ng-container>
 
-                <!-- Date of Filing/Admission Date -->
-                <ng-container matColumnDef="filingDate">
-                    <th mat-header-cell *matHeaderCellDef>Date of Filing/ Admission</th>
-                    <td mat-cell *matCellDef="let row">{{ row.filingDate }}</td>
-                </ng-container>
+          <!-- Case Type -->
+          <ng-container matColumnDef="caseType">
+            <th mat-header-cell *matHeaderCellDef>Case Type</th>
+            <td mat-cell *matCellDef="let row">{{ row.caseType }}</td>
+          </ng-container>
 
-                <!-- Received Date -->
-                <ng-container matColumnDef="receivedDate">
-                    <th mat-header-cell *matHeaderCellDef>Received Date</th>
-                    <td mat-cell *matCellDef="let row">{{ row.receivedDate }}</td>
-                </ng-container>
+          <!-- Approval Status -->
+          <ng-container matColumnDef="approvalStatus">
+            <th mat-header-cell *matHeaderCellDef>Approval Status</th>
+            <td mat-cell *matCellDef="let row">
+              <span
+                class="status-badge"
+                [ngClass]="{
+                  pending: row.approvalStatus === 'Pending',
+                  approved: row.approvalStatus === 'Approved',
+                  forwarded: row.approvalStatus === 'Forward',
+                  returned: row.approvalStatus === 'Returned'
+                }"
+              >
+                {{ row.approvalStatus }}
+              </span>
+            </td>
+          </ng-container>
 
-                <!-- Year -->
-                <ng-container matColumnDef="year">
-                    <th mat-header-cell *matHeaderCellDef>Year</th>
-                    <td mat-cell *matCellDef="let row">{{ row.year }}</td>
-                </ng-container>
+          <!-- Actions -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td class="action-btn" mat-cell *matCellDef="let element">
+              <!-- View -->
+              <button
+                mat-icon-button
+                matTooltip="View"
+                [disabled]="
+                  !['Forward', 'Approved', 'Pending', 'Returned'].includes(element.approvalStatus)
+                "
+                [ngClass]="{
+                  'is-disabled': !['Forward', 'Approved', 'Pending', 'Returned'].includes(
+                    element.approvalStatus
+                  )
+                }"
+                (click)="viewCase(element.id)"
+              >
+                <mat-icon fontSet="material-icons-outlined" class="view-icon">visibility</mat-icon>
+              </button>
 
-                <!-- Court Category Type -->
-                <ng-container matColumnDef="courtCategory">
-                    <th mat-header-cell *matHeaderCellDef>Court Category Type</th>
-                    <td mat-cell *matCellDef="let row">{{ row.courtCategory }}</td>
-                </ng-container>
+              <!-- Edit -->
+              <button
+                mat-icon-button
+                matTooltip="Edit"
+                [disabled]="!['Returned', 'Pending'].includes(element.approvalStatus)"
+                [ngClass]="{
+                  'is-disabled': !['Returned', 'Pending'].includes(element.approvalStatus)
+                }"
+                (click)="editCase(element.id)"
+              >
+                <mat-icon fontSet="material-icons-outlined" class="edit-icon">edit</mat-icon>
+              </button>
 
-                <!-- Name Of Court -->
-                <ng-container matColumnDef="courtName">
-                    <th mat-header-cell *matHeaderCellDef>Name Of Court</th>
-                    <td mat-cell *matCellDef="let row">{{ row.courtName }}</td>
-                </ng-container>
+              <!-- Forward -->
+              <button
+                mat-icon-button
+                matTooltip="Forward"
+                [disabled]="element.approvalStatus !== 'Pending'"
+                [ngClass]="{ 'is-disabled': element.approvalStatus !== 'Pending' }"
+              >
+                <mat-icon fontSet="material-icons-outlined" class="forward">send</mat-icon>
+              </button>
+            </td>
+          </ng-container>
 
-                <!-- Case Type -->
-                <ng-container matColumnDef="caseType">
-                    <th mat-header-cell *matHeaderCellDef>Case Type</th>
-                    <td mat-cell *matCellDef="let row">{{ row.caseType }}</td>
-                </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
-                <!-- Approval Status -->
-                <ng-container matColumnDef="approvalStatus">
-                    <th mat-header-cell *matHeaderCellDef>Approval Status</th>
-                    <td mat-cell *matCellDef="let row">
-                        <span class="status-badge"
-                            [ngClass]="{'pending': row.approvalStatus === 'Pending', 'approved': row.approvalStatus === 'Approved', 'forwarded': row.approvalStatus === 'Forward', 'returned': row.approvalStatus === 'Returned'}">
-                            {{ row.approvalStatus }}
-                        </span>
-                    </td>
-                </ng-container>
+          <!-- Empty Row (No Data Found Message) -->
+          <tr class="mat-row no-data-row" *matNoDataRow>
+            <td class="mat-cell" [attr.colspan]="displayedColumns.length" class="no-data-cell">
+              No Case Records Found.
+            </td>
+          </tr>
+        </table>
+      </div>
 
-                <!-- Actions -->
-                <ng-container matColumnDef="actions">
-                    <th mat-header-cell *matHeaderCellDef>Actions</th>
-                    <td class="action-btn" mat-cell *matCellDef="let element">
-
-                        <!-- View -->
-                        <button mat-icon-button matTooltip="View"
-                            [disabled]="!['Forward','Approved','Pending','Returned'].includes(element.approvalStatus)"
-                            [ngClass]="{'is-disabled': !['Forward','Approved','Pending','Returned'].includes(element.approvalStatus)}"
-                            (click)="viewCase(element.id)">
-                            <mat-icon class="view-icon">visibility</mat-icon>
-                        </button>
-
-                        <!-- Edit -->
-                        <button mat-icon-button matTooltip="Edit"
-                            [disabled]="!['Returned','Pending'].includes(element.approvalStatus)"
-                            [ngClass]="{'is-disabled': !['Returned','Pending'].includes(element.approvalStatus)}"
-                            (click)="editCase(element.id)">
-                            <mat-icon class="edit-icon">edit</mat-icon>
-                        </button>
-
-                        <!-- Forward -->
-                        <button mat-icon-button matTooltip="Forward" [disabled]="element.approvalStatus !== 'Pending'"
-                            [ngClass]="{'is-disabled': element.approvalStatus !== 'Pending'}">
-                            <mat-icon class="forward">send</mat-icon>
-                        </button>
-
-                    </td>
-                </ng-container>
-
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-                <!-- Empty Row (No Data Found Message) -->
-                <tr class="mat-row no-data-row" *matNoDataRow>
-                    <td class="mat-cell" [attr.colspan]="displayedColumns.length" class="no-data-cell">
-                        No Case Records Found.
-                    </td>
-                </tr>
-
-            </table>
-
-        </div>
-
-        <mat-paginator [length]="dataSource.data.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"
-            showFirstLastButtons>
-        </mat-paginator>
+      <mat-paginator
+        [length]="dataSource.data.length"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 25, 50]"
+        showFirstLastButtons
+      >
+      </mat-paginator>
     </div>
+  </div>
 </mat-card>
