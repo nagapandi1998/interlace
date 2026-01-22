@@ -1,5 +1,3 @@
-<app-loader [loading]="loading"></app-loader>
-
 <mat-card class="card-body" appearance="outlined">
   <div class="add-button">
     <div class="file-upload-container">
@@ -21,5 +19,22 @@
       <div id="superdoc-toolbar" class="toolbar-content"></div>
     </div>
     <div id="superdoc"></div>
+    <!-- SPELL CHECK POPUP -->
+    <div
+      class="spell-popup"
+      *ngIf="spellPopup.visible"
+      [style.left.px]="spellPopup.x"
+      [style.top.px]="spellPopup.y"
+    >
+      <div
+        class="spell-item"
+        *ngFor="let s of spellPopup.suggestions"
+        (click)="replaceMisspelledWord(s)"
+      >
+        {{ s }}
+      </div>
+    </div>
   </div>
+
+  <app-loader [loading]="loading"></app-loader>
 </mat-card>

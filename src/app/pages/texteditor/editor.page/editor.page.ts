@@ -7,6 +7,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { ToastService } from '../../../shared/service/toaster/toast-service';
 import { Loader } from '../../../shared/components/loader/loader';
+import Typo from 'typo-js';
 
 type InsertMode = 'inline' | 'block';
 
@@ -28,6 +29,15 @@ export class TextEditorPage implements AfterViewInit {
 
   editor: any = null;
   loading = false;
+  typo: any;
+  spellPopup = {
+    visible: false,
+    x: 0,
+    y: 0,
+    from: 0,
+    to: 0,
+    suggestions: [] as string[],
+  };
 
   private TEMPLATE_FIELDS: TemplateField[] = [
     { key: 'case_number', label: 'Case Number:', mode: 'inline' },
@@ -44,7 +54,10 @@ export class TextEditorPage implements AfterViewInit {
     { key: 'officer_designation', label: 'Designation:', mode: 'inline' },
   ];
 
-  constructor(private zone: NgZone, private toastService: ToastService) {}
+  constructor(
+    private zone: NgZone,
+    private toastService: ToastService,
+  ) {}
 
   // Initialize SuperDoc editor
   private createEditor(file?: File | string) {
@@ -58,14 +71,45 @@ export class TextEditorPage implements AfterViewInit {
       pagination: true,
       rulers: true,
       shouldNotGroupWhenFull: true,
-      defaultFontFamily: 'Arial',
+      // defaultFontFamily: 'sans-serif',
       defaultFontSize: 12,
-      onReady: () => console.log('Editor ready'),
+
+      modules: {
+        toolbar: {
+          fonts: [
+            { label: 'Arial', key: 'Arial, sans-serif' },
+            { label: 'Times New Roman', key: 'Times New Roman, serif' },
+            // { label: 'Georgia', key: 'Georgia, serif' },
+            // { label: 'Verdana', key: 'Verdana, sans-serif' },
+            // { label: 'Courier New', key: 'Courier New, monospace' },
+            { label: 'Roboto', key: 'Roboto, sans-serif' },
+            { label: 'Sans Serif', key: 'sans-serif' },
+            { label: 'Noto Sans Tamil', key: 'Noto Sans Tamil' },
+          ],
+        },
+      },
+
+      onReady: () => {
+        console.log('Editor ready');
+        this.setupSpellChecker();
+      },
       onEditorCreate: () => console.log('Editor created'),
     } as any);
   }
 
   ngAfterViewInit() {
+    // Load dictionary files (you might want to fetch them or bundle)
+    fetch('/assets/dictionaries/en_US.aff')
+      .then((r) => r.text())
+      .then((affData) => {
+        fetch('/assets/dictionaries/en_US.dic')
+          .then((r) => r.text())
+          .then((dicData) => {
+            this.typo = new Typo('en_US', affData, dicData, {});
+            console.log('Typo.js initialized');
+          });
+      });
+
     this.zone.runOutsideAngular(() => {
       this.createEditor();
     });
@@ -324,7 +368,7 @@ export class TextEditorPage implements AfterViewInit {
         // Block insert with Arial style
         const p = state.schema.nodes.paragraph.create(
           { style: 'font-family: Arial; font-size: 12pt;' },
-          state.schema.text(item.value)
+          state.schema.text(item.value),
         );
         tr = tr.insert(item.pos + 1, p);
       }
@@ -334,5 +378,84 @@ export class TextEditorPage implements AfterViewInit {
       dispatch(tr);
       // this.toastService.showMsg('success', 'Data inserted successfully.');
     }
+  }
+
+  checkWord(word: string) {
+    if (!this.typo) return false;
+    return this.typo.check(word);
+  }
+
+  getSuggestions(word: string): string[] {
+    if (!this.typo) return [];
+    return this.typo.suggest(word, 5); // top 5 suggestions
+  }
+
+  private setupSpellChecker() {
+    const view = this.editor.activeEditor.view;
+
+    view.dom.addEventListener('contextmenu', (event: MouseEvent) => {
+      event.preventDefault();
+
+      const pos = view.posAtCoords({
+        left: event.clientX,
+        top: event.clientY,
+      });
+      if (!pos) return;
+
+      const { state } = view;
+      const $pos = state.doc.resolve(pos.pos);
+      const text = $pos.parent.textContent || '';
+      const offset = $pos.parentOffset;
+
+      const word = this.getWordAt(text, offset);
+      if (!word || this.checkWord(word)) {
+        this.zone.run(() => (this.spellPopup.visible = false));
+        return;
+      }
+
+      const suggestions = this.getSuggestions(word);
+      if (!suggestions.length) return;
+
+      const start = text.lastIndexOf(word, offset);
+      const from = pos.pos - (offset - start);
+      const to = from + word.length;
+
+      this.zone.run(() => {
+        this.spellPopup = {
+          visible: true,
+          x: event.clientX,
+          y: event.clientY,
+          from,
+          to,
+          suggestions,
+        };
+      });
+    });
+
+    document.addEventListener('click', () => {
+      this.zone.run(() => {
+        this.spellPopup.visible = false;
+      });
+    });
+  }
+
+  replaceMisspelledWord(word: string) {
+    const view = this.editor.activeEditor.view;
+    const { state, dispatch } = view;
+
+    dispatch(state.tr.insertText(word, this.spellPopup.from, this.spellPopup.to));
+    this.spellPopup.visible = false;
+  }
+
+  private getWordAt(text: string, offset: number): string {
+    const left = text.slice(0, offset).search(/\S+$/);
+    const right = text.slice(offset).search(/\s/);
+
+    if (left === -1) return '';
+
+    const start = left;
+    const end = right === -1 ? text.length : offset + right;
+
+    return text.slice(start, end);
   }
 }
