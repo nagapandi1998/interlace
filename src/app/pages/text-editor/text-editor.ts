@@ -48,7 +48,7 @@ export class TextEditor implements AfterViewInit {
       rulers: true,
       shouldNotGroupWhenFull: true,
       // defaultFontFamily: 'sans-serif',
-      defaultFontSize: 12,
+      defaultFontSize: 11,
 
       modules: {
         toolbar: {
