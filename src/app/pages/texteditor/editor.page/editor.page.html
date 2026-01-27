@@ -3,9 +3,9 @@
     <div class="file-upload-container">
       <button mat-raised-button (click)="importDocument()">Import</button>
 
-      <button mat-raised-button (click)="loadCaseTemplate()">Load Template</button>
+      <!-- <button mat-raised-button (click)="loadCaseTemplate()">Load Template</button>
       <button mat-raised-button (click)="populateCaseData()">Insert Data</button>
-      <button mat-raised-button (click)="extractCaseData()">Extract Data</button>
+      <button mat-raised-button (click)="extractCaseData()">Extract Data</button> -->
 
       <input type="file" #fileInput hidden (change)="onFileSelected($event)" accept=".docx" />
       <button mat-raised-button class="clear-btn" (click)="resetDocument()">Clear</button>

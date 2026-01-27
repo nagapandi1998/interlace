@@ -72,7 +72,7 @@ export class TextEditorPage implements AfterViewInit {
       rulers: true,
       shouldNotGroupWhenFull: true,
       // defaultFontFamily: 'sans-serif',
-      defaultFontSize: 12,
+      defaultFontSize: 11,
 
       modules: {
         toolbar: {
@@ -84,13 +84,17 @@ export class TextEditorPage implements AfterViewInit {
             // { label: 'Courier New', key: 'Courier New, monospace' },
             { label: 'Roboto', key: 'Roboto, sans-serif' },
             { label: 'Sans Serif', key: 'sans-serif' },
-            { label: 'Noto Sans Tamil', key: 'Noto Sans Tamil' },
+            // { label: 'Noto Sans Tamil', key: 'Noto Sans Tamil' },
+            // { label: 'SaiIndira', key: 'SaiIndira' },
+            { label: 'Azhagi', key: 'Azhagi' },
+            { label: 'Latha', key: 'Latha' },
           ],
         },
       },
 
       onReady: () => {
         console.log('Editor ready');
+        this.editor.activeEditor?.commands.setFontSize('11pt');
         this.setupSpellChecker();
       },
       onEditorCreate: () => console.log('Editor created'),
@@ -367,7 +371,7 @@ export class TextEditorPage implements AfterViewInit {
       } else {
         // Block insert with Arial style
         const p = state.schema.nodes.paragraph.create(
-          { style: 'font-family: Arial; font-size: 12pt;' },
+          // { style: 'font-family: Arial; font-size: 11pt;' },
           state.schema.text(item.value),
         );
         tr = tr.insert(item.pos + 1, p);

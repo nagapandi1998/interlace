@@ -1,0 +1,53 @@
+.card {
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.card1{
+    background: red;
+}
+
+.card2{
+    background: blue;
+}
+
+.card3{
+    background: green;
+}
+.card4{
+    background: yellow;
+}
+// _grid.scss
+
+$grid-columns: 12;
+$grid-gutter: 16px;
+
+// Breakpoints like Bootstrap
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+);
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat($grid-columns, 1fr);
+  gap: $grid-gutter;
+}
+
+// Generate col classes dynamically
+@each $breakpoint, $value in $breakpoints {
+  @for $i from 1 through $grid-columns {
+    .col-#{$breakpoint}-#{$i} {
+      @if $breakpoint == xs {
+        grid-column: span $i;
+      } @else {
+        @media (min-width: $value) {
+          grid-column: span $i;
+        }
+      }
+    }
+  }
+}

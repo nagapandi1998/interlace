@@ -6,6 +6,7 @@ import { caseRoutes } from './pages/cases/case-routing';
 import { texteditorRoutes } from './pages/texteditor/texteditor-routing';
 import { menuRoutes } from './pages/master/master-routing';
 import { adminRoutes } from './pages/admin/admin-routing';
+import { dashboardRoutes } from './pages/dashboard/dashboard-routing';
 
 export const routes: Routes = [
   {
@@ -40,6 +41,10 @@ export const routes: Routes = [
         path: 'admin',
         children: [...adminRoutes],
       },
+      {
+        path: 'dashboard',
+        children: [...dashboardRoutes],
+      }
     ],
   },
 ];
