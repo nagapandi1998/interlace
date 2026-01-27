@@ -61,6 +61,7 @@ export class TextEditor implements AfterViewInit {
             { label: 'Roboto', key: 'Roboto, sans-serif' },
             { label: 'Sans Serif', key: 'sans-serif' },
             { label: 'Noto Sans Tamil', key: 'Noto Sans Tamil' },
+            { label: 'Azhagi', key: 'Azhagi' },
           ],
         },
       },

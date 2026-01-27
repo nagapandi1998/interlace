@@ -1,5 +1,13 @@
 @use '../../../assets/scss/variable' as *;
 
+@font-face {
+  font-family: 'Azhagi';
+  src: url('/assets/fonts/Azhagi.Com-SaiIndira-Bilingual-PhoneticTransliteration.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-synthesis: none;
+}
+
 .add-button {
   // display: flex;
   justify-content: space-between !important;
