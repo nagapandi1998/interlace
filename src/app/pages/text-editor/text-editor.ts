@@ -69,6 +69,7 @@ export class TextEditor implements AfterViewInit {
 
       onReady: () => {
         console.log('Editor ready');
+        this.editor.activeEditor?.commands.setFontSize('11pt');
         this.setupSpellChecker();
       },
       onEditorCreate: () => console.log('Editor created'),
