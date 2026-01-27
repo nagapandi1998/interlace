@@ -8,6 +8,13 @@
   font-synthesis: none;
 }
 
+@font-face {
+  font-family: 'Latha';
+  src: url('/assets/fonts/latha.ttf') format('truetype');
+  font-weight: 300 !important;
+  font-style: normal;
+}
+
 .add-button {
   // display: flex;
   justify-content: space-between !important;
